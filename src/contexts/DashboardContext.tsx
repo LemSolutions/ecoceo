@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useReducer, ReactNode, useEffect, useState } from 'react';
-import { supabaseHelpers, Campaign, Lead } from '@/lib/supabase';
+import { supabaseHelpers, Campaign, Lead } from '@/lib/_external/supabase';
 
 // Tipi per i dati della dashboard
 export interface Project {

@@ -1,12 +1,12 @@
 "use client";
 
-import Hero from "@/components/Hero";
+import Hero from '@/components/_public/Hero';
 import AboutSectionOne from "@/components/About/AboutSectionOne";
 
-import Testimonials from "@/components/Testimonials";
-import Blog from "@/components/Blog";
-import Contact from "@/components/Contact";
-import Services from "@/components/Services";
+import Testimonials from '@/components/_public/Testimonials';
+import Blog from '@/components/_public/Blog';
+import Contact from '@/components/_public/Contact';
+import Services from '@/components/_public/Services';
 import { useState, useEffect } from 'react';
 import { safeFetch } from '@/sanity/lib/client';
 import { siteSettingsQuery } from '@/sanity/lib/queries';

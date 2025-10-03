@@ -1,7 +1,7 @@
 "use client";
 
 import Breadcrumb from "@/components/Common/Breadcrumb";
-import Blog from "@/components/Blog";
+import Blog from '@/components/_public/Blog';
 
 const BlogPage = () => {
   return (

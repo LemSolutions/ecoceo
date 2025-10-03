@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation';
 import { safeFetch } from '@/sanity/lib/client';
 import { projectBySlugQuery } from '@/sanity/lib/queries';
 import { getImageUrl, getTextValue } from '@/sanity/lib/image';
-import { useSanityUIComponents } from '@/hooks/useSanityUIComponents';
+import { useSanityUIComponents } from '@/hooks/_ui/useSanityUIComponents';
 import SanityStyledComponent from '@/components/Common/SanityStyledComponent';
 import Breadcrumb from "@/components/Common/Breadcrumb";
 import Link from 'next/link';

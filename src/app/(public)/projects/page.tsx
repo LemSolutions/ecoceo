@@ -1,7 +1,7 @@
 "use client";
 
 import Breadcrumb from "@/components/Common/Breadcrumb";
-import Projects from "@/components/Projects";
+import Projects from '@/components/_public/Projects';
 
 const ProjectsPage = () => {
   return (

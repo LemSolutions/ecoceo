@@ -5,7 +5,7 @@ import Breadcrumb from "@/components/Common/Breadcrumb";
 import Link from 'next/link';
 import { useState } from 'react';
 import CheckoutWithPayment from '@/components/Shop/CheckoutWithPayment';
-import { Customer, ShippingAddress } from '@/types/order';
+import { Customer, ShippingAddress } from '@/types/_api/order';
 
 interface CheckoutForm {
   // Personal Information

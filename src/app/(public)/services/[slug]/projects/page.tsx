@@ -5,10 +5,10 @@ import { useParams } from 'next/navigation';
 import { safeFetch } from '@/sanity/lib/client';
 import { projectsByServiceQuery, serviceBySlugQuery } from '@/sanity/lib/queries';
 import { getTextValue } from '@/sanity/lib/image';
-import { useSanityUIComponents } from '@/hooks/useSanityUIComponents';
+import { useSanityUIComponents } from '@/hooks/_ui/useSanityUIComponents';
 import SanityStyledComponent from '@/components/Common/SanityStyledComponent';
 import Breadcrumb from "@/components/Common/Breadcrumb";
-import Projects from "@/components/Projects";
+import Projects from '@/components/_public/Projects';
 import Link from 'next/link';
 
 const ServiceProjectsPage = () => {
