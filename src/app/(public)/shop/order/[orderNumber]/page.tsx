@@ -41,7 +41,7 @@ const getStatusColor = (status: string) => {
     pending: 'bg-yellow-100 text-yellow-800',
     confirmed: 'bg-blue-100 text-blue-800',
     processing: 'bg-purple-100 text-purple-800',
-    shipped: 'bg-orange-100 text-orange-800',
+    shipped: 'bg-blue-100 text-blue-800',
     delivered: 'bg-green-100 text-green-800',
     cancelled: 'bg-red-100 text-red-800'
   };
@@ -90,7 +90,7 @@ const OrderPage = async ({ params }: OrderPageProps) => {
       </div>
 
       {/* Order Content - Gradiente da bianco ad arancione intenso */}
-      <div className="bg-gradient-to-b from-white via-orange-100 to-orange-400 text-black">
+      <div className="bg-gradient-to-b from-white via-blue-100 to-blue-400 text-black">
         <section className="py-16 lg:py-20">
           <div className="container">
             <div className="max-w-4xl mx-auto">

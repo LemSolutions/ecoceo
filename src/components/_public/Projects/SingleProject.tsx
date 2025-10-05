@@ -2,7 +2,7 @@
 
 import { getImageUrl, getTextValue } from '@/sanity/lib/image';
 import { useSanityUIComponents } from '@/hooks/_ui/useSanityUIComponents';
-import SanityStyledComponent from '@/components/Common/SanityStyledComponent';
+import SanityStyledComponent from '@/components/_public/Common/SanityStyledComponent';
 import Link from 'next/link';
 import { ProjectCardProps } from '@/types/_data/project';
 

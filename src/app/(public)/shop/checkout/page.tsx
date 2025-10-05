@@ -5,7 +5,7 @@ import Breadcrumb from "@/components/Common/Breadcrumb";
 import Link from 'next/link';
 import { useState } from 'react';
 import CheckoutWithPayment from '@/components/Shop/CheckoutWithPayment';
-import { Customer, ShippingAddress } from '@/types/_api/order';
+import { Customer, ShippingAddress } from '@/types/order';
 
 interface CheckoutForm {
   // Personal Information
@@ -84,7 +84,7 @@ const CheckoutPage = () => {
           />
         </div>
 
-        <div className="bg-gradient-to-b from-white via-orange-100 to-orange-400 text-black">
+        <div className="bg-gradient-to-b from-white via-blue-100 to-blue-400 text-black">
           <section className="py-16 lg:py-20">
             <div className="container">
               <div className="text-center py-12">
@@ -119,7 +119,7 @@ const CheckoutPage = () => {
       </div>
 
       {/* Checkout Content */}
-      <div className="bg-gradient-to-b from-white via-orange-100 to-orange-400 text-black">
+      <div className="bg-gradient-to-b from-white via-blue-100 to-blue-400 text-black">
         <section className="py-16 lg:py-20">
           <div className="container">
             <div className="max-w-6xl mx-auto">

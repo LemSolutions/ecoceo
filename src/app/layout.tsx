@@ -27,6 +27,7 @@ export default function RootLayout({
   const pathname = usePathname();
   const isStudioPage = pathname?.startsWith('/studio');
   const isDashboardPage = pathname?.startsWith('/dashboard');
+  const isClientAreaPage = pathname?.startsWith('/area-clienti');
   const [siteSettings, setSiteSettings] = useState(null);
 
 
@@ -42,10 +43,10 @@ export default function RootLayout({
       }
     };
 
-    if (!isStudioPage && !isDashboardPage) {
+    if (!isStudioPage && !isDashboardPage && !isClientAreaPage) {
       fetchSiteSettings();
     }
-  }, [isStudioPage, isDashboardPage]);
+  }, [isStudioPage, isDashboardPage, isClientAreaPage]);
 
   return (
     <html suppressHydrationWarning lang="en">
@@ -90,7 +91,7 @@ export default function RootLayout({
           fontFamily: siteSettings?.typography?.bodyFont || 'Inter',
           backgroundImage: `
             radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0),
-            linear-gradient(135deg, #f97316 0%, #dc2626 15%, #991b1b 30%, #1f2937 55%, #4b5563 80%, #d1d5db 100%)
+            linear-gradient(135deg, #3b82f6 0%, #1e40af 15%, #1e3a8a 30%, #1f2937 55%, #4b5563 80%, #dbeafe 100%)
           `,
           backgroundSize: '20px 20px, 200% 200%',
           backgroundPosition: '0 0, 0% 0%',
@@ -102,10 +103,10 @@ export default function RootLayout({
         <Providers>
           <CartProvider>
             <AnalyticsProvider>
-              {!isStudioPage && !isDashboardPage && <Header siteSettings={siteSettings} />}
+              {!isStudioPage && !isDashboardPage && !isClientAreaPage && <Header siteSettings={siteSettings} />}
               {children}
-              {!isStudioPage && !isDashboardPage && <Footer />}
-              {!isStudioPage && !isDashboardPage && <ScrollToTop />}
+              {!isStudioPage && !isDashboardPage && !isClientAreaPage && <Footer />}
+              {!isStudioPage && !isDashboardPage && !isClientAreaPage && <ScrollToTop />}
             </AnalyticsProvider>
           </CartProvider>
         </Providers>

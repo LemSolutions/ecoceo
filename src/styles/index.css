@@ -36,7 +36,7 @@ layer(base);
 .bg-purple-600 .text-white,
 .bg-green-600 .text-white,
 .bg-red-600 .text-white,
-.bg-orange-600 .text-white,
+.bg-blue-600 .text-white,
 .bg-indigo-600 .text-white,
 .bg-cyan-600 .text-white,
 .bg-yellow-600 .text-white {
@@ -67,7 +67,7 @@ p, span, div, h1, h2, h3, h4, h5, h6 {
 .bg-purple-600,
 .bg-green-600,
 .bg-red-600,
-.bg-orange-600,
+.bg-blue-600,
 .bg-indigo-600,
 .bg-cyan-600,
 .bg-yellow-600 {
@@ -90,12 +90,15 @@ p, span, div, h1, h2, h3, h4, h5, h6 {
   --color-white: #ffffff;
   --color-black: #000000;
   --color-dark: #6b7280;
-  --color-primary: #ff6600;
+  --color-primary: #2563eb;
   --color-yellow: #fbb040;
+  --color-blue-light: #dbeafe;
+  --color-blue-medium: #3b82f6;
+  --color-blue-dark: #1e40af;
   --color-bg-color-dark: #171c28;
 
   --color-body-color: #6b7280;
-  --color-body-color-dark: #ff6b00;
+  --color-body-color-dark: #2563eb;
 
   --color-dark: #1a1a1a; /* più neutro rispetto a #1d2430 */
   --color-bg-color-dark: #1a1a1a;
@@ -113,6 +116,9 @@ p, span, div, h1, h2, h3, h4, h5, h6 {
   --color-gray-950: #030712;
   --color-gray-dark: #1e232e;
   --color-gray-light: #f0f2f9;
+  --color-bg-white: #ffffff;
+  --color-bg-blue: #eff6ff;
+  --color-bg-yellow: #fef3c7;
 
   --shadow-sign-up: 0px 5px 10px rgba(4, 10, 34, 0.2);
   --shadow-one: 0px 2px 3px rgba(7, 7, 77, 0.05);
@@ -212,15 +218,15 @@ p, span, div, h1, h2, h3, h4, h5, h6 {
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background-start-rgb: 255, 255, 255;
+  --background-end-rgb: 239, 246, 255;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background-start-rgb: 30, 58, 138;
+    --background-end-rgb: 59, 130, 246;
   }
 }
 
@@ -609,7 +615,7 @@ body {
   }
 
   .focus\:ring-primary:focus {
-    --tw-ring-color: #f97316;
+    --tw-ring-color: #2563eb;
   }
 
   .focus\:border-transparent:focus {
@@ -789,4 +795,29 @@ body {
 .btn-secondary:hover {
   background-color: var(--secondary-color);
   opacity: 0.9;
+}
+
+/* New background color utilities */
+.bg-white-theme {
+  background-color: var(--color-bg-white);
+}
+
+.bg-blue-theme {
+  background-color: var(--color-bg-blue);
+}
+
+.bg-yellow-theme {
+  background-color: var(--color-bg-yellow);
+}
+
+.bg-gradient-white-blue {
+  background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+}
+
+.bg-gradient-blue-yellow {
+  background: linear-gradient(135deg, #3b82f6 0%, #fbb040 100%);
+}
+
+.bg-gradient-white-yellow {
+  background: linear-gradient(135deg, #ffffff 0%, #fef3c7 100%);
 }

@@ -3,7 +3,7 @@
 import { safeFetch } from '@/sanity/lib/client';
 import { productsQuery } from '@/sanity/lib/queries';
 import { useSanityUIComponents } from '@/hooks/_ui/useSanityUIComponents';
-import SanityStyledComponent from '@/components/Common/SanityStyledComponent';
+import SanityStyledComponent from '@/components/_public/Common/SanityStyledComponent';
 import SingleProduct from './SingleProduct';
 import { useState, useEffect } from 'react';
 import { Product, ProductGridProps } from '@/types/_data/product';

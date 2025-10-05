@@ -1,7 +1,7 @@
 "use client";
 
 import Breadcrumb from "@/components/Common/Breadcrumb";
-import Shop from '@/components/_public/Shop';
+import Shop from "@/components/Shop";
 
 const ShopPage = () => {
   return (

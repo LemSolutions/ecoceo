@@ -5,8 +5,8 @@ import { safeFetch } from '@/sanity/lib/client';
 import { heroQuery } from '@/sanity/lib/queries';
 import { getImageUrl, getTextValue } from '@/sanity/lib/image';
 import { useSanityUIComponents } from '@/hooks/_ui/useSanityUIComponents';
-import SanityStyledComponent from '@/components/Common/SanityStyledComponent';
-import SanityLink from '@/components/Common/SanityLink';
+import SanityStyledComponent from '@/components/_public/Common/SanityStyledComponent';
+import SanityLink from '@/components/_public/Common/SanityLink';
 import { useState, useEffect } from 'react';
 
 const Hero = () => {

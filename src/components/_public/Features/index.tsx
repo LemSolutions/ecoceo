@@ -4,7 +4,7 @@ import { safeFetch } from '@/sanity/lib/client';
 import { featuresQuery } from '@/sanity/lib/queries';
 import { getImageUrl, getTextValue } from '@/sanity/lib/image';
 import { useSanityUIComponents } from '@/hooks/_ui/useSanityUIComponents';
-import SanityStyledComponent from '@/components/Common/SanityStyledComponent';
+import SanityStyledComponent from '@/components/_public/Common/SanityStyledComponent';
 import { useState, useEffect } from 'react';
 
 const Features = () => {

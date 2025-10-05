@@ -49,7 +49,7 @@ const LegalPage = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-orange-500"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
       </div>
     );
   }
@@ -181,7 +181,7 @@ const LegalPage = () => {
                   If you have any questions about this {legalContent.title.toLowerCase()}, please contact us at{' '}
                   <a 
                     href={`mailto:${siteSettings?.contactInfo?.email || 'info@company.com'}`}
-                    className="text-orange-500 hover:text-orange-600 font-semibold"
+                    className="text-blue-500 hover:text-blue-600 font-semibold"
                   >
                     {siteSettings?.contactInfo?.email || 'info@company.com'}
                   </a>

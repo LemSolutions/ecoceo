@@ -1,7 +1,7 @@
 "use client";
 
 import Breadcrumb from "@/components/Common/Breadcrumb";
-import Contact from '@/components/_public/Contact';
+import Contact from "@/components/Contact";
 
 const ContactPage = () => {
   return (

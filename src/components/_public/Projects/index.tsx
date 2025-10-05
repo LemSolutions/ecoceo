@@ -3,7 +3,7 @@
 import { safeFetch } from '@/sanity/lib/client';
 import { projectsQuery } from '@/sanity/lib/queries';
 import { useSanityUIComponents } from '@/hooks/_ui/useSanityUIComponents';
-import SanityStyledComponent from '@/components/Common/SanityStyledComponent';
+import SanityStyledComponent from '@/components/_public/Common/SanityStyledComponent';
 import SingleProject from './SingleProject';
 import { useState, useEffect } from 'react';
 import { Project, ProjectGridProps } from '@/types/_data/project';

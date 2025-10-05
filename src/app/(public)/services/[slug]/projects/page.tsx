@@ -5,10 +5,10 @@ import { useParams } from 'next/navigation';
 import { safeFetch } from '@/sanity/lib/client';
 import { projectsByServiceQuery, serviceBySlugQuery } from '@/sanity/lib/queries';
 import { getTextValue } from '@/sanity/lib/image';
-import { useSanityUIComponents } from '@/hooks/_ui/useSanityUIComponents';
+import { useSanityUIComponents } from '@/hooks/useSanityUIComponents';
 import SanityStyledComponent from '@/components/Common/SanityStyledComponent';
 import Breadcrumb from "@/components/Common/Breadcrumb";
-import Projects from '@/components/_public/Projects';
+import Projects from "@/components/Projects";
 import Link from 'next/link';
 
 const ServiceProjectsPage = () => {
@@ -79,7 +79,7 @@ const ServiceProjectsPage = () => {
       </div>
 
       {/* Service Projects Content - Gradiente da bianco ad arancione intenso */}
-      <div className="bg-gradient-to-b from-white via-orange-100 to-orange-400 text-black">
+      <div className="bg-gradient-to-b from-white via-blue-100 to-blue-400 text-black">
         <section className="py-16 lg:py-20">
           <div className="container">
             <div className="text-center mb-16">

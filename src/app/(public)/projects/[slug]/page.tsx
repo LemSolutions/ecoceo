@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation';
 import { safeFetch } from '@/sanity/lib/client';
 import { projectBySlugQuery } from '@/sanity/lib/queries';
 import { getImageUrl, getTextValue } from '@/sanity/lib/image';
-import { useSanityUIComponents } from '@/hooks/_ui/useSanityUIComponents';
+import { useSanityUIComponents } from '@/hooks/useSanityUIComponents';
 import SanityStyledComponent from '@/components/Common/SanityStyledComponent';
 import Breadcrumb from "@/components/Common/Breadcrumb";
 import Link from 'next/link';
@@ -73,7 +73,7 @@ const ProjectDetailsPage = () => {
       </div>
 
       {/* Project Details Content - Gradiente da bianco ad arancione intenso */}
-      <div className="bg-gradient-to-b from-white via-orange-100 to-orange-400 text-black">
+      <div className="bg-gradient-to-b from-white via-blue-100 to-blue-400 text-black">
         <section className="pt-[150px] pb-[120px]">
           <div className="container">
             <div className="-mx-4 flex flex-wrap justify-center">
@@ -139,7 +139,7 @@ const ProjectDetailsPage = () => {
                     </div>
                     <div className="mb-5">
                       {project.featured && (
-                        <span className="bg-orange-500 inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold text-white">
+                        <span className="bg-blue-500 inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold text-white">
                           In Evidenza
                         </span>
                       )}

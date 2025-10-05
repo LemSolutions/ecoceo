@@ -7,7 +7,7 @@ import { getImageUrl } from '@/sanity/lib/image';
 
 import { safeFetch } from '@/sanity/lib/client';
 import { navbarServicesQuery } from '@/sanity/lib/queries';
-import MiniCart from '@/components/Shop/MiniCart';
+import MiniCart from '@/components/_public/Shop/MiniCart';
 
 interface HeaderProps {
   siteSettings?: any;

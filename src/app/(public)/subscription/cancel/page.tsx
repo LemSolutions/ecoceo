@@ -15,7 +15,7 @@ const SubscriptionCancelPage = () => {
       </div>
 
       {/* Cancel Content */}
-      <div className="bg-gradient-to-b from-white via-orange-100 to-orange-400 text-black">
+      <div className="bg-gradient-to-b from-white via-blue-100 to-blue-400 text-black">
         <section className="py-16 lg:py-20">
           <div className="container">
             <div className="max-w-2xl mx-auto text-center">

@@ -28,7 +28,7 @@ const LegalPage = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-orange-500"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
       </div>
     );
   }
@@ -100,7 +100,7 @@ const LegalPage = () => {
                   )}
                   <Link
                     href={`/legal/${page.slug}`}
-                    className="inline-block bg-gradient-to-r from-gray-900 to-gray-700 text-white px-6 py-3 rounded-lg font-semibold hover:from-orange-600 hover:to-orange-500 transition-all duration-300"
+                    className="inline-block bg-gradient-to-r from-gray-900 to-gray-700 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-blue-500 transition-all duration-300"
                   >
                     Read More
                   </Link>
@@ -125,7 +125,7 @@ const LegalPage = () => {
                   If you have any questions about our legal documents, please contact us at{' '}
                   <a 
                     href={`mailto:${siteSettings?.contactInfo?.email || 'info@company.com'}`}
-                    className="text-orange-500 hover:text-orange-600 font-semibold"
+                    className="text-blue-500 hover:text-blue-600 font-semibold"
                   >
                     {siteSettings?.contactInfo?.email || 'info@company.com'}
                   </a>
