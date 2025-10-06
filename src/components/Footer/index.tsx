@@ -314,7 +314,7 @@ const Footer = () => {
                   {siteSettings.legal.privacyPolicy && (
                     <Link
                       href={`/legal/${siteSettings.legal.privacyPolicy.slug?.current || 'privacy-policy'}`}
-                      className="text-gray-300 hover:text-orange-300 text-sm transition duration-300"
+                      className="text-white hover:text-orange-300 text-sm transition duration-300"
                     >
                       {siteSettings.legal.privacyPolicy.title}
                     </Link>
@@ -322,7 +322,7 @@ const Footer = () => {
                   {siteSettings.legal.termsOfService && (
                     <Link
                       href={`/legal/${siteSettings.legal.termsOfService.slug?.current || 'terms-of-service'}`}
-                      className="text-gray-300 hover:text-orange-300 text-sm transition duration-300"
+                      className="text-white hover:text-orange-300 text-sm transition duration-300"
                     >
                       {siteSettings.legal.termsOfService.title}
                     </Link>
@@ -330,7 +330,7 @@ const Footer = () => {
                   {siteSettings.legal.cookiePolicy && (
                     <Link
                       href={`/legal/${siteSettings.legal.cookiePolicy.slug?.current || 'cookie-policy'}`}
-                      className="text-gray-300 hover:text-orange-300 text-sm transition duration-300"
+                      className="text-white hover:text-orange-300 text-sm transition duration-300"
                     >
                       {siteSettings.legal.cookiePolicy.title}
                     </Link>
