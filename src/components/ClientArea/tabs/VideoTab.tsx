@@ -56,15 +56,15 @@ const VideoTab: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-700">
-        <h2 className="text-2xl font-bold text-white mb-4">🎥 Video Tutorial e Guide</h2>
+      <div className="bg-white rounded-lg shadow-lg p-6 border border-blue-200">
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">🎥 Video Tutorial e Guide</h2>
         <p className="text-gray-300">
           Esplora la nostra collezione di video tutorial, presentazioni e guide per massimizzare l'utilizzo dei nostri servizi.
         </p>
       </div>
 
       {/* Filters */}
-      <div className="bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-700">
+      <div className="bg-white rounded-lg shadow-lg p-6 border border-blue-200">
         <div className="flex flex-col sm:flex-row gap-4">
           {/* Search */}
           <div className="flex-1">
@@ -81,7 +81,7 @@ const VideoTab: React.FC = () => {
           <select
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            className="px-4 py-2 border border-gray-600 bg-gray-700 text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-4 py-2 border border-gray-300 bg-white text-gray-900 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="all">Tutte le categorie</option>
             {categories.map(category => (

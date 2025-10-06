@@ -77,7 +77,7 @@ const DocumentCard: React.FC<DocumentCardProps> = ({ document, onDownload }) => 
   };
 
   return (
-    <div className="bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-700">
+    <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-blue-200">
       {/* Preview Image or File Icon */}
       <div className="aspect-video bg-gray-100 flex items-center justify-center">
         {document.previewImage ? (
@@ -99,12 +99,12 @@ const DocumentCard: React.FC<DocumentCardProps> = ({ document, onDownload }) => 
 
       {/* Content */}
       <div className="p-4">
-        <h3 className="font-semibold text-lg text-white mb-2 line-clamp-2">
+        <h3 className="font-semibold text-lg text-gray-900 mb-2 line-clamp-2">
           {document.title}
         </h3>
         
         {document.description && (
-          <p className="text-gray-300 text-sm mb-3 line-clamp-2">
+          <p className="text-gray-600 text-sm mb-3 line-clamp-2">
             {document.description}
           </p>
         )}

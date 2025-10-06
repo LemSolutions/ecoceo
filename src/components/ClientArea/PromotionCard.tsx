@@ -40,7 +40,7 @@ const PromotionCard: React.FC<PromotionCardProps> = ({ promotion, onLearnMore })
   };
 
   return (
-    <div className={`bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-700 ${
+    <div className={`bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-blue-200 ${
       promotion.isFeatured ? 'ring-2 ring-blue-500' : ''
     }`}>
       {/* Featured Badge */}
@@ -90,12 +90,12 @@ const PromotionCard: React.FC<PromotionCardProps> = ({ promotion, onLearnMore })
 
       {/* Content */}
       <div className="p-4">
-        <h3 className="font-bold text-xl text-white mb-2 line-clamp-2">
+        <h3 className="font-bold text-xl text-gray-900 mb-2 line-clamp-2">
           {promotion.title}
         </h3>
         
         {promotion.description && (
-          <p className="text-gray-300 text-sm mb-3 line-clamp-2">
+          <p className="text-gray-600 text-sm mb-3 line-clamp-2">
             {promotion.description}
           </p>
         )}

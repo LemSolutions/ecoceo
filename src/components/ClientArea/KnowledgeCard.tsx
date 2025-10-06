@@ -49,7 +49,7 @@ const KnowledgeCard: React.FC<KnowledgeCardProps> = ({ knowledge, onReadMore }) 
   };
 
   return (
-    <div className="bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-gray-700">
+    <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 border border-blue-200">
       {/* Featured Image */}
       {knowledge.featuredImage && (
         <div className="aspect-video bg-gray-200">
@@ -64,7 +64,7 @@ const KnowledgeCard: React.FC<KnowledgeCardProps> = ({ knowledge, onReadMore }) 
 
       {/* Content */}
       <div className="p-4">
-        <h3 className="font-semibold text-lg text-white mb-2 line-clamp-2">
+        <h3 className="font-semibold text-lg text-gray-900 mb-2 line-clamp-2">
           {knowledge.title}
         </h3>
         
