@@ -91,7 +91,7 @@ export default function RootLayout({
           fontFamily: siteSettings?.typography?.bodyFont || 'Inter',
           backgroundImage: `
             radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0),
-            linear-gradient(135deg, #ffffff 0%, #3b82f6 16%, #ffffff 33%, #fbb040 50%, #ffffff 66%, #ef4444 83%, #ffffff 100%)
+            linear-gradient(135deg, #ffffff 0%, #3b82f6 25%, #ffffff 50%, #ef4444 75%, #ffffff 100%)
           `,
           backgroundSize: '20px 20px, 200% 200%',
           backgroundPosition: '0 0, 0% 0%',
