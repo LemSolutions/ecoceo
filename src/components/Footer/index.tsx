@@ -247,48 +247,128 @@ const Footer = () => {
             <div className="w-full px-4 md:w-2/3 lg:w-4/12 xl:w-2/6">
               <div className="mb-12 lg:mb-16">
                 <h3 className="text-white mb-10 text-xl font-semibold">
-                  {siteSettings?.footer?.contactTitle || "Contact Info"}
+                  LEM Solutions S.N.C.
                 </h3>
-                <div className="mb-8 flex w-full max-w-[370px]">
-                  <div className="bg-white/30 backdrop-blur/30 backdrop-blur/20 mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded-full">
-                    <svg
-                      width="28"
-                      height="19"
-                      viewBox="0 0 28 19"
-                      className="fill-current text-white"
-                    >
-                      <path d="M25.3636 0H2.63636C1.18182 0 0 1.16785 0 2.6052V15.3948C0 16.8322 1.18182 18 2.63636 18H25.3636C26.8182 18 28 16.8322 28 15.3948V2.6052C28 1.16785 26.8182 0 25.3636 0ZM25.3636 1.3831C25.5909 1.3831 25.7727 1.56241 25.7727 1.79366V4.64002L14 10.1192L2.22727 4.64002V1.79366C2.22727 1.56241 2.40909 1.3831 2.63636 1.3831H25.3636ZM25.3636 16.6169H2.63636C2.40909 16.6169 2.22727 16.4376 2.22727 16.2064V6.67667L13.3182 11.7947C13.7727 12.0434 14.2273 12.0434 14.6818 11.7947L25.7727 6.67667V16.2064C25.7727 16.4376 25.5909 16.6169 25.3636 16.6169Z" />
-                    </svg>
+                
+                {/* Ragione Sociale */}
+                <div className="mb-6">
+                  <p className="text-gray-300 text-sm font-medium mb-2">
+                    Ragione sociale:
+                  </p>
+                  <p className="text-white text-base leading-relaxed">
+                    Lem Solutions S.N.C. di Morano Lino Carmine & Ferrario Massimiliano
+                  </p>
+                </div>
+
+                {/* P.IVA e C.U. */}
+                <div className="mb-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-gray-300 text-sm font-medium mb-1">
+                      P.IVA:
+                    </p>
+                    <p className="text-white text-base">
+                      IT02961500135
+                    </p>
                   </div>
-                  <div className="w-full">
-                    <h4 className="text-gray-700 mb-1 text-xl font-bold">
-                      Email Address
-                    </h4>
-                    <p className="text-gray-600 mb-6 text-base font-medium leading-relaxed">
-                      {siteSettings?.contactInfo?.email || "info@company.com"}
+                  <div>
+                    <p className="text-gray-300 text-sm font-medium mb-1">
+                      C.U.:
+                    </p>
+                    <p className="text-white text-base">
+                      M5UXCR1
                     </p>
                   </div>
                 </div>
-                <div className="mb-8 flex w-full max-w-[370px]">
-                  <div className="bg-gray-300/50 mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded-full">
-                    <svg
-                      width="28"
-                      height="21"
-                      viewBox="0 0 28 21"
-                      className="fill-current text-gray-600"
-                    >
-                      <path d="M25.0909 0H2.90909C1.30909 0 0 1.3 0 2.9V18.1C0 19.7 1.30909 21 2.90909 21H25.0909C26.6909 21 28 19.7 28 18.1V2.9C28 1.3 26.6909 0 25.0909 0ZM25.0909 1.4C25.4909 1.4 25.8182 1.7 25.8182 2.1V3.5L14 9.8L2.18182 3.5V2.1C2.18182 1.7 2.50909 1.4 2.90909 1.4H25.0909ZM25.0909 19.6H2.90909C2.50909 19.6 2.18182 19.3 2.18182 18.9V6.2L13.3182 12.1C13.7727 12.4 14.2273 12.4 14.6818 12.1L25.8182 6.2V18.9C25.8182 19.3 25.4909 19.6 25.0909 19.6Z" />
-                    </svg>
+
+                {/* Indirizzo */}
+                <div className="mb-6">
+                  <p className="text-gray-300 text-sm font-medium mb-2">
+                    Sede:
+                  </p>
+                  <p className="text-white text-base leading-relaxed">
+                    Via Gondar 6<br />
+                    Monza (MB) 20900
+                  </p>
+                </div>
+
+                {/* Contatti */}
+                <div className="space-y-4">
+                  <div className="flex items-center">
+                    <div className="bg-white/30 backdrop-blur/30 backdrop-blur/20 mr-4 flex h-10 w-10 items-center justify-center overflow-hidden rounded-full">
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                        className="fill-current text-white"
+                      >
+                        <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z"/>
+                        <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-gray-300 text-sm font-medium mb-1">
+                        Email:
+                      </p>
+                      <a 
+                        href="mailto:info@lemsolutions.it"
+                        className="text-white hover:text-orange-300 text-base transition duration-300"
+                      >
+                        info@lemsolutions.it
+                      </a>
+                    </div>
                   </div>
-                  <div className="w-full">
-                    <h4 className="text-gray-700 mb-1 text-xl font-bold">
-                      Phone Number
-                    </h4>
-                    <p className="text-gray-600 mb-6 text-base font-medium leading-relaxed">
-                      {siteSettings?.contactInfo?.phone || "+1 (555) 123-4567"}
-                    </p>
+
+                  <div className="flex items-center">
+                    <div className="bg-white/30 backdrop-blur/30 backdrop-blur/20 mr-4 flex h-10 w-10 items-center justify-center overflow-hidden rounded-full">
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                        className="fill-current text-white"
+                      >
+                        <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122L9.8 11.85a.678.678 0 0 1-.656-.227L7.682 9.94a.678.678 0 0 0-.122-.58L5.78 7.05a.678.678 0 0 0-.122-.58L7.682 5.38a.678.678 0 0 1 .227-.656L9.8 3.15a.678.678 0 0 0 .656-.227L12.02 1.282a.678.678 0 0 0-.063-1.015L9.75.273z"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-gray-300 text-sm font-medium mb-1">
+                        Telefono:
+                      </p>
+                      <a 
+                        href="tel:+393474806300"
+                        className="text-white hover:text-orange-300 text-base transition duration-300"
+                      >
+                        +39 347 4806300
+                      </a>
+                    </div>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Mappa Google Maps */}
+        <div className="border-t border-gray-300/30 py-8">
+          <div className="container">
+            <div className="mb-8">
+              <h3 className="text-white text-xl font-semibold text-center mb-6">
+                📍 La Nostra Sede
+              </h3>
+              <div className="max-w-4xl mx-auto">
+                <iframe 
+                  src="https://www.google.com/maps?q=Via+Gondar+6,+Monza+(MB)+20900&output=embed" 
+                  width="100%" 
+                  height="220" 
+                  style={{
+                    border: 0,
+                    borderRadius: '12px',
+                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)'
+                  }}
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade" 
+                  title="LEM Solutions Sede"
+                  className="w-full"
+                />
               </div>
             </div>
           </div>
@@ -300,7 +380,7 @@ const Footer = () => {
               <div className="w-full px-4 md:w-2/3 lg:w-1/2">
                 <div className="text-center md:text-left">
                   <p className="text-white text-base">
-                    &copy; 2025 {siteSettings?.title || "Your Company"}. {siteSettings?.footer?.copyrightText || "All rights reserved."}
+                    &copy; 2025 LEM Solutions S.N.C. Tutti i diritti riservati.
                   </p>
                 </div>
               </div>
