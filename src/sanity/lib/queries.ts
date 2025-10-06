@@ -153,6 +153,19 @@ export const aboutQuery = groq`
   }
 `
 
+// Fallback query to get any about section if none is active
+export const aboutFallbackQuery = groq`
+  *[_type == "about"][0] {
+    _id,
+    title,
+    subtitle,
+    description,
+    image,
+    features,
+    stats
+  }
+`
+
 
 
 // Query to get the active contact section

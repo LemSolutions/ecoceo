@@ -3,7 +3,7 @@
 import Image from "next/image";
 import SectionTitle from "../Common/SectionTitle";
 import { safeFetch } from '@/sanity/lib/client';
-import { aboutQuery } from '@/sanity/lib/queries';
+import { aboutQuery, aboutFallbackQuery } from '@/sanity/lib/queries';
 import { getImageUrl, getTextValue } from '@/sanity/lib/image';
 import { useSanityUIComponents } from '@/hooks/useSanityUIComponents';
 import SanityStyledComponent from '@/components/Common/SanityStyledComponent';
@@ -23,10 +23,19 @@ const AboutSectionOne = () => {
   useEffect(() => {
     const fetchAbout = async () => {
       try {
-        const aboutData = await safeFetch(aboutQuery);
+        // Try to fetch active about section first
+        let aboutData = await safeFetch(aboutQuery);
+        
+        // If no active section found, try fallback
+        if (!aboutData) {
+          console.log('No active about section found, trying fallback...');
+          aboutData = await safeFetch(aboutFallbackQuery);
+        }
+        
         setAbout(aboutData);
       } catch (error) {
         console.error('Error fetching about data:', error);
+        setAbout(null);
       } finally {
         setLoading(false);
       }
@@ -65,15 +74,94 @@ const AboutSectionOne = () => {
 
   if (!about) {
     return (
-      <div className="text-center py-12">
-        <h3 className="text-xl font-semibold mb-4">About Section</h3>
-        <p className="text-gray-600 mb-6">Create your about section content in Sanity Studio to get started.</p>
-        <button 
-          onClick={() => window.location.href = '/studio'}
-          className="inline-block bg-primary text-white px-6 py-3 rounded hover:bg-primary/80 transition"
-        >
-          Go to Sanity Studio
-        </button>
+      <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-2">
+        {/* Left Column - Text Content */}
+        <div className="w-full px-4 lg:w-1/2">
+          <div className="wow fadeInUp" data-wow-delay=".2s">
+            <div className="mb-9">
+              <h3 className="mb-4 text-xl font-bold text-white sm:text-2xl lg:text-xl xl:text-2xl">
+                Chi Siamo
+              </h3>
+              <p className="text-base font-medium leading-relaxed text-white/80 sm:text-lg sm:leading-relaxed">
+                Siamo LEM Solutions, un'azienda specializzata nello sviluppo di soluzioni digitali innovative. 
+                Con anni di esperienza nel settore, aiutiamo le aziende a trasformare la loro presenza digitale 
+                e raggiungere i loro obiettivi di business attraverso tecnologie all'avanguardia.
+              </p>
+            </div>
+            
+            <div className="mb-9">
+              <h3 className="mb-4 text-xl font-bold text-white sm:text-2xl lg:text-xl xl:text-2xl">
+                La Nostra Missione
+              </h3>
+              <p className="text-base font-medium leading-relaxed text-white/80 sm:text-lg sm:leading-relaxed">
+                La nostra missione è quella di aiutare le aziende a crescere nel mondo digitale attraverso 
+                soluzioni innovative e personalizzate. Crediamo che ogni business abbia un potenziale unico 
+                che può essere espresso attraverso la tecnologia.
+              </p>
+            </div>
+
+            <div className="mb-9">
+              <h3 className="mb-4 text-xl font-bold text-white sm:text-2xl lg:text-xl xl:text-2xl">
+                I Nostri Valori
+              </h3>
+              <p className="text-base font-medium leading-relaxed text-white/80 sm:text-lg sm:leading-relaxed">
+                L'innovazione, la qualità e la trasparenza sono i pilastri su cui fondiamo il nostro lavoro. 
+                Ogni progetto è un'opportunità per superare le aspettative e creare valore duraturo per i nostri clienti.
+              </p>
+            </div>
+
+            {/* Features List */}
+            <div className="space-y-4">
+              <div className="flex items-center">
+                <span className="bg-blue-500/20 text-blue-400 mr-4 flex h-[30px] w-[30px] items-center justify-center rounded-md">
+                  ✓
+                </span>
+                <p className="text-white text-lg font-medium">
+                  Sviluppo Web Personalizzato
+                </p>
+              </div>
+              <div className="flex items-center">
+                <span className="bg-blue-500/20 text-blue-400 mr-4 flex h-[30px] w-[30px] items-center justify-center rounded-md">
+                  ✓
+                </span>
+                <p className="text-white text-lg font-medium">
+                  Design Responsive e Moderno
+                </p>
+              </div>
+              <div className="flex items-center">
+                <span className="bg-blue-500/20 text-blue-400 mr-4 flex h-[30px] w-[30px] items-center justify-center rounded-md">
+                  ✓
+                </span>
+                <p className="text-white text-lg font-medium">
+                  Consulenza IT Specializzata
+                </p>
+              </div>
+              <div className="flex items-center">
+                <span className="bg-blue-500/20 text-blue-400 mr-4 flex h-[30px] w-[30px] items-center justify-center rounded-md">
+                  ✓
+                </span>
+                <p className="text-white text-lg font-medium">
+                  Supporto Tecnico Completo
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column - Image */}
+        <div className="w-full px-4 lg:w-1/2">
+          <div className="wow fadeInUp" data-wow-delay=".4s">
+            <div className="relative mx-auto aspect-25/24 max-w-[500px] lg:mr-0">
+              <div className="w-full h-full bg-gradient-to-br from-blue-500/20 to-blue-600/30 rounded-lg flex items-center justify-center">
+                <div className="text-center p-8">
+                  <div className="text-6xl mb-4">💻</div>
+                  <h3 className="text-white text-xl font-bold mb-2">LEM Solutions</h3>
+                  <p className="text-white/80">Soluzioni Digitali Innovative</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
