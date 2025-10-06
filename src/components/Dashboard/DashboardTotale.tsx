@@ -970,8 +970,8 @@ export default function DashboardTotale() {
                         </div>
                       </div>
                     </div>
-                    {task.status !== 'completed' && (
-                      <div className="flex space-x-1">
+                    <div className="flex space-x-1">
+                      {task.status !== 'completed' ? (
                         <button
                           onClick={async () => {
                             try {
@@ -993,15 +993,16 @@ export default function DashboardTotale() {
                         >
                           <span className="text-sm">✓</span>
                         </button>
+                      ) : (
                         <button
                           onClick={() => deleteQuickTask(task.id)}
                           className="p-1.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex-shrink-0"
-                          title="Elimina task"
+                          title="Elimina task completata"
                         >
                           <span className="text-sm">🗑️</span>
                         </button>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
