@@ -16,5 +16,21 @@ import clientKnowledge from './clientArea/knowledge'
 import clientPromotion from './clientArea/promotion'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [post, blockContent, feature, testimonial, hero, about, contact, service, project, product, siteSettings, clientVideo, clientDocument, clientKnowledge, clientPromotion],
+  types: [
+    post, 
+    blockContent, 
+    feature, 
+    testimonial, 
+    hero, 
+    about, 
+    contact, 
+    service, 
+    project, 
+    product, 
+    siteSettings, 
+    clientVideo, 
+    clientDocument, 
+    clientKnowledge, 
+    clientPromotion
+  ],
 }
