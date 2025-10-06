@@ -246,58 +246,58 @@ const Footer = () => {
 
             <div className="w-full px-4 md:w-2/3 lg:w-4/12 xl:w-2/6">
               <div className="mb-12 lg:mb-16">
-                <h3 className="text-white mb-10 text-xl font-semibold">
+                <h3 className="text-white mb-8 text-xl font-semibold">
                   LEM Solutions S.N.C.
                 </h3>
                 
-                {/* Ragione Sociale */}
-                <div className="mb-6">
-                  <p className="text-gray-300 text-sm font-medium mb-2">
-                    Ragione sociale:
-                  </p>
-                  <p className="text-white text-base leading-relaxed">
-                    Lem Solutions S.N.C. di Morano Lino Carmine & Ferrario Massimiliano
-                  </p>
-                </div>
-
-                {/* P.IVA e C.U. */}
-                <div className="mb-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Informazioni Aziendali */}
+                <div className="space-y-4">
                   <div>
                     <p className="text-gray-300 text-sm font-medium mb-1">
-                      P.IVA:
+                      Ragione sociale
                     </p>
-                    <p className="text-white text-base">
-                      IT02961500135
+                    <p className="text-white text-sm leading-relaxed">
+                      Lem Solutions S.N.C. di Morano Lino Carmine & Ferrario Massimiliano
                     </p>
                   </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-gray-300 text-sm font-medium mb-1">
+                        P.IVA
+                      </p>
+                      <p className="text-white text-sm">
+                        IT02961500135
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-gray-300 text-sm font-medium mb-1">
+                        C.U.
+                      </p>
+                      <p className="text-white text-sm">
+                        M5UXCR1
+                      </p>
+                    </div>
+                  </div>
+
                   <div>
                     <p className="text-gray-300 text-sm font-medium mb-1">
-                      C.U.:
+                      Sede
                     </p>
-                    <p className="text-white text-base">
-                      M5UXCR1
+                    <p className="text-white text-sm leading-relaxed">
+                      Via Gondar 6<br />
+                      Monza (MB) 20900
                     </p>
                   </div>
-                </div>
-
-                {/* Indirizzo */}
-                <div className="mb-6">
-                  <p className="text-gray-300 text-sm font-medium mb-2">
-                    Sede:
-                  </p>
-                  <p className="text-white text-base leading-relaxed">
-                    Via Gondar 6<br />
-                    Monza (MB) 20900
-                  </p>
                 </div>
 
                 {/* Contatti */}
-                <div className="space-y-4">
+                <div className="mt-6 space-y-3">
                   <div className="flex items-center">
-                    <div className="bg-white/30 backdrop-blur/30 backdrop-blur/20 mr-4 flex h-10 w-10 items-center justify-center overflow-hidden rounded-full">
+                    <div className="bg-white/30 backdrop-blur/30 backdrop-blur/20 mr-3 flex h-8 w-8 items-center justify-center overflow-hidden rounded-full">
                       <svg
-                        width="16"
-                        height="16"
+                        width="14"
+                        height="14"
                         viewBox="0 0 16 16"
                         className="fill-current text-white"
                       >
@@ -307,11 +307,11 @@ const Footer = () => {
                     </div>
                     <div>
                       <p className="text-gray-300 text-sm font-medium mb-1">
-                        Email:
+                        Email
                       </p>
                       <a 
                         href="mailto:info@lemsolutions.it"
-                        className="text-white hover:text-orange-300 text-base transition duration-300"
+                        className="text-white hover:text-orange-300 text-sm transition duration-300"
                       >
                         info@lemsolutions.it
                       </a>
@@ -319,10 +319,10 @@ const Footer = () => {
                   </div>
 
                   <div className="flex items-center">
-                    <div className="bg-white/30 backdrop-blur/30 backdrop-blur/20 mr-4 flex h-10 w-10 items-center justify-center overflow-hidden rounded-full">
+                    <div className="bg-white/30 backdrop-blur/30 backdrop-blur/20 mr-3 flex h-8 w-8 items-center justify-center overflow-hidden rounded-full">
                       <svg
-                        width="16"
-                        height="16"
+                        width="14"
+                        height="14"
                         viewBox="0 0 16 16"
                         className="fill-current text-white"
                       >
@@ -331,11 +331,11 @@ const Footer = () => {
                     </div>
                     <div>
                       <p className="text-gray-300 text-sm font-medium mb-1">
-                        Telefono:
+                        Telefono
                       </p>
                       <a 
                         href="tel:+393474806300"
-                        className="text-white hover:text-orange-300 text-base transition duration-300"
+                        className="text-white hover:text-orange-300 text-sm transition duration-300"
                       >
                         +39 347 4806300
                       </a>
@@ -348,20 +348,20 @@ const Footer = () => {
         </div>
 
         {/* Mappa Google Maps */}
-        <div className="border-t border-gray-300/30 py-8">
+        <div className="border-t border-gray-300/30 py-6">
           <div className="container">
-            <div className="mb-8">
-              <h3 className="text-white text-xl font-semibold text-center mb-6">
-                📍 La Nostra Sede
+            <div className="mb-6">
+              <h3 className="text-white text-lg font-semibold text-center mb-4">
+                La Nostra Sede
               </h3>
-              <div className="max-w-4xl mx-auto">
+              <div className="max-w-3xl mx-auto">
                 <iframe 
                   src="https://www.google.com/maps?q=Via+Gondar+6,+Monza+(MB)+20900&output=embed" 
                   width="100%" 
-                  height="220" 
+                  height="200" 
                   style={{
                     border: 0,
-                    borderRadius: '12px',
+                    borderRadius: '8px',
                     boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)'
                   }}
                   loading="lazy" 
