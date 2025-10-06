@@ -337,6 +337,32 @@ export default function DashboardTotale() {
     }
   };
 
+  const deleteQuickTask = async (taskId: string) => {
+    if (!confirm('Sei sicuro di voler eliminare questa task veloce?')) {
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('quick_tasks')
+        .delete()
+        .eq('id', taskId);
+
+      if (error) {
+        console.error('Errore eliminazione quick task:', error);
+        alert('Errore nell\'eliminazione della task');
+        return;
+      }
+
+      // Ricarica i dati
+      loadQuickTasks();
+      alert('Task eliminata con successo!');
+    } catch (error) {
+      console.error('Errore eliminazione quick task:', error);
+      alert('Errore nell\'eliminazione della task');
+    }
+  };
+
   const loadProjects = async () => {
     try {
       const { data, error } = await supabase
@@ -866,14 +892,43 @@ export default function DashboardTotale() {
           {/* Quick Tasks Recenti */}
           {quickTasks.length > 0 && (
           <div className="bg-white/30 backdrop-blur/30 backdrop-blur rounded-xl shadow-lg border border-gray-100 p-1.5 sm:p-2 lg:p-4">
-            <div className="flex items-center mb-3 sm:mb-4">
-              <div className="p-1.5 sm:p-2 bg-green-100 rounded-lg mr-3 sm:mr-4">
-                <span className="text-base sm:text-lg">⚡</span>
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
+              <div className="flex items-center">
+                <div className="p-1.5 sm:p-2 bg-green-100 rounded-lg mr-3 sm:mr-4">
+                  <span className="text-base sm:text-lg">⚡</span>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <h2 className="text-base sm:text-lg font-bold text-gray-900">Task Veloci Recenti</h2>
+                  <p className="text-xs sm:text-sm text-gray-600">I tuoi task più recenti</p>
+                </div>
               </div>
-              <div className="min-w-0 flex-1">
-                <h2 className="text-base sm:text-lg font-bold text-gray-900">Task Veloci Recenti</h2>
-                <p className="text-xs sm:text-sm text-gray-600">I tuoi task più recenti</p>
-              </div>
+              {quickTasks.some(task => task.status === 'completed') && (
+                <button
+                  onClick={async () => {
+                    if (!confirm('Sei sicuro di voler eliminare tutte le task completate?')) {
+                      return;
+                    }
+                    try {
+                      const completedTasks = quickTasks.filter(task => task.status === 'completed');
+                      const { error } = await supabase
+                        .from('quick_tasks')
+                        .delete()
+                        .in('id', completedTasks.map(task => task.id));
+                      
+                      if (error) throw error;
+                      loadQuickTasks();
+                      alert(`${completedTasks.length} task completate eliminate!`);
+                    } catch (error) {
+                      console.error('Errore eliminazione task completate:', error);
+                      alert('Errore nell\'eliminazione delle task completate');
+                    }
+                  }}
+                  className="px-2 py-1 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors text-xs font-medium"
+                  title="Elimina task completate"
+                >
+                  🗑️ Pulizia
+                </button>
+              )}
             </div>
             
             <div className="space-y-2">
@@ -916,27 +971,36 @@ export default function DashboardTotale() {
                       </div>
                     </div>
                     {task.status !== 'completed' && (
-                      <button
-                        onClick={async () => {
-                          try {
-                            const { error } = await supabase
-                              .from('quick_tasks')
-                              .update({ status: 'completed', completed_at: new Date().toISOString() })
-                              .eq('id', task.id);
-                            
-                            if (error) throw error;
-                            loadQuickTasks();
-                            alert('Task completato!');
-                          } catch (error) {
-                            console.error('Errore completamento task:', error);
-                            alert('Errore nel completamento del task');
-                          }
-                        }}
-                        className="ml-3 p-1.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex-shrink-0"
-                        title="Completa task"
-                      >
-                        <span className="text-sm">✓</span>
-                      </button>
+                      <div className="flex space-x-1">
+                        <button
+                          onClick={async () => {
+                            try {
+                              const { error } = await supabase
+                                .from('quick_tasks')
+                                .update({ status: 'completed', completed_at: new Date().toISOString() })
+                                .eq('id', task.id);
+                              
+                              if (error) throw error;
+                              loadQuickTasks();
+                              alert('Task completato!');
+                            } catch (error) {
+                              console.error('Errore completamento task:', error);
+                              alert('Errore nel completamento del task');
+                            }
+                          }}
+                          className="p-1.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex-shrink-0"
+                          title="Completa task"
+                        >
+                          <span className="text-sm">✓</span>
+                        </button>
+                        <button
+                          onClick={() => deleteQuickTask(task.id)}
+                          className="p-1.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors flex-shrink-0"
+                          title="Elimina task"
+                        >
+                          <span className="text-sm">🗑️</span>
+                        </button>
+                      </div>
                     )}
                   </div>
                 </div>
