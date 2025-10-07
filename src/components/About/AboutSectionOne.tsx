@@ -23,18 +23,28 @@ const AboutSectionOne = () => {
   useEffect(() => {
     const fetchAbout = async () => {
       try {
+        console.log('🔍 AboutSectionOne: Starting to fetch About data...');
+        
         // Try to fetch active about section first
         let aboutData = await safeFetch(aboutQuery);
+        console.log('📊 AboutSectionOne: Active query result:', aboutData);
         
         // If no active section found, try fallback
         if (!aboutData) {
-          console.log('No active about section found, trying fallback...');
+          console.log('⚠️ AboutSectionOne: No active about section found, trying fallback...');
           aboutData = await safeFetch(aboutFallbackQuery);
+          console.log('📊 AboutSectionOne: Fallback query result:', aboutData);
         }
         
+        console.log('✅ AboutSectionOne: Final about data:', aboutData);
         setAbout(aboutData);
       } catch (error) {
-        console.error('Error fetching about data:', error);
+        console.error('❌ AboutSectionOne: Error fetching about data:', error);
+        console.error('❌ AboutSectionOne: Error details:', {
+          message: error.message,
+          statusCode: error.statusCode,
+          response: error.response
+        });
         setAbout(null);
       } finally {
         setLoading(false);

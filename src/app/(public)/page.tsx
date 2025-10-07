@@ -2,6 +2,7 @@
 
 import Hero from "@/components/Hero";
 import AboutSectionOne from "@/components/About/AboutSectionOne";
+import AboutDebug from "@/components/About/AboutDebug";
 
 import Testimonials from "@/components/Testimonials";
 import Blog from "@/components/Blog";
@@ -152,6 +153,10 @@ const HomePage = () => {
                 Scopri la nostra storia, i nostri valori e la passione che ci guida nel creare soluzioni digitali innovative.
               </p>
             </div>
+            
+            {/* Debug Component - Temporary */}
+            <AboutDebug />
+            
             <AboutSectionOne />
           </div>
         </section>
