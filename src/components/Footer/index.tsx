@@ -307,37 +307,25 @@ const Footer = () => {
               </div>
             </div>
             
-            {/* Legal Links */}
-            {siteSettings?.legal && (
-              <div className="mt-4 pt-4 border-t border-gray-300/30">
-                <div className="flex flex-wrap justify-center gap-6">
-                  {siteSettings.legal.privacyPolicy && (
-                    <Link
-                      href={`/legal/${siteSettings.legal.privacyPolicy.slug?.current || 'privacy-policy'}`}
-                      className="text-white hover:text-orange-300 text-sm transition duration-300"
-                    >
-                      {siteSettings.legal.privacyPolicy.title}
-                    </Link>
-                  )}
-                  {siteSettings.legal.termsOfService && (
-                    <Link
-                      href={`/legal/${siteSettings.legal.termsOfService.slug?.current || 'terms-of-service'}`}
-                      className="text-white hover:text-orange-300 text-sm transition duration-300"
-                    >
-                      {siteSettings.legal.termsOfService.title}
-                    </Link>
-                  )}
-                  {siteSettings.legal.cookiePolicy && (
-                    <Link
-                      href={`/legal/${siteSettings.legal.cookiePolicy.slug?.current || 'cookie-policy'}`}
-                      className="text-white hover:text-orange-300 text-sm transition duration-300"
-                    >
-                      {siteSettings.legal.cookiePolicy.title}
-                    </Link>
-                  )}
-                </div>
+            {/* Legal Links - Iubenda */}
+            <div className="mt-4 pt-4 border-t border-gray-300/30">
+              <div className="flex flex-wrap justify-center gap-6">
+                <a 
+                  href="https://www.iubenda.com/privacy-policy/43054480" 
+                  className="iubenda-nostyle iubenda-noiframe iubenda-embed text-white hover:text-orange-300 text-sm transition duration-300" 
+                  title="Privacy Policy"
+                >
+                  Privacy Policy
+                </a>
+                <a 
+                  href="https://www.iubenda.com/privacy-policy/43054480/cookie-policy" 
+                  className="iubenda-nostyle iubenda-noiframe iubenda-embed text-white hover:text-orange-300 text-sm transition duration-300" 
+                  title="Cookie Policy"
+                >
+                  Cookie Policy
+                </a>
               </div>
-            )}
+            </div>
           </div>
         </div>
       </footer>
