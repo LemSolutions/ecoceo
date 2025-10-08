@@ -18,19 +18,7 @@ const ProjectsPage = () => {
       <div className="text-white">
         <section className="py-16 lg:py-20">
           <div className="container">
-            <div className="text-center mb-16">
-              <h1 className="text-3xl font-bold text-white sm:text-4xl lg:text-5xl mb-4">
-                I Nostri Progetti
-              </h1>
-              <p className="text-white/80 text-lg max-w-2xl mx-auto">
-                Scopri i nostri lavori realizzati per clienti soddisfatti. Ogni progetto racconta una storia di successo e innovazione.
-              </p>
-            </div>
-            <Projects 
-              projects={[]}
-              title="Portfolio dei Nostri Lavori"
-              subtitle="Dai un'occhiata ai progetti che abbiamo realizzato per i nostri clienti"
-            />
+            <Projects />
           </div>
         </section>
       </div>

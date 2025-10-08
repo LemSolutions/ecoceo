@@ -1025,7 +1025,7 @@ export default function DashboardTotale() {
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-4">
-          <div className="bg-gradient-to-br from-red-50 to-rose-100 rounded-xl p-1.5 sm:p-2 lg:p-4 border border-red-200 hover:shadow-lg transition-all duration-200">
+          <div className="r from-red-50 to-rose-100 rounded-xl p-1.5 sm:p-2 lg:p-4 border border-red-200 hover:shadow-lg transition-all duration-200">
             <div className="flex items-center justify-between mb-4">
               <div className="p-3 bg-red-100 rounded-lg">
                 <span className="text-xl">🏠</span>
@@ -1045,7 +1045,7 @@ export default function DashboardTotale() {
             </div>
           </div>
           
-          <div className="bg-gradient-to-br from-orange-50 to-amber-100 rounded-xl p-1.5 sm:p-2 lg:p-4 border border-orange-200 hover:shadow-lg transition-all duration-200">
+          <div className="r from-orange-50 to-amber-100 rounded-xl p-1.5 sm:p-2 lg:p-4 border border-orange-200 hover:shadow-lg transition-all duration-200">
             <div className="flex items-center justify-between mb-4">
               <div className="p-3 bg-orange-100 rounded-lg">
                 <span className="text-xl">🛒</span>
@@ -1065,7 +1065,7 @@ export default function DashboardTotale() {
             </div>
           </div>
           
-          <div className="bg-gradient-to-br from-green-50 to-emerald-100 rounded-xl p-1.5 sm:p-2 lg:p-4 border border-green-200 hover:shadow-lg transition-all duration-200">
+          <div className="r from-green-50 to-emerald-100 rounded-xl p-1.5 sm:p-2 lg:p-4 border border-green-200 hover:shadow-lg transition-all duration-200">
             <div className="flex items-center justify-between mb-4">
               <div className="p-3 bg-green-100 rounded-lg">
                 <span className="text-xl">💳</span>
@@ -1085,7 +1085,7 @@ export default function DashboardTotale() {
             </div>
           </div>
           
-          <div className={`bg-gradient-to-br ${todayPayments.netFlow >= 0 ? 'from-emerald-50 to-emerald-100 border-emerald-200' : 'from-red-50 to-rose-100 border-red-200'} rounded-xl p-1.5 sm:p-2 lg:p-4 border hover:shadow-lg transition-all duration-200`}>
+          <div className={`r ${todayPayments.netFlow >= 0 ? 'from-emerald-50 to-emerald-100 border-emerald-200' : 'from-red-50 to-rose-100 border-red-200'} rounded-xl p-1.5 sm:p-2 lg:p-4 border hover:shadow-lg transition-all duration-200`}>
             <div className="flex items-center justify-between mb-4">
               <div className={`p-3 rounded-lg ${todayPayments.netFlow >= 0 ? 'bg-emerald-100' : 'bg-red-100'}`}>
                 <span className="text-xl">{todayPayments.netFlow >= 0 ? '💰' : '⚠️'}</span>

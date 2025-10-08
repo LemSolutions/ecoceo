@@ -25,7 +25,7 @@ const OrderSuccessContent = () => {
   return (
     <>
       {/* Breadcrumb Section - Gradiente da grigio scuro a bianco */}
-      <div className="bg-gradient-to-b from-gray-800 via-gray-400 to-white text-black">
+      <div className=" from-gray-800 via-gray-400 to-white text-black">
         <Breadcrumb
           pageName="Ordine Completato"
           description="Grazie per il tuo acquisto!"
@@ -33,7 +33,7 @@ const OrderSuccessContent = () => {
       </div>
 
       {/* Success Content - Gradiente da bianco ad arancione intenso */}
-      <div className="bg-gradient-to-b from-white via-blue-100 to-blue-400 text-black">
+      <div className=" from-white via-blue-100 to-blue-400 text-black">
         <section className="py-16 lg:py-20">
           <div className="container">
             <div className="max-w-2xl mx-auto text-center">

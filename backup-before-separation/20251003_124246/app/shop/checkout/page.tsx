@@ -77,14 +77,14 @@ const CheckoutPage = () => {
   if (state.items.length === 0) {
     return (
       <>
-        <div className="bg-gradient-to-b from-gray-800 via-gray-400 to-white text-black">
+        <div className=" from-gray-800 via-gray-400 to-white text-black">
           <Breadcrumb
             pageName="Checkout"
             description="Il tuo carrello è vuoto"
           />
         </div>
 
-        <div className="bg-gradient-to-b from-white via-orange-100 to-orange-400 text-black">
+        <div className=" from-white via-orange-100 to-orange-400 text-black">
           <section className="py-16 lg:py-20">
             <div className="container">
               <div className="text-center py-12">
@@ -111,7 +111,7 @@ const CheckoutPage = () => {
   return (
     <>
       {/* Breadcrumb Section */}
-      <div className="bg-gradient-to-b from-gray-800 via-gray-400 to-white text-black">
+      <div className=" from-gray-800 via-gray-400 to-white text-black">
         <Breadcrumb
           pageName="Checkout"
           description="Completa il tuo ordine"
@@ -119,7 +119,7 @@ const CheckoutPage = () => {
       </div>
 
       {/* Checkout Content */}
-      <div className="bg-gradient-to-b from-white via-orange-100 to-orange-400 text-black">
+      <div className=" from-white via-orange-100 to-orange-400 text-black">
         <section className="py-16 lg:py-20">
           <div className="container">
             <div className="max-w-6xl mx-auto">

@@ -65,7 +65,7 @@ const ProjectDetailsPage = () => {
   return (
     <>
       {/* Breadcrumb Section - Gradiente da grigio scuro a bianco */}
-      <div className="bg-gradient-to-b from-gray-800 via-gray-400 to-white text-black">
+      <div className=" from-gray-800 via-gray-400 to-white text-black">
         <Breadcrumb
           pageName={getTextValue(project.title)}
           description="Dettagli del progetto"
@@ -73,7 +73,7 @@ const ProjectDetailsPage = () => {
       </div>
 
       {/* Project Details Content - Gradiente da bianco ad arancione intenso */}
-      <div className="bg-gradient-to-b from-white via-blue-100 to-blue-400 text-black">
+      <div className=" from-white via-blue-100 to-blue-400 text-black">
         <section className="pt-[150px] pb-[120px]">
           <div className="container">
             <div className="-mx-4 flex flex-wrap justify-center">
@@ -94,14 +94,16 @@ const ProjectDetailsPage = () => {
                     className="border-body-color/10 mb-10 flex flex-wrap items-center justify-between border-b pb-4 dark:border-white/10"
                   >
                     <div className="flex flex-wrap items-center">
-                      <div className="mr-10 mb-5 flex items-center">
-                        <Link
-                          href={`/services/${project.service.slug.current}`}
-                          className="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
-                        >
-                          {getTextValue(project.service.name)}
-                        </Link>
-                      </div>
+                      {project.service && (
+                        <div className="mr-10 mb-5 flex items-center">
+                          <Link
+                            href={`/services/${project.service.slug.current}`}
+                            className="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
+                          >
+                            {getTextValue(project.service.name)}
+                          </Link>
+                        </div>
+                      )}
                       {project.client && (
                         <div className="mr-10 mb-5 flex items-center">
                           <div className="w-full">
@@ -250,17 +252,19 @@ const ProjectDetailsPage = () => {
                         )}
                       </div>
                     </div>
-                    <div className="mb-5">
-                      <Link
-                        href={`/services/${project.service.slug.current}/projects`}
-                        className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors"
-                      >
-                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                        </svg>
-                        Altri progetti di {getTextValue(project.service.name)}
-                      </Link>
-                    </div>
+                    {project.service && (
+                      <div className="mb-5">
+                        <Link
+                          href={`/services/${project.service.slug.current}/projects`}
+                          className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+                        >
+                          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                          </svg>
+                          Altri progetti di {getTextValue(project.service.name)}
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

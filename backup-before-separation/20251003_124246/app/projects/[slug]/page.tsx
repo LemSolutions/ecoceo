@@ -65,7 +65,7 @@ const ProjectDetailsPage = () => {
   return (
     <>
       {/* Breadcrumb Section - Gradiente da grigio scuro a bianco */}
-      <div className="bg-gradient-to-b from-gray-800 via-gray-400 to-white text-black">
+      <div className=" from-gray-800 via-gray-400 to-white text-black">
         <Breadcrumb
           pageName={getTextValue(project.title)}
           description="Dettagli del progetto"
@@ -73,7 +73,7 @@ const ProjectDetailsPage = () => {
       </div>
 
       {/* Project Details Content - Gradiente da bianco ad arancione intenso */}
-      <div className="bg-gradient-to-b from-white via-orange-100 to-orange-400 text-black">
+      <div className=" from-white via-orange-100 to-orange-400 text-black">
         <section className="pt-[150px] pb-[120px]">
           <div className="container">
             <div className="-mx-4 flex flex-wrap justify-center">

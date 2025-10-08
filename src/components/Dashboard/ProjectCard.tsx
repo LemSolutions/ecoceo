@@ -40,7 +40,7 @@ export default function ProjectCard({ project, services, onEdit, onDelete }: Pro
       <div className="p-8">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-lg">
+            <div className="w-12 h-12 r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-lg">
               {project.name.charAt(0).toUpperCase()}
             </div>
             <div>

@@ -82,7 +82,7 @@ const OrderPage = async ({ params }: OrderPageProps) => {
   return (
     <>
       {/* Breadcrumb Section - Gradiente da grigio scuro a bianco */}
-      <div className="bg-gradient-to-b from-gray-800 via-gray-400 to-white text-black">
+      <div className=" from-gray-800 via-gray-400 to-white text-black">
         <Breadcrumb
           pageName={`Ordine #${order.orderNumber}`}
           description="Dettagli del tuo ordine"
@@ -90,7 +90,7 @@ const OrderPage = async ({ params }: OrderPageProps) => {
       </div>
 
       {/* Order Content - Gradiente da bianco ad arancione intenso */}
-      <div className="bg-gradient-to-b from-white via-blue-100 to-blue-400 text-black">
+      <div className=" from-white via-blue-100 to-blue-400 text-black">
         <section className="py-16 lg:py-20">
           <div className="container">
             <div className="max-w-4xl mx-auto">

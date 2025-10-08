@@ -655,7 +655,7 @@ export default function ProductionLineSimulation() {
 
   if (!isLoaded) {
     return (
-      <div className="w-full h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-800 flex items-center justify-center">
+      <div className="w-full h-screen r from-gray-900 via-blue-900 to-gray-800 flex items-center justify-center">
         <div className="text-white text-2xl font-bold animate-pulse">
           Caricamento simulazione catena di produzione...
         </div>
@@ -664,7 +664,7 @@ export default function ProductionLineSimulation() {
   }
 
   return (
-    <div className="w-full h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-800 relative overflow-hidden">
+    <div className="w-full h-screen r from-gray-900 via-blue-900 to-gray-800 relative overflow-hidden">
       <Canvas
         camera={{ position: [15, 10, 15], fov: 75 }}
         style={{ background: 'transparent' }}

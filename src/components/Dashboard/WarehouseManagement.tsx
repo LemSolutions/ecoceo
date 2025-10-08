@@ -118,7 +118,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Immagine Prodotto - Responsive Ottimizzato */}
-      <div className="relative h-32 sm:h-40 lg:h-56 xl:h-64 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center overflow-hidden">
+      <div className="relative h-32 sm:h-40 lg:h-56 xl:h-64 r from-gray-100 to-gray-200 flex items-center justify-center overflow-hidden">
         {item.imageUrl ? (
           <img 
             src={item.imageUrl} 

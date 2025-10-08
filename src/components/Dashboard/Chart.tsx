@@ -17,7 +17,7 @@ export default function Chart({ type, data }: ChartProps) {
     switch (type) {
       case 'line':
         return (
-          <div className="h-64 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg flex items-center justify-center">
+          <div className="h-64 r from-blue-50 to-indigo-50 rounded-lg flex items-center justify-center">
             <div className="text-center">
               <div className="text-4xl mb-2">📈</div>
               <p className="text-gray-600 font-medium">Grafico Lineare</p>
@@ -27,7 +27,7 @@ export default function Chart({ type, data }: ChartProps) {
         );
       case 'bar':
         return (
-          <div className="h-64 bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg flex items-center justify-center">
+          <div className="h-64 r from-green-50 to-emerald-50 rounded-lg flex items-center justify-center">
             <div className="text-center">
               <div className="text-4xl mb-2">📊</div>
               <p className="text-gray-600 font-medium">Grafico a Barre</p>
@@ -37,7 +37,7 @@ export default function Chart({ type, data }: ChartProps) {
         );
       case 'doughnut':
         return (
-          <div className="h-64 bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg flex items-center justify-center">
+          <div className="h-64 r from-purple-50 to-pink-50 rounded-lg flex items-center justify-center">
             <div className="text-center">
               <div className="text-4xl mb-2">🥧</div>
               <p className="text-gray-600 font-medium">Grafico a Torta</p>

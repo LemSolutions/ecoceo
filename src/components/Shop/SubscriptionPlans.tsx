@@ -112,7 +112,7 @@ const SubscriptionPlans = () => {
   };
 
   return (
-    <div className="py-16 bg-gradient-to-b from-white via-blue-100 to-blue-400">
+    <div className="py-16  from-white via-blue-100 to-blue-400">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">

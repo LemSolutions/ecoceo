@@ -68,9 +68,9 @@ export const testimonialsQuery = groq`
 export const servicesQuery = groq`
   *[_type == "service" && isActive == true] | order(order asc) {
     _id,
-    name,
+    "name": title,
     slug,
-    shortDescription,
+    "shortDescription": description,
     fullDescription,
     icon,
     image,
@@ -89,10 +89,12 @@ export const servicesQuery = groq`
 export const navbarServicesQuery = groq`
   *[_type == "service" && isActive == true && showInNavbar == true] | order(order asc) {
     _id,
-    name,
+    "name": title,
     slug,
-    shortDescription,
-    url
+    "shortDescription": description,
+    url,
+    isActive,
+    showInNavbar
   }
 `
 
@@ -100,9 +102,9 @@ export const navbarServicesQuery = groq`
 export const homepageServicesQuery = groq`
   *[_type == "service" && isActive == true && showInHomepage == true] | order(order asc) {
     _id,
-    name,
+    "name": title,
     slug,
-    shortDescription,
+    "shortDescription": description,
     icon,
     image,
     features,
@@ -114,9 +116,9 @@ export const homepageServicesQuery = groq`
 export const serviceBySlugQuery = groq`
   *[_type == "service" && slug.current == $slug][0] {
     _id,
-    name,
+    "name": title,
     slug,
-    shortDescription,
+    "shortDescription": description,
     fullDescription,
     icon,
     image,
@@ -166,6 +168,21 @@ export const aboutFallbackQuery = groq`
   }
 `
 
+// Query to get all about posts for the about page
+export const allAboutPostsQuery = groq`
+  *[_type == "about"] | order(_createdAt desc) {
+    _id,
+    title,
+    subtitle,
+    description,
+    image,
+    features,
+    stats,
+    isActive,
+    _createdAt
+  }
+`
+
 
 
 // Query to get the active contact section
@@ -204,9 +221,9 @@ export const siteSettingsQuery = groq`
 export const projectsQuery = groq`
   *[_type == "project" && isActive == true] | order(order asc) {
     _id,
-    title,
+    "title": name,
     slug,
-    shortDescription,
+    "shortDescription": description,
     mainImage,
     client,
     completionDate,
@@ -216,7 +233,7 @@ export const projectsQuery = groq`
     featured,
     service->{
       _id,
-      name,
+      "name": title,
       slug
     }
   }
@@ -226,9 +243,9 @@ export const projectsQuery = groq`
 export const projectsByServiceQuery = groq`
   *[_type == "project" && isActive == true && service->slug.current == $serviceSlug] | order(order asc) {
     _id,
-    title,
+    "title": name,
     slug,
-    shortDescription,
+    "shortDescription": description,
     mainImage,
     client,
     completionDate,
@@ -238,7 +255,7 @@ export const projectsByServiceQuery = groq`
     featured,
     service->{
       _id,
-      name,
+      "name": title,
       slug
     }
   }
@@ -248,9 +265,9 @@ export const projectsByServiceQuery = groq`
 export const featuredProjectsQuery = groq`
   *[_type == "project" && isActive == true && featured == true] | order(order asc) {
     _id,
-    title,
+    "title": name,
     slug,
-    shortDescription,
+    "shortDescription": description,
     mainImage,
     client,
     completionDate,
@@ -259,7 +276,7 @@ export const featuredProjectsQuery = groq`
     githubUrl,
     service->{
       _id,
-      name,
+      "name": title,
       slug
     }
   }
@@ -269,9 +286,9 @@ export const featuredProjectsQuery = groq`
 export const projectBySlugQuery = groq`
   *[_type == "project" && slug.current == $slug][0] {
     _id,
-    title,
+    "title": name,
     slug,
-    shortDescription,
+    "shortDescription": description,
     fullDescription,
     mainImage,
     gallery,
@@ -283,9 +300,9 @@ export const projectBySlugQuery = groq`
     featured,
     service->{
       _id,
-      name,
+      "name": title,
       slug,
-      shortDescription
+      "shortDescription": description
     }
   }
 `
@@ -352,9 +369,9 @@ export const productBySlugQuery = groq`
 export const dashboardServicesQuery = groq`
   *[_type == "service" && isActive == true] | order(order asc) {
     _id,
-    name,
+    "name": title,
     slug,
-    shortDescription,
+    "shortDescription": description,
     icon,
     order,
     isActive,
@@ -371,16 +388,16 @@ export const dashboardServicesQuery = groq`
 export const dashboardProjectsQuery = groq`
   *[_type == "project" && isActive == true] | order(order asc) {
     _id,
-    title,
+    "title": name,
     slug,
-    shortDescription,
+    "shortDescription": description,
     client,
     completionDate,
     technologies,
     featured,
     service->{
       _id,
-      name,
+      "name": title,
       slug
     },
     // Campi per dati finanziari (da aggiungere allo schema se necessario)
@@ -398,16 +415,16 @@ export const dashboardProjectsQuery = groq`
 export const dashboardProjectsByServiceQuery = groq`
   *[_type == "project" && isActive == true && service->slug.current == $serviceSlug] | order(order asc) {
     _id,
-    title,
+    "title": name,
     slug,
-    shortDescription,
+    "shortDescription": description,
     client,
     completionDate,
     technologies,
     featured,
     service->{
       _id,
-      name,
+      "name": title,
       slug
     },
     "budget": coalesce(budget, 0),

@@ -32,7 +32,7 @@ const CartPage = () => {
     return (
       <>
         {/* Breadcrumb Section - Gradiente da grigio scuro a bianco */}
-        <div className="bg-gradient-to-b from-gray-800 via-gray-400 to-white text-black">
+        <div className=" from-gray-800 via-gray-400 to-white text-black">
           <Breadcrumb
             pageName="Carrello"
             description="Il tuo carrello è vuoto"
@@ -40,7 +40,7 @@ const CartPage = () => {
         </div>
 
         {/* Empty Cart Content - Gradiente da bianco ad arancione intenso */}
-        <div className="bg-gradient-to-b from-white via-blue-100 to-blue-400 text-black">
+        <div className=" from-white via-blue-100 to-blue-400 text-black">
           <section className="py-16 lg:py-20">
             <div className="container">
               <div className="text-center py-12">
@@ -75,7 +75,7 @@ const CartPage = () => {
   return (
     <>
       {/* Breadcrumb Section - Gradiente da grigio scuro a bianco */}
-      <div className="bg-gradient-to-b from-gray-800 via-gray-400 to-white text-black">
+      <div className=" from-gray-800 via-gray-400 to-white text-black">
         <Breadcrumb
           pageName="Carrello"
           description={`${state.itemCount} articoli nel carrello`}
@@ -83,7 +83,7 @@ const CartPage = () => {
       </div>
 
       {/* Cart Content - Gradiente da bianco ad arancione intenso */}
-      <div className="bg-gradient-to-b from-white via-blue-100 to-blue-400 text-black">
+      <div className=" from-white via-blue-100 to-blue-400 text-black">
         <section className="py-16 lg:py-20">
           <div className="container">
             <div className="max-w-6xl mx-auto">

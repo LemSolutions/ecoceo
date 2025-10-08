@@ -44,14 +44,16 @@ const SingleProject = ({ project, index }: ProjectCardProps) => {
           </Link>
           
           <div className="p-6 sm:p-8 md:px-6 md:py-8 lg:p-8 xl:px-5 xl:py-8 2xl:p-8">
-            <div className="mb-4">
-              <Link
-                href={`/services/${project.service.slug.current}`}
-                className="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium hover:bg-gray-200 transition-colors"
-              >
-                {project.service.name}
-              </Link>
-            </div>
+            {project.service && (
+              <div className="mb-4">
+                <Link
+                  href={`/services/${project.service.slug.current}`}
+                  className="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium hover:bg-gray-200 transition-colors"
+                >
+                  {project.service.name}
+                </Link>
+              </div>
+            )}
             
             <SanityStyledComponent
               component={projectTitleComponent}

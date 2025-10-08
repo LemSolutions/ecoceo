@@ -1489,7 +1489,7 @@ export default function BusinessPlanManagement() {
             { stage: 'Purchase', description: 'Effettua l\'acquisto', touchpoints: ['Checkout', 'Payment', 'Confirmation'] },
             { stage: 'Retention', description: 'Diventa cliente fedele', touchpoints: ['Support', 'Upsell', 'Community'] }
           ].map((stage, index) => (
-            <div key={index} className="bg-gradient-to-br from-blue-50 to-indigo-100 p-4 rounded-lg">
+            <div key={index} className="r from-blue-50 to-indigo-100 p-4 rounded-lg">
               <h4 className="font-semibold text-gray-900 mb-2">{stage.stage}</h4>
               <p className="text-sm text-gray-600 mb-3">{stage.description}</p>
               <div className="space-y-1">
@@ -2003,7 +2003,7 @@ export default function BusinessPlanManagement() {
         {/* Diagramma di Flusso */}
         <div className="mb-8">
           <h4 className="text-md font-medium text-gray-800 mb-4">Diagramma di Flusso Operativo</h4>
-          <div className="bg-gradient-to-br from-blue-50 to-indigo-100 p-6 rounded-lg">
+          <div className="r from-blue-50 to-indigo-100 p-6 rounded-lg">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-white/30 backdrop-blur/30 backdrop-blur p-4 rounded-lg shadow-sm text-center">
                 <div className="text-2xl mb-2">📥</div>

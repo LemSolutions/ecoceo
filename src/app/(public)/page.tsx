@@ -1,9 +1,6 @@
 "use client";
 
 import Hero from "@/components/Hero";
-import AboutSectionOne from "@/components/About/AboutSectionOne";
-import AboutDebug from "@/components/About/AboutDebug";
-
 import Testimonials from "@/components/Testimonials";
 import Blog from "@/components/Blog";
 import Contact from "@/components/Contact";
@@ -140,28 +137,6 @@ const HomePage = () => {
           </div>
         </section>
       </div>
-
-      {/* About Section */}
-      <div className="text-white">
-        <section className="py-16 lg:py-20">
-          <div className="container">
-            <div className="text-center mb-16">
-              <h2 className="text-white mb-4 text-3xl font-bold sm:text-4xl lg:text-5xl">
-                Chi Siamo
-              </h2>
-              <p className="text-white/80 text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
-                Scopri la nostra storia, i nostri valori e la passione che ci guida nel creare soluzioni digitali innovative.
-              </p>
-            </div>
-            
-            {/* Debug Component - Temporary */}
-            <AboutDebug />
-            
-            <AboutSectionOne />
-          </div>
-        </section>
-      </div>
-
 
 
       {/* Testimonials Section */}

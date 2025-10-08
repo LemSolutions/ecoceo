@@ -23,28 +23,18 @@ const AboutSectionOne = () => {
   useEffect(() => {
     const fetchAbout = async () => {
       try {
-        console.log('🔍 AboutSectionOne: Starting to fetch About data...');
-        
         // Try to fetch active about section first
         let aboutData = await safeFetch(aboutQuery);
-        console.log('📊 AboutSectionOne: Active query result:', aboutData);
         
         // If no active section found, try fallback
         if (!aboutData) {
-          console.log('⚠️ AboutSectionOne: No active about section found, trying fallback...');
+          console.log('No active about section found, trying fallback...');
           aboutData = await safeFetch(aboutFallbackQuery);
-          console.log('📊 AboutSectionOne: Fallback query result:', aboutData);
         }
         
-        console.log('✅ AboutSectionOne: Final about data:', aboutData);
         setAbout(aboutData);
       } catch (error) {
-        console.error('❌ AboutSectionOne: Error fetching about data:', error);
-        console.error('❌ AboutSectionOne: Error details:', {
-          message: error.message,
-          statusCode: error.statusCode,
-          response: error.response
-        });
+        console.error('Error fetching about data:', error);
         setAbout(null);
       } finally {
         setLoading(false);
@@ -82,98 +72,9 @@ const AboutSectionOne = () => {
     );
   }
 
+  // Se non ci sono dati da Sanity, non mostrare nulla
   if (!about) {
-    return (
-      <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-2">
-        {/* Left Column - Text Content */}
-        <div className="w-full px-4 lg:w-1/2">
-          <div className="wow fadeInUp" data-wow-delay=".2s">
-            <div className="mb-9">
-              <h3 className="mb-4 text-xl font-bold text-white sm:text-2xl lg:text-xl xl:text-2xl">
-                Chi Siamo
-              </h3>
-              <p className="text-base font-medium leading-relaxed text-white/80 sm:text-lg sm:leading-relaxed">
-                Siamo LEM Solutions, un'azienda specializzata nello sviluppo di soluzioni digitali innovative. 
-                Con anni di esperienza nel settore, aiutiamo le aziende a trasformare la loro presenza digitale 
-                e raggiungere i loro obiettivi di business attraverso tecnologie all'avanguardia.
-              </p>
-            </div>
-            
-            <div className="mb-9">
-              <h3 className="mb-4 text-xl font-bold text-white sm:text-2xl lg:text-xl xl:text-2xl">
-                La Nostra Missione
-              </h3>
-              <p className="text-base font-medium leading-relaxed text-white/80 sm:text-lg sm:leading-relaxed">
-                La nostra missione è quella di aiutare le aziende a crescere nel mondo digitale attraverso 
-                soluzioni innovative e personalizzate. Crediamo che ogni business abbia un potenziale unico 
-                che può essere espresso attraverso la tecnologia.
-              </p>
-            </div>
-
-            <div className="mb-9">
-              <h3 className="mb-4 text-xl font-bold text-white sm:text-2xl lg:text-xl xl:text-2xl">
-                I Nostri Valori
-              </h3>
-              <p className="text-base font-medium leading-relaxed text-white/80 sm:text-lg sm:leading-relaxed">
-                L'innovazione, la qualità e la trasparenza sono i pilastri su cui fondiamo il nostro lavoro. 
-                Ogni progetto è un'opportunità per superare le aspettative e creare valore duraturo per i nostri clienti.
-              </p>
-            </div>
-
-            {/* Features List */}
-            <div className="space-y-4">
-              <div className="flex items-center">
-                <span className="bg-blue-500/20 text-blue-400 mr-4 flex h-[30px] w-[30px] items-center justify-center rounded-md">
-                  ✓
-                </span>
-                <p className="text-white text-lg font-medium">
-                  Sviluppo Web Personalizzato
-                </p>
-              </div>
-              <div className="flex items-center">
-                <span className="bg-blue-500/20 text-blue-400 mr-4 flex h-[30px] w-[30px] items-center justify-center rounded-md">
-                  ✓
-                </span>
-                <p className="text-white text-lg font-medium">
-                  Design Responsive e Moderno
-                </p>
-              </div>
-              <div className="flex items-center">
-                <span className="bg-blue-500/20 text-blue-400 mr-4 flex h-[30px] w-[30px] items-center justify-center rounded-md">
-                  ✓
-                </span>
-                <p className="text-white text-lg font-medium">
-                  Consulenza IT Specializzata
-                </p>
-              </div>
-              <div className="flex items-center">
-                <span className="bg-blue-500/20 text-blue-400 mr-4 flex h-[30px] w-[30px] items-center justify-center rounded-md">
-                  ✓
-                </span>
-                <p className="text-white text-lg font-medium">
-                  Supporto Tecnico Completo
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Right Column - Image */}
-        <div className="w-full px-4 lg:w-1/2">
-          <div className="wow fadeInUp" data-wow-delay=".4s">
-            <div className="relative mx-auto aspect-25/24 max-w-[500px] lg:mr-0">
-              <div className="w-full h-full bg-gradient-to-br from-blue-500/20 to-blue-600/30 rounded-lg flex items-center justify-center">
-                <div className="text-center p-8">
-                  <div className="text-6xl mb-4">💻</div>
-                  <h3 className="text-white text-xl font-bold mb-2">LEM Solutions</h3>
-                  <p className="text-white/80">Soluzioni Digitali Innovative</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+    return null;
   }
 
   return (

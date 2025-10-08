@@ -22,11 +22,18 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'service',
+      title: 'Servizio Principale',
+      type: 'reference',
+      to: [{ type: 'service' }],
+      description: 'Servizio principale associato a questo progetto',
+    }),
+    defineField({
       name: 'assignedServices',
       title: 'Servizi Assegnati',
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'service' }] }],
-      description: 'Servizi assegnati a questo progetto',
+      description: 'Altri servizi assegnati a questo progetto',
     }),
     defineField({
       name: 'description',

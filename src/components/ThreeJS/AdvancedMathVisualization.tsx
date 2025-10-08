@@ -414,7 +414,7 @@ export default function AdvancedMathVisualization() {
 
   if (!isLoaded) {
     return (
-      <div className="w-full h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center">
+      <div className="w-full h-screen r from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center">
         <div className="text-white text-2xl font-bold animate-pulse">
           Caricamento visualizzazione matematica avanzata...
         </div>
@@ -423,7 +423,7 @@ export default function AdvancedMathVisualization() {
   }
 
   return (
-    <div className="w-full h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 relative overflow-hidden">
+    <div className="w-full h-screen r from-purple-900 via-blue-900 to-indigo-900 relative overflow-hidden">
       <Canvas
         camera={{ position: [8, 6, 8], fov: 75 }}
         style={{ background: 'transparent' }}

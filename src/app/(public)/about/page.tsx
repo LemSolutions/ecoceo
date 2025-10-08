@@ -1,8 +1,7 @@
 "use client";
 
 import Breadcrumb from "@/components/Common/Breadcrumb";
-import AboutSectionOne from "@/components/About/AboutSectionOne";
-import AboutSectionTwo from "@/components/About/AboutSectionTwo";
+import AllAboutPosts from "@/components/About/AllAboutPosts";
 
 const AboutPage = () => {
   return (
@@ -15,23 +14,15 @@ const AboutPage = () => {
         />
       </div>
 
-      {/* About Section One */}
+      {/* All About Posts from Sanity */}
       <div className="text-white">
         <section className="py-16 lg:py-20">
           <div className="container">
-            <AboutSectionOne />
+            <AllAboutPosts />
           </div>
         </section>
       </div>
 
-      {/* About Section Two */}
-      <div className="text-white">
-        <section className="py-16 lg:py-20">
-          <div className="container">
-            <AboutSectionTwo />
-          </div>
-        </section>
-      </div>
     </>
   );
 };

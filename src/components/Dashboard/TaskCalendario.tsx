@@ -145,7 +145,7 @@ export default function TaskCalendario() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 shadow-lg border border-blue-200">
+        <div className="r from-blue-50 to-blue-100 rounded-xl p-6 shadow-lg border border-blue-200">
           <div className="flex items-center">
             <div className="p-3 bg-blue-500 rounded-lg mr-4">
               <span className="text-white text-xl">📋</span>
@@ -161,7 +161,7 @@ export default function TaskCalendario() {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 shadow-lg border border-green-200">
+        <div className="r from-green-50 to-green-100 rounded-xl p-6 shadow-lg border border-green-200">
           <div className="flex items-center">
             <div className="p-3 bg-green-500 rounded-lg mr-4">
               <span className="text-white text-xl">✅</span>
@@ -177,7 +177,7 @@ export default function TaskCalendario() {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-xl p-6 shadow-lg border border-yellow-200">
+        <div className="r from-yellow-50 to-yellow-100 rounded-xl p-6 shadow-lg border border-yellow-200">
           <div className="flex items-center">
             <div className="p-3 bg-yellow-500 rounded-lg mr-4">
               <span className="text-white text-xl">🔄</span>
@@ -193,7 +193,7 @@ export default function TaskCalendario() {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-6 shadow-lg border border-red-200">
+        <div className="r from-red-50 to-red-100 rounded-xl p-6 shadow-lg border border-red-200">
           <div className="flex items-center">
             <div className="p-3 bg-red-500 rounded-lg mr-4">
               <span className="text-white text-xl">⏰</span>

@@ -32,10 +32,29 @@ const Header = ({ siteSettings }: HeaderProps) => {
     const fetchServices = async () => {
       try {
         const servicesData = await safeFetch(navbarServicesQuery);
-        setServices(servicesData || []);
+        console.log('Services fetched:', servicesData);
+        
+        // If no services from Sanity, use fallback services
+        if (!servicesData || servicesData.length === 0) {
+          console.log('No services from Sanity, using fallback');
+          setServices([
+            { _id: 'fallback-1', name: 'Web Design', slug: { current: 'web-design' } },
+            { _id: 'fallback-2', name: 'Sviluppo Web', slug: { current: 'sviluppo-web' } },
+            { _id: 'fallback-3', name: 'E-commerce', slug: { current: 'e-commerce' } },
+            { _id: 'fallback-4', name: 'Consulenza IT', slug: { current: 'consulenza-it' } }
+          ]);
+        } else {
+          setServices(servicesData);
+        }
       } catch (error) {
         console.error('Error fetching services:', error);
-        setServices([]);
+        // Use fallback services on error
+        setServices([
+          { _id: 'fallback-1', name: 'Web Design', slug: { current: 'web-design' } },
+          { _id: 'fallback-2', name: 'Sviluppo Web', slug: { current: 'sviluppo-web' } },
+          { _id: 'fallback-3', name: 'E-commerce', slug: { current: 'e-commerce' } },
+          { _id: 'fallback-4', name: 'Consulenza IT', slug: { current: 'consulenza-it' } }
+        ]);
       }
     };
 
@@ -166,26 +185,29 @@ const Header = ({ siteSettings }: HeaderProps) => {
                           </button>
                           {/* Dropdown Menu */}
                           <div
-                            className={`absolute left-0 mt-2 w-64 rounded-md bg-white/30 backdrop-blur/30 backdrop-blur shadow-lg ring-1 ring-black ring-opacity-5 transition-all duration-200 lg:block ${
+                            className={`absolute left-0 mt-2 w-64 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition-all duration-200 lg:block ${
                               isServicesDropdownOpen ? "opacity-100 visible" : "opacity-0 invisible"
                             }`}
                             onMouseEnter={() => setIsServicesDropdownOpen(true)}
                             onMouseLeave={() => setIsServicesDropdownOpen(false)}
+                            style={{ backgroundColor: '#ffffff' }}
                           >
                             <div className="py-1">
                               <Link
                                 href="/services"
-                                className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-150 border-b border-gray-100"
+                                className="block px-4 py-3 text-sm hover:bg-blue-50 transition-colors duration-150 border-b border-gray-200"
+                                style={{ color: '#1f2937' }}
                               >
-                                <div className="font-medium text-dark dark:text-white">Tutti i Servizi</div>
+                                <div className="font-medium" style={{ color: '#111827' }}>Tutti i Servizi</div>
                               </Link>
                               {services.map((service, index) => (
                                 <Link
                                   key={service._id || index}
                                   href={service.url || `/services/${service.slug?.current}`}
-                                  className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-150"
+                                  className="block px-4 py-3 text-sm hover:bg-blue-50 transition-colors duration-150"
+                                  style={{ color: '#1f2937' }}
                                 >
-                                  <div className="font-medium text-dark dark:text-white">{service.name}</div>
+                                  <div className="font-medium" style={{ color: '#111827' }}>{service.name}</div>
                                 </Link>
                               ))}
                             </div>

@@ -71,7 +71,7 @@ const ServiceProjectsPage = () => {
   return (
     <>
       {/* Breadcrumb Section - Gradiente da grigio scuro a bianco */}
-      <div className="bg-gradient-to-b from-gray-800 via-gray-400 to-white text-black">
+      <div className=" from-gray-800 via-gray-400 to-white text-black">
         <Breadcrumb
           pageName={`Progetti - ${getTextValue(service.name)}`}
           description={`Scopri i progetti realizzati per il servizio ${getTextValue(service.name)}`}
@@ -79,7 +79,7 @@ const ServiceProjectsPage = () => {
       </div>
 
       {/* Service Projects Content - Gradiente da bianco ad arancione intenso */}
-      <div className="bg-gradient-to-b from-white via-blue-100 to-blue-400 text-black">
+      <div className=" from-white via-blue-100 to-blue-400 text-black">
         <section className="py-16 lg:py-20">
           <div className="container">
             <div className="text-center mb-16">

@@ -1,0 +1,187 @@
+/* Sanity Studio Custom Styles for Better Visibility - Dark Theme */
+
+/* Global text visibility - White text on dark background */
+* {
+  color: #ffffff !important;
+}
+
+/* Ensure all text elements are visible */
+div, span, p, h1, h2, h3, h4, h5, h6, label, input, textarea, select, button {
+  color: #ffffff !important;
+}
+
+/* Input fields */
+input, textarea, select {
+  color: #ffffff !important;
+  background-color: #374151 !important;
+  border: 1px solid #6b7280 !important;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3) !important;
+}
+
+/* Placeholder text */
+input::placeholder, textarea::placeholder {
+  color: #d1d5db !important;
+}
+
+/* Buttons */
+button {
+  color: #ffffff !important;
+  background-color: #3b82f6 !important;
+  border: 1px solid #3b82f6 !important;
+}
+
+button:hover {
+  background-color: #2563eb !important;
+  border-color: #2563eb !important;
+}
+
+/* Links */
+a {
+  color: #60a5fa !important;
+}
+
+a:hover {
+  color: #93c5fd !important;
+}
+
+/* Background colors for better contrast - Dark theme */
+body, html {
+  background-color: #111827 !important;
+  color: #ffffff !important;
+}
+
+/* Ensure Sanity Studio specific elements are visible - Dark theme */
+[data-ui="Card"] {
+  color: #ffffff !important;
+  background-color: #1f2937 !important;
+  border: 1px solid #374151 !important;
+}
+
+[data-ui="Text"] {
+  color: #ffffff !important;
+}
+
+[data-ui="Label"] {
+  color: #e5e7eb !important;
+}
+
+[data-ui="Fieldset"] {
+  color: #e5e7eb !important;
+}
+
+[data-ui="Heading"] {
+  color: #ffffff !important;
+}
+
+[data-ui="Main"] {
+  background-color: #111827 !important;
+}
+
+/* Navigation and sidebar */
+[data-ui="Navbar"] {
+  background-color: #1f2937 !important;
+  border-bottom: 1px solid #374151 !important;
+}
+
+[data-ui="Sidebar"] {
+  background-color: #1f2937 !important;
+  border-right: 1px solid #374151 !important;
+}
+
+/* Override any transparent or invisible elements */
+*[style*="transparent"], *[style*="rgba(0,0,0,0)"] {
+  color: #ffffff !important;
+}
+
+/* Force visibility for Sanity Studio components */
+.sanity-studio * {
+  color: #ffffff !important;
+}
+
+/* Additional dark theme overrides */
+[data-ui="Button"][data-tone="default"] {
+  background-color: #374151 !important;
+  color: #ffffff !important;
+  border-color: #4b5563 !important;
+}
+
+[data-ui="Button"][data-tone="primary"] {
+  background-color: #3b82f6 !important;
+  color: #ffffff !important;
+  border-color: #3b82f6 !important;
+}
+
+[data-ui="Button"][data-tone="positive"] {
+  background-color: #10b981 !important;
+  color: #ffffff !important;
+  border-color: #10b981 !important;
+}
+
+[data-ui="Button"][data-tone="caution"] {
+  background-color: #f59e0b !important;
+  color: #ffffff !important;
+  border-color: #f59e0b !important;
+}
+
+[data-ui="Button"][data-tone="critical"] {
+  background-color: #ef4444 !important;
+  color: #ffffff !important;
+  border-color: #ef4444 !important;
+}
+
+/* Menu and dropdown styling */
+[data-ui="Menu"] {
+  background-color: #1f2937 !important;
+  border: 1px solid #374151 !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2) !important;
+}
+
+[data-ui="Menu"] [data-ui="MenuItem"] {
+  color: #ffffff !important;
+}
+
+[data-ui="Menu"] [data-ui="MenuItem"]:hover {
+  background-color: #374151 !important;
+}
+
+/* Tooltip styling */
+[data-ui="Tooltip"] {
+  background-color: #1f2937 !important;
+  color: #ffffff !important;
+  border: 1px solid #374151 !important;
+}
+
+/* Alert styling */
+[data-ui="Alert"] {
+  background-color: #1f2937 !important;
+  border: 1px solid #374151 !important;
+  color: #ffffff !important;
+}
+
+[data-ui="Alert"][data-tone="positive"] {
+  background-color: #064e3b !important;
+  border-color: #065f46 !important;
+  color: #10b981 !important;
+}
+
+[data-ui="Alert"][data-tone="caution"] {
+  background-color: #78350f !important;
+  border-color: #92400e !important;
+  color: #fbbf24 !important;
+}
+
+[data-ui="Alert"][data-tone="critical"] {
+  background-color: #7f1d1d !important;
+  border-color: #991b1b !important;
+  color: #f87171 !important;
+}
+
+[data-ui="Alert"][data-tone="info"] {
+  background-color: #1e3a8a !important;
+  border-color: #1e40af !important;
+  color: #60a5fa !important;
+}
