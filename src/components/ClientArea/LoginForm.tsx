@@ -65,8 +65,25 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
           </div>
 
           {error && (
-            <div className="bg-red-100 border border-red-300 text-red-700 px-4 py-3 rounded-lg text-sm">
-              {error}
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+              <div className="flex items-center mb-2">
+                <span className="text-red-500 mr-2">❌</span>
+                <span className="text-red-700 text-sm font-medium">{error}</span>
+              </div>
+              <div className="mt-3 pt-3 border-t border-red-200">
+                <p className="text-sm text-red-600 mb-2">
+                  Non hai accesso? Richiedi le credenziali a:
+                </p>
+                <a 
+                  href="mailto:commerciale@lemsolutions.it?subject=Richiesta accesso Area Clienti"
+                  className="inline-flex items-center text-sm font-medium text-red-700 hover:text-red-800 transition-colors"
+                >
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                  commerciale@lemsolutions.it
+                </a>
+              </div>
             </div>
           )}
 
