@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from 'next/dynamic';
+import Script from 'next/script';
 import { Inter } from "next/font/google";
 import { Providers } from "./providers";
 import { CartProvider } from "@/contexts/CartContext";
@@ -58,28 +59,6 @@ export default function RootLayout({
           <meta name="description" content={siteSettings.description} />
         )}
 
-        {/* Iubenda Script */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function (w,d) {
-                var loader = function () {
-                  var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0];
-                  s.src="https://cdn.iubenda.com/iubenda.js";
-                  tag.parentNode.insertBefore(s,tag);
-                };
-                if(w.addEventListener){
-                  w.addEventListener("load", loader, false);
-                }else if(w.attachEvent){
-                  w.attachEvent("onload", loader);
-                }else{
-                  w.onload = loader;
-                }
-              })(window, document);
-            `,
-          }}
-        />
-
         <style dangerouslySetInnerHTML={{ __html: `
           @keyframes gradientMove {
             0% {
@@ -132,6 +111,13 @@ export default function RootLayout({
             </AnalyticsProvider>
           </CartProvider>
         </Providers>
+        
+        {/* Iubenda Script - caricato dopo il rendering */}
+        <Script
+          id="iubenda-script"
+          src="https://cdn.iubenda.com/iubenda.js"
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   );
