@@ -53,9 +53,9 @@ const SingleProduct = ({ product, index }: ProductCardProps) => {
       className="w-full"
     >
       <div className="wow fadeInUp" data-wow-delay={`${index * 100}ms`}>
-        <div className="group relative overflow-hidden rounded-sm bg-white/30 backdrop-blur/30 backdrop-blurshadow-one duration-300 hover:shadow-two dark:bg-dark dark:hover:shadow-gray-dark">
+        <div className="group relative overflow-hidden rounded-lg bg-white/30 backdrop-blur/30 backdrop-blur shadow-lg duration-300 hover:shadow-xl dark:bg-dark dark:hover:shadow-gray-dark">
           <Link href={`/shop/${product.slug?.current || product._id}`}>
-            <div className="relative block aspect-[37/22] overflow-hidden">
+            <div className="relative block aspect-[4/3] overflow-hidden">
               {product.mainImage ? (
                 <img
                   src={getImageUrl(product.mainImage)}
@@ -89,7 +89,7 @@ const SingleProduct = ({ product, index }: ProductCardProps) => {
             </div>
           </Link>
           
-          <div className="p-6 sm:p-8 md:px-6 md:py-8 lg:p-8 xl:px-5 xl:py-8 2xl:p-8">
+          <div className="p-8 sm:p-10 md:p-8 lg:p-10 xl:p-8 2xl:p-10">
             <div className="mb-4">
               <span className="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">
                 {product.category}

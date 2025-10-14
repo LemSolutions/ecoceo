@@ -74,32 +74,16 @@ const Shop = ({ products: initialProducts, title, subtitle }: ProductGridProps) 
       componentName="ShopSection"
     >
       <div className="container">
-        {(title || subtitle) && (
-          <div className="text-center mb-16">
-            {title && (
-              <SanityStyledComponent
-                component={shopTitleComponent}
-                componentName="ShopTitle"
-                as="h2"
-                className="text-3xl font-bold text-black sm:text-4xl lg:text-5xl mb-4"
-              >
-                {title}
-              </SanityStyledComponent>
-            )}
-            {subtitle && (
-              <SanityStyledComponent
-                component={shopSubtitleComponent}
-                componentName="ShopSubtitle"
-                as="p"
-                className="text-black/80 text-lg max-w-2xl mx-auto"
-              >
-                {subtitle}
-              </SanityStyledComponent>
-            )}
-          </div>
-        )}
+        <div className="text-center mb-16">
+          <h2 className="text-3xl font-bold text-white sm:text-4xl lg:text-5xl mb-4">
+            I Nostri Prodotti
+          </h2>
+          <p className="text-white/80 text-lg max-w-2xl mx-auto">
+            Scegli tra la nostra selezione di prodotti di alta qualità
+          </p>
+        </div>
         
-        <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
           {products.map((product, index) => (
             <SingleProduct key={product._id} product={product} index={index} />
           ))}
