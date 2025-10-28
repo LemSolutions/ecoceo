@@ -139,7 +139,7 @@ const OrderReview = ({ customer, shippingAddress, cartItems, orderSummary, onEdi
             <span className="font-medium">{formatPrice(orderSummary.subtotal)}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-gray-600">Spese di spedizione:</span>
+            <span className="text-gray-600">Spese di imballo:</span>
             <span className="font-medium">{formatPrice(orderSummary.shippingCost)}</span>
           </div>
           <div className="border-t pt-3">

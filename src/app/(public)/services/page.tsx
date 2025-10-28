@@ -78,7 +78,7 @@ const ServicesPage = () => {
                 I Nostri Servizi
               </h1>
               <p className="text-white/80 text-lg max-w-2xl mx-auto">
-                Soluzioni complete e personalizzate per trasformare la tua presenza digitale e raggiungere i tuoi obiettivi di business.
+                Servizi per ottenere un prodotto perfetto.
               </p>
             </div>
 

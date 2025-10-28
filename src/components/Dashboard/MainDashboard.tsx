@@ -27,6 +27,9 @@ import EnvironmentSetup from './EnvironmentSetup';
 import DashboardDataTest from './DashboardDataTest';
 import DashboardDataFixer from './DashboardDataFixer';
 import MathRoboticsDemo from '../ThreeJS/MathRoboticsDemo';
+import StripeTest from '../Test/StripeTest';
+import DynamicShippingTest from '../Test/DynamicShippingTest';
+import StripeProductTest from '../Test/StripeProductTest';
 
 export default function MainDashboard() {
   const [activeSection, setActiveSection] = useState('dashboard');
@@ -174,6 +177,24 @@ export default function MainDashboard() {
       title: 'Matematica & Robotica',
       icon: '🤖',
       description: 'Funzioni matematiche e applicazioni robotiche'
+    },
+    'stripe-test': {
+      component: StripeTest,
+      title: 'Test Stripe',
+      icon: '💳',
+      description: 'Test sistema pagamenti Stripe'
+    },
+    'shipping-test': {
+      component: DynamicShippingTest,
+      title: 'Test Spedizioni',
+      icon: '🚚',
+      description: 'Test calcolo dinamico spedizioni'
+    },
+    'stripe-products': {
+      component: StripeProductTest,
+      title: 'Prodotti Stripe',
+      icon: '🛍️',
+      description: 'Gestione prodotti da Stripe'
     }
   };
 

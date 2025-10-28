@@ -821,3 +821,33 @@ body {
 .bg-gradient-white-yellow {
   background: linear-gradient(135deg, #ffffff 0%, #fef3c7 100%);
 }
+
+/* Dynamic gradient background with green */
+.dynamic-gradient-bg {
+  background-image: 
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0),
+    linear-gradient(135deg, #ffffff 0%, #3b82f6 20%, #ffffff 40%, #ef4444 60%, #ffffff 80%, #10b981 100%);
+  background-size: 20px 20px, 200% 200%;
+  background-position: 0 0, 0% 0%;
+  background-attachment: fixed;
+  min-height: 100vh;
+  animation: gradientMove 25s ease-in-out infinite;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0 0, 0% 0%;
+  }
+  25% {
+    background-position: 0 0, 50% 50%;
+  }
+  50% {
+    background-position: 0 0, 100% 100%;
+  }
+  75% {
+    background-position: 0 0, 50% 50%;
+  }
+  100% {
+    background-position: 0 0, 0% 0%;
+  }
+}

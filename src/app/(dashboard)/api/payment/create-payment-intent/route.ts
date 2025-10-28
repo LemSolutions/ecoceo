@@ -1,21 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
-import Stripe from 'stripe';
-
-// Initialize Stripe only if API key is available
-let stripe: Stripe | null = null;
-
-if (process.env.STRIPE_SECRET_KEY) {
-  stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-    apiVersion: '2025-07-30.basil',
-  });
-}
+import { getStripeInstance, validateStripeConfig, eurosToCents } from '@/lib/stripe';
 
 export async function POST(request: NextRequest) {
-  // Check if Stripe is configured
+  // Validate Stripe configuration
+  const configValidation = validateStripeConfig();
+  if (!configValidation.isValid) {
+    return NextResponse.json(
+      { error: 'Stripe not configured', details: configValidation.errors },
+      { status: 503 }
+    );
+  }
+
+  const stripe = getStripeInstance();
   if (!stripe) {
     return NextResponse.json(
-      { error: 'Stripe not configured' },
-      { status: 503 }
+      { error: 'Failed to initialize Stripe' },
+      { status: 500 }
     );
   }
 
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
 
     // Create a PaymentIntent with the order amount and currency
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: Math.round(amount * 100), // Convert to cents
+      amount: eurosToCents(amount), // Convert to cents using helper
       currency,
       automatic_payment_methods: {
         enabled: true,

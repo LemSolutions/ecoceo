@@ -10,7 +10,7 @@ const BlogPage = () => {
       <div>
         <Breadcrumb
           pageName="Il Nostro Blog"
-          description="Articoli, guide e insights dal mondo del web design e dello sviluppo digitale. Scopri le ultime novità e tendenze del settore."
+          description="Scopri il mondo della stampa digitale su ceramica  Scopri le ultime novità e tendenze del settore."
         />
       </div>
 
@@ -23,9 +23,8 @@ const BlogPage = () => {
                 Il Nostro Blog
               </h1>
               <p className="text-black/80 text-lg max-w-3xl mx-auto leading-relaxed">
-                Articoli, guide e insights dal mondo del web design e dello sviluppo digitale. 
-                Scopri le ultime novità, tendenze del settore e consigli pratici per migliorare 
-                la tua presenza online.
+                Scopri il mondo della stampa digitale su ceramica  
+      
               </p>
             </div>
             <Blog />

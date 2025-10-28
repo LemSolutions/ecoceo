@@ -10,7 +10,7 @@ const AboutPage = () => {
       <div className="text-white">
         <Breadcrumb
           pageName="Chi Siamo"
-          description="Scopri la nostra storia, i nostri valori e la passione che ci guida nel creare soluzioni digitali innovative per il tuo business."
+          description="Scopri la nostra realtà."
         />
       </div>
 

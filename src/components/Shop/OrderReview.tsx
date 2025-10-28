@@ -1,8 +1,7 @@
 "use client";
 
 import { Customer, ShippingAddress, OrderSummary } from '@/types/order';
-import { CartItem } from '@/types/product';
-import { getImageUrl, getTextValue } from '@/sanity/lib/image';
+import { CartItem } from '@/types/stripeProduct';
 
 interface OrderReviewProps {
   customer: Customer;
@@ -82,15 +81,15 @@ const OrderReview = ({ customer, shippingAddress, cartItems, orderSummary, onEdi
         </div>
         <div className="space-y-4">
           {cartItems.map((item) => (
-            <div key={item.product._id} className="flex items-center gap-4 p-3 border border-gray-100 rounded-lg">
+            <div key={item.product.id} className="flex items-center gap-4 p-3 border border-gray-100 rounded-lg">
               <img
-                src={getImageUrl(item.product.mainImage)}
-                alt={getTextValue(item.product.title)}
+                src={item.product.images && item.product.images.length > 0 ? item.product.images[0] : '/placeholder-product.jpg'}
+                alt={item.product.name}
                 className="w-16 h-16 object-cover rounded-lg"
               />
               <div className="flex-1">
                 <h4 className="font-medium text-black">
-                  {getTextValue(item.product.title)}
+                  {item.product.name}
                 </h4>
                 <p className="text-sm text-gray-600">
                   Quantità: {item.quantity}
@@ -98,7 +97,7 @@ const OrderReview = ({ customer, shippingAddress, cartItems, orderSummary, onEdi
               </div>
               <div className="text-right">
                 <p className="font-medium">
-                  {formatPrice(item.product.price * item.quantity)}
+                  {formatPrice((item.product.price.unit_amount / 100) * item.quantity)}
                 </p>
               </div>
             </div>
@@ -139,7 +138,7 @@ const OrderReview = ({ customer, shippingAddress, cartItems, orderSummary, onEdi
             <span className="font-medium">{formatPrice(orderSummary.subtotal)}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-gray-600">Spese di spedizione:</span>
+            <span className="text-gray-600">Spese di imballo:</span>
             <span className="font-medium">{formatPrice(orderSummary.shippingCost)}</span>
           </div>
           <div className="border-t pt-3">

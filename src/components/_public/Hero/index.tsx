@@ -163,13 +163,9 @@ const Hero = () => {
                     />
                   ) : (
                     <div className="relative mx-auto max-w-[500px] lg:mr-0">
-                      <Image
-                        src="/images/hero/hero-image.svg"
-                        alt="Hero Image"
-                        width={600}
-                        height={600}
-                        className="mx-auto max-w-full lg:mr-0"
-                      />
+                      <div className="w-[600px] h-[600px] bg-gradient-to-br from-primary/20 to-primary/40 rounded-lg flex items-center justify-center">
+                        <span className="text-primary text-2xl font-bold">Hero Image</span>
+                      </div>
                     </div>
                   )}
                 </div>

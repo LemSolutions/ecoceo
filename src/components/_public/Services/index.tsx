@@ -71,8 +71,20 @@ const Services = () => {
           <div className="wow fadeInUp" data-wow-delay={`${index * 100}ms`}>
             <div className="group relative overflow-hidden rounded-sm bg-white/30 backdrop-blur/30 backdrop-blurshadow-one duration-300 hover:shadow-two dark:bg-dark dark:hover:shadow-gray-dark">
               <div className="p-8">
-                <div className="mb-6 flex h-[70px] w-[70px] items-center justify-center rounded-md bg-primary bg-opacity-10 text-4xl">
-                  {service.icon || "💼"}
+                <div className="mb-6 flex h-[70px] w-[70px] items-center justify-center rounded-md overflow-hidden">
+                  {service.image ? (
+                    <Image
+                      src={getImageUrl(service.image)}
+                      alt={getTextValue(service.name)}
+                      width={70}
+                      height={70}
+                      className="object-cover w-full h-full"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-primary bg-opacity-10 flex items-center justify-center text-4xl">
+                      {service.icon || "💼"}
+                    </div>
+                  )}
                 </div>
                 
                 <SanityStyledComponent

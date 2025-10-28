@@ -41,7 +41,7 @@ const HomePage = () => {
                 I Nostri Servizi
               </h2>
               <p className="text-white/80 text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
-                Soluzioni complete e personalizzate per trasformare la tua presenza digitale e raggiungere i tuoi obiettivi di business.
+                Servizi per ottenere un prodotto perfetto.
               </p>
             </div>
             <Services />
@@ -165,7 +165,7 @@ const HomePage = () => {
                 Il Nostro Blog
               </h2>
               <p className="text-white/80 text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
-                Articoli, guide e insights dal mondo del web design e dello sviluppo digitale.
+              Scopri il mondo della stampa digitale su ceramica
               </p>
             </div>
             <Blog />
@@ -182,7 +182,7 @@ const HomePage = () => {
                 Contattaci
               </h2>
               <p className="text-white/80 text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
-                Siamo qui per aiutarti a realizzare i tuoi progetti digitali. Contattaci per una consulenza gratuita.
+                Siamo qui per aiutarti a realizzare i tuoi progetti di stampa digitale su  ceramica  Contattaci per una consulenza gratuita.
               </p>
             </div>
             <Contact />

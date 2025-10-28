@@ -63,7 +63,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
           <div className="relative -mx-4 flex items-center justify-between">
             <div className="w-72 max-w-full px-4 xl:mr-12">
               <Link href="/" className="header-logo block w-full py-3 group">
-                {siteSettings?.logo ? (
+                {siteSettings?.logo && (
                   <Image
                     src={getImageUrl(siteSettings.logo)}
                     alt="logo"
@@ -71,16 +71,8 @@ const Header = ({ siteSettings }: HeaderProps) => {
                     height={40}
                     className="w-full dark:hidden transition-all duration-300 group-hover:scale-105 group-hover:drop-shadow-lg"
                   />
-                ) : (
-                  <Image
-                    src="/images/logo/logo-2.svg"
-                    alt="logo"
-                    width={180}
-                    height={40}
-                    className="w-full dark:hidden transition-all duration-300 group-hover:scale-105 group-hover:drop-shadow-lg"
-                  />
                 )}
-                {siteSettings?.logoDark ? (
+                {siteSettings?.logoDark && (
                   <Image
                     src={getImageUrl(siteSettings.logoDark)}
                     alt="logo"
@@ -88,14 +80,11 @@ const Header = ({ siteSettings }: HeaderProps) => {
                     height={40}
                     className="hidden w-full dark:block transition-all duration-300 group-hover:scale-105 group-hover:drop-shadow-lg"
                   />
-                ) : (
-                  <Image
-                    src="/images/logo/logo.svg"
-                    alt="logo"
-                    width={180}
-                    height={40}
-                    className="hidden w-full dark:block transition-all duration-300 group-hover:scale-105 group-hover:drop-shadow-lg"
-                  />
+                )}
+                {!siteSettings?.logo && !siteSettings?.logoDark && (
+                  <div className="w-[180px] h-[40px] bg-primary rounded flex items-center justify-center">
+                    <span className="text-white font-bold text-lg">LOGO</span>
+                  </div>
                 )}
               </Link>
             </div>

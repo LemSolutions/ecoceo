@@ -5,13 +5,9 @@ const AboutSectionTwo = () => {
     <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-2">
       <div className="wow fadeInUp" data-wow-delay=".2s">
         <div className="relative mx-auto max-w-[500px] lg:mr-0">
-          <Image
-            src="/images/about/about-image-2.svg"
-            alt="about-image"
-            width={500}
-            height={400}
-            className="mx-auto max-w-full lg:mr-0"
-          />
+          <div className="w-[500px] h-[400px] bg-gradient-to-br from-primary/20 to-primary/40 rounded-lg flex items-center justify-center">
+            <span className="text-primary text-xl font-bold">About Image</span>
+          </div>
         </div>
       </div>
       

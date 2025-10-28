@@ -2,8 +2,11 @@
 
 import Breadcrumb from "@/components/Common/Breadcrumb";
 import Shop from "@/components/Shop";
+import { useStripeProducts } from "@/hooks/useStripeProducts";
 
 const ShopPage = () => {
+  const { products, loading, error } = useStripeProducts();
+
   return (
     <>
       {/* Breadcrumb Section */}
@@ -19,7 +22,9 @@ const ShopPage = () => {
         <section className="py-16 lg:py-20">
           <div className="container">
             <Shop 
-              products={[]}
+              products={products}
+              loading={loading}
+              error={error}
             />
           </div>
         </section>

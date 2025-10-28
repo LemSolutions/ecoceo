@@ -35,7 +35,7 @@ const Footer = () => {
             <div className="w-full px-4 md:w-1/2 lg:w-4/12 xl:w-5/12">
               <div className="mb-12 max-w-[360px] lg:mb-16">
                 <Link href="/" className="mb-8 inline-block">
-                  {siteSettings?.logo ? (
+                  {siteSettings?.logo && (
                     <Image
                       src={getImageUrl(siteSettings.logo)}
                       alt="logo"
@@ -43,16 +43,8 @@ const Footer = () => {
                       height={30}
                       className="w-full dark:hidden"
                     />
-                  ) : (
-                    <Image
-                      src="/images/logo/logo-2.svg"
-                      alt="logo"
-                      width={140}
-                      height={30}
-                      className="w-full dark:hidden"
-                    />
                   )}
-                  {siteSettings?.logoDark ? (
+                  {siteSettings?.logoDark && (
                     <Image
                       src={getImageUrl(siteSettings.logoDark)}
                       alt="logo"
@@ -60,14 +52,11 @@ const Footer = () => {
                       height={30}
                       className="hidden w-full dark:block"
                     />
-                  ) : (
-                    <Image
-                      src="/images/logo/logo.svg"
-                      alt="logo"
-                      width={140}
-                      height={30}
-                      className="hidden w-full dark:block"
-                    />
+                  )}
+                  {!siteSettings?.logo && !siteSettings?.logoDark && (
+                    <div className="w-[140px] h-[30px] bg-primary rounded flex items-center justify-center">
+                      <span className="text-white font-bold text-sm">LOGO</span>
+                    </div>
                   )}
                 </Link>
                 <p className="text-white mb-9 text-base font-medium leading-relaxed">

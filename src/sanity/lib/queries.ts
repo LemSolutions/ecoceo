@@ -318,6 +318,8 @@ export const productsQuery = groq`
     price,
     comparePrice,
     stock,
+    weight,
+    dimensions,
     featured,
     category
   }
@@ -336,6 +338,8 @@ export const featuredProductsQuery = groq`
     price,
     comparePrice,
     stock,
+    weight,
+    dimensions,
     category
   }
 `

@@ -11,6 +11,12 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { client } from '@/sanity/lib/client';
 import { siteSettingsQuery } from '@/sanity/lib/queries';
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+import '@/lib/fontawesome';
+
+// Tell Font Awesome to skip adding the CSS automatically since it's already imported above
+config.autoAddCss = false;
 
 
 // Lazy load components
@@ -59,19 +65,6 @@ export default function RootLayout({
           <meta name="description" content={siteSettings.description} />
         )}
 
-        <style dangerouslySetInnerHTML={{ __html: `
-          @keyframes gradientMove {
-            0% {
-              background-position: 0 0, 0% 0%;
-            }
-            50% {
-              background-position: 0 0, 100% 100%;
-            }
-            100% {
-              background-position: 0 0, 0% 0%;
-            }
-          }
-        `}} />
         {/* Load Google Fonts based on typography settings */}
         {siteSettings?.typography?.headingFont && (
           <link
@@ -85,20 +78,25 @@ export default function RootLayout({
             rel="stylesheet"
           />
         )}
+        
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-5JF0637T6F"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-5JF0637T6F');
+          `}
+        </Script>
       </head>
       <body 
-        className={`${inter.className}`}
+        className={`${inter.className} dynamic-gradient-bg`}
         style={{
-          fontFamily: siteSettings?.typography?.bodyFont || 'Inter',
-          backgroundImage: `
-            radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0),
-            linear-gradient(135deg, #ffffff 0%, #3b82f6 25%, #ffffff 50%, #ef4444 75%, #ffffff 100%)
-          `,
-          backgroundSize: '20px 20px, 200% 200%',
-          backgroundPosition: '0 0, 0% 0%',
-          backgroundAttachment: 'fixed',
-          minHeight: '100vh',
-          animation: 'gradientMove 25s ease-in-out infinite'
+          fontFamily: siteSettings?.typography?.bodyFont || 'Inter'
         }}
       >
         <Providers>
