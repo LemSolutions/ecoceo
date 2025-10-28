@@ -57,8 +57,12 @@ const SimpleStripeCheckout = ({ customerEmail, onSuccess, onError }: SimpleStrip
 
       if (responseData.url) {
         console.log('Redirecting to Stripe URL:', responseData.url);
-        // Use window.location for direct redirect
-        window.location.href = responseData.url;
+        // Ensure we're not in an iframe and redirect to top level
+        if (window.top !== window.self) {
+          window.top.location.href = responseData.url;
+        } else {
+          window.location.href = responseData.url;
+        }
       } else if (responseData.sessionId) {
         // Fallback: use Stripe.js redirect
         const { loadStripe } = await import('@stripe/stripe-js');

@@ -8,6 +8,25 @@ const nextConfig = {
   // Compressione e ottimizzazioni
   compress: true,
   
+  // Headers per fixare i problemi di permissions policy
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Permissions-Policy',
+            value: 'payment=*'
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN'
+          }
+        ],
+      },
+    ];
+  },
+  
   // Disabilita temporaneamente alcune regole ESLint per il build
   eslint: {
     ignoreDuringBuilds: true,
