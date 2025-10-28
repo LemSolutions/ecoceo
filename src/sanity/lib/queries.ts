@@ -307,65 +307,6 @@ export const projectBySlugQuery = groq`
   }
 `
 
-// Query to get all active products ordered by order
-export const productsQuery = groq`
-  *[_type == "product" && isActive == true] | order(order asc) {
-    _id,
-    title,
-    slug,
-    shortDescription,
-    mainImage,
-    price,
-    comparePrice,
-    stock,
-    weight,
-    dimensions,
-    featured,
-    category
-  }
-`
-
-
-
-// Query to get featured products
-export const featuredProductsQuery = groq`
-  *[_type == "product" && isActive == true && featured == true] | order(order asc) {
-    _id,
-    title,
-    slug,
-    shortDescription,
-    mainImage,
-    price,
-    comparePrice,
-    stock,
-    weight,
-    dimensions,
-    category
-  }
-`
-
-// Query to get a single product by slug
-export const productBySlugQuery = groq`
-  *[_type == "product" && slug.current == $slug][0] {
-    _id,
-    title,
-    slug,
-    shortDescription,
-    fullDescription,
-    mainImage,
-    gallery,
-    price,
-    comparePrice,
-    sku,
-    stock,
-    weight,
-    dimensions,
-    features,
-    tags,
-    featured,
-    category
-  }
-`
 
 // ===== DASHBOARD QUERIES =====
 

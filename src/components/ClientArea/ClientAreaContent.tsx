@@ -54,7 +54,7 @@ const ClientAreaContent: React.FC = () => {
   const tabs = [
     {
       id: 'overview',
-      label: '🏠 Area Clienti',
+      label: 'Area Clienti',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
@@ -64,7 +64,7 @@ const ClientAreaContent: React.FC = () => {
     },
     {
       id: 'videos',
-      label: '🎥 Area Video',
+      label: 'Area Video',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
@@ -74,7 +74,7 @@ const ClientAreaContent: React.FC = () => {
     },
     {
       id: 'documents',
-      label: '📄 Area Documenti',
+      label: 'Area Documenti',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
@@ -84,7 +84,7 @@ const ClientAreaContent: React.FC = () => {
     },
     {
       id: 'knowledge',
-      label: '📚 Area Conoscenza',
+      label: 'Area Conoscenza',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
@@ -94,7 +94,7 @@ const ClientAreaContent: React.FC = () => {
     },
     {
       id: 'promotions',
-      label: '🎁 Area Promozioni',
+      label: 'Area Promozioni',
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
@@ -126,7 +126,7 @@ const ClientAreaContent: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">🏠 Area Clienti</h1>
+              <h1 className="text-2xl font-bold text-gray-900">Area Clienti</h1>
               <p className="text-gray-600">Contenuti esclusivi e risorse per i nostri clienti</p>
             </div>
             <button
@@ -197,7 +197,7 @@ const OverviewTab: React.FC<{ stats: ClientAreaStats | null }> = ({ stats }) => 
               </svg>
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">🎥 Video</p>
+              <p className="text-sm font-medium text-gray-600">Video</p>
               <p className="text-2xl font-bold text-gray-900">{stats?.totalVideos || 0}</p>
             </div>
           </div>
@@ -211,7 +211,7 @@ const OverviewTab: React.FC<{ stats: ClientAreaStats | null }> = ({ stats }) => 
               </svg>
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">📄 Documenti</p>
+              <p className="text-sm font-medium text-gray-600">Documenti</p>
               <p className="text-2xl font-bold text-gray-900">{stats?.totalDocuments || 0}</p>
             </div>
           </div>
@@ -225,7 +225,7 @@ const OverviewTab: React.FC<{ stats: ClientAreaStats | null }> = ({ stats }) => 
               </svg>
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">📚 Nozioni</p>
+              <p className="text-sm font-medium text-gray-600">Nozioni</p>
               <p className="text-2xl font-bold text-gray-900">{stats?.totalKnowledge || 0}</p>
             </div>
           </div>
@@ -239,7 +239,7 @@ const OverviewTab: React.FC<{ stats: ClientAreaStats | null }> = ({ stats }) => 
               </svg>
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">🎁 Promozioni</p>
+              <p className="text-sm font-medium text-gray-600">Promozioni</p>
               <p className="text-2xl font-bold text-gray-900">{stats?.activePromotions || 0}</p>
             </div>
           </div>
@@ -250,7 +250,7 @@ const OverviewTab: React.FC<{ stats: ClientAreaStats | null }> = ({ stats }) => 
       <div className="bg-white rounded-lg shadow-lg p-8 border border-blue-200">
         <div className="text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            🎉 Benvenuto nell'Area Clienti
+            Benvenuto nell'Area Clienti
           </h2>
           <p className="text-lg text-gray-600 mb-6">
             Qui troverai tutti i contenuti esclusivi, documenti, video tutorial e promozioni speciali riservate ai nostri clienti.

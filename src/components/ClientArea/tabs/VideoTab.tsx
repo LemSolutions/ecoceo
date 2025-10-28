@@ -57,7 +57,7 @@ const VideoTab: React.FC = () => {
     <div className="space-y-6">
       {/* Header */}
       <div className="bg-white rounded-lg shadow-lg p-6 border border-blue-200">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">🎥 Video Tutorial e Guide</h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">Video Tutorial e Guide</h2>
         <p className="text-gray-300">
           Esplora la nostra collezione di video tutorial, presentazioni e guide per massimizzare l'utilizzo dei nostri servizi.
         </p>

@@ -39,7 +39,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
             </svg>
           </div>
           <h2 className="mt-6 text-3xl font-bold text-gray-900">
-            🏠 Area Clienti
+            Area Clienti
           </h2>
           <p className="mt-2 text-sm text-gray-600">
             Inserisci la password per accedere ai contenuti esclusivi
