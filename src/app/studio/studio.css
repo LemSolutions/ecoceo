@@ -94,11 +94,56 @@ body, html {
 
 /* Override any transparent or invisible elements */
 *[style*="transparent"], *[style*="rgba(0,0,0,0)"] {
+  background-color: #1f2937 !important;
+  color: #ffffff !important;
+}
+
+/* Fix for white divs with white text on Windows */
+div[style*="background-color: white"], 
+div[style*="background-color: #ffffff"],
+div[style*="background-color: #fff"] {
+  background-color: #1f2937 !important;
+  color: #ffffff !important;
+}
+
+/* Fix for any white background elements */
+*[style*="background-color: white"],
+*[style*="background-color: #ffffff"],
+*[style*="background-color: #fff"] {
+  background-color: #1f2937 !important;
   color: #ffffff !important;
 }
 
 /* Force visibility for Sanity Studio components */
 .sanity-studio * {
+  color: #ffffff !important;
+}
+
+/* Additional Windows-specific fixes for navigation elements */
+nav, nav * {
+  background-color: #1f2937 !important;
+  color: #ffffff !important;
+}
+
+/* Fix for any navigation menus */
+.nav, .navigation, .menu, .dropdown {
+  background-color: #1f2937 !important;
+  color: #ffffff !important;
+}
+
+.nav *, .navigation *, .menu *, .dropdown * {
+  background-color: #1f2937 !important;
+  color: #ffffff !important;
+}
+
+/* Ensure all text in navigation is visible */
+nav a, nav button, nav div, nav span {
+  color: #ffffff !important;
+  background-color: #1f2937 !important;
+}
+
+nav a:hover, nav button:hover {
+  background-color: #374151 !important;
   color: #ffffff !important;
 }
 
@@ -133,7 +178,7 @@ body, html {
   border-color: #ef4444 !important;
 }
 
-/* Menu and dropdown styling */
+/* Menu and dropdown styling - Enhanced for Windows compatibility */
 [data-ui="Menu"] {
   background-color: #1f2937 !important;
   border: 1px solid #374151 !important;
@@ -142,10 +187,35 @@ body, html {
 
 [data-ui="Menu"] [data-ui="MenuItem"] {
   color: #ffffff !important;
+  background-color: #1f2937 !important;
 }
 
 [data-ui="Menu"] [data-ui="MenuItem"]:hover {
   background-color: #374151 !important;
+  color: #ffffff !important;
+}
+
+/* Additional menu item styling for better visibility */
+[data-ui="MenuItem"] {
+  color: #ffffff !important;
+  background-color: #1f2937 !important;
+}
+
+[data-ui="MenuItem"]:hover {
+  background-color: #374151 !important;
+  color: #ffffff !important;
+}
+
+/* Menu button styling */
+[data-ui="MenuButton"] {
+  color: #ffffff !important;
+  background-color: #374151 !important;
+  border: 1px solid #4b5563 !important;
+}
+
+[data-ui="MenuButton"]:hover {
+  background-color: #4b5563 !important;
+  color: #ffffff !important;
 }
 
 /* Tooltip styling */

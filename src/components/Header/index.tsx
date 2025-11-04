@@ -84,8 +84,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
         style={{
           fontFamily: siteSettings?.typography?.headingFont || 'Inter',
           ...(isSticky && {
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-            backdropFilter: 'blur(10px)',
+            backdropFilter: 'blur(8px)',
             borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
           })
         }}

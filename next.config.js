@@ -45,6 +45,11 @@ const nextConfig = {
         hostname: "cdn.sanity.io",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "files.stripe.com",
+        port: "",
+      },
     ],
     formats: ['image/webp', 'image/avif'],
     minimumCacheTTL: 60,
