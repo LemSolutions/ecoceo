@@ -8,7 +8,7 @@ export const dashboardInfo = {
         <div>
           <h3 className="font-semibold text-gray-900 mb-2">🎯 Scopo</h3>
           <p className="text-gray-700">
-            La dashboard fornisce una visione completa dell'azienda con KPI, statistiche e accesso rapido a tutte le funzioni.
+            La dashboard fornisce una visione completa dell&apos;azienda con KPI, statistiche e accesso rapido a tutte le funzioni.
           </p>
         </div>
         
@@ -16,7 +16,7 @@ export const dashboardInfo = {
           <h3 className="font-semibold text-gray-900 mb-2">📈 KPI Principali</h3>
           <ul className="text-gray-700 space-y-1">
             <li>• <strong>Progetti Attivi:</strong> Numero di progetti in corso</li>
-            <li>• <strong>ROI Medio:</strong> Ritorno sull'investimento medio</li>
+            <li>• <strong>ROI Medio:</strong> Ritorno sull&apos;investimento medio</li>
             <li>• <strong>Fatturato Totale:</strong> Somma di tutti i ricavi</li>
             <li>• <strong>Lead Attivi:</strong> Contatti commerciali in gestione</li>
           </ul>
@@ -166,7 +166,7 @@ export const dashboardInfo = {
         <div>
           <h3 className="font-semibold text-gray-900 mb-2">📊 Metriche</h3>
           <ul className="text-gray-700 space-y-1">
-            <li>• <strong>ROI:</strong> Ritorno sull'investimento in R&D</li>
+            <li>• <strong>ROI:</strong> Ritorno sull&apos;investimento in R&D</li>
             <li>• <strong>Varianza:</strong> Differenza budget vs costi reali</li>
             <li>• <strong>Efficienza:</strong> Progresso vs spesa</li>
           </ul>
@@ -214,7 +214,7 @@ export const dashboardInfo = {
             <li>• <strong>Nome:</strong> Nome del contatto</li>
             <li>• <strong>Email:</strong> Indirizzo email</li>
             <li>• <strong>Telefono:</strong> Numero di contatto</li>
-            <li>• <strong>Fonte:</strong> Come ha trovato l'azienda</li>
+            <li>• <strong>Fonte:</strong> Come ha trovato l&apos;azienda</li>
             <li>• <strong>Stato:</strong> Nuovo, Contattato, Qualificato, Cliente</li>
             <li>• <strong>Valore:</strong> Potenziale valore del lead</li>
           </ul>
@@ -303,7 +303,7 @@ export const dashboardInfo = {
         <div>
           <h3 className="font-semibold text-gray-900 mb-2">⚡ Come Funziona</h3>
           <ul className="text-gray-700 space-y-1">
-            <li>• <strong>Clicca "Sincronizza":</strong> Avvia il processo</li>
+            <li>• <strong>Clicca &quot;Sincronizza&quot;:</strong> Avvia il processo</li>
             <li>• <strong>Caricamento:</strong> Recupera dati da Sanity</li>
             <li>• <strong>Conversione:</strong> Adatta formato dashboard</li>
             <li>• <strong>Aggiornamento:</strong> Sostituisce dati esistenti</li>
@@ -351,7 +351,7 @@ export const dashboardInfo = {
           <h3 className="font-semibold text-gray-900 mb-2">🔄 Aggiornamento</h3>
           <ul className="text-gray-700 space-y-1">
             <li>• <strong>Automatico:</strong> Si aggiorna al caricamento</li>
-            <li>• <strong>Manuale:</strong> Pulsante "Aggiorna"</li>
+            <li>• <strong>Manuale:</strong> Pulsante &quot;Aggiorna&quot;</li>
             <li>• <strong>Tempo Reale:</strong> Riflette dati Sanity attuali</li>
           </ul>
         </div>
@@ -385,7 +385,7 @@ export const dashboardInfo = {
           <ul className="text-gray-700 space-y-1">
             <li>• <strong>Seleziona Progetto:</strong> Dal dropdown progetti</li>
             <li>• <strong>Seleziona Servizio:</strong> Dal dropdown servizi</li>
-            <li>• <strong>Clicca "Assegna":</strong> Conferma l'assegnazione</li>
+            <li>• <strong>Clicca &quot;Assegna&quot;:</strong> Conferma l&apos;assegnazione</li>
             <li>• <strong>Aggiornamento:</strong> Modifica salvata in Sanity</li>
           </ul>
         </div>
@@ -430,7 +430,7 @@ export const dashboardInfo = {
         <div>
           <h3 className="font-semibold text-gray-900 mb-2">🎯 Scopo</h3>
           <p className="text-gray-700">
-            Sezione dedicata all'integrazione di AI per generazione contenuti, SEO, immagini e analisi intelligenti.
+            Sezione dedicata all&apos;integrazione di AI per generazione contenuti, SEO, immagini e analisi intelligenti.
           </p>
         </div>
         

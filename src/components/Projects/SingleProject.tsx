@@ -1,13 +1,46 @@
 "use client";
 
 import { getImageUrl, getTextValue } from '@/sanity/lib/image';
+import { useState, useCallback, type CSSProperties } from 'react';
 import { useSanityUIComponents } from '@/hooks/useSanityUIComponents';
 import SanityStyledComponent from '@/components/Common/SanityStyledComponent';
 import Link from 'next/link';
 import { ProjectCardProps } from '@/types/project';
 
+const BASE_TRANSFORM = 'perspective(1200px) rotateX(0deg) rotateY(0deg) translateZ(0)';
+
 const SingleProject = ({ project, index }: ProjectCardProps) => {
   const { getComponent } = useSanityUIComponents();
+  const [hoverStyle, setHoverStyle] = useState<CSSProperties>({
+    transform: BASE_TRANSFORM,
+    boxShadow: '0 15px 30px -20px rgba(15, 23, 42, 0.55)',
+    transition: 'transform 0.4s ease-out, box-shadow 0.4s ease-out',
+  });
+
+  const handleMouseMove = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const { width, height, left, top } = bounds;
+    const x = event.clientX - left;
+    const y = event.clientY - top;
+    const rotateX = ((y - height / 2) / height) * -10;
+    const rotateY = ((x - width / 2) / width) * 10;
+
+    setHoverStyle({
+      transform: `perspective(1200px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(
+        2,
+      )}deg) translateZ(8px)`,
+      transition: 'transform 0.08s ease-out, box-shadow 0.12s ease-out',
+      boxShadow: '0 20px 45px -25px rgba(9, 9, 11, 0.75)',
+    });
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setHoverStyle({
+      transform: BASE_TRANSFORM,
+      transition: 'transform 0.4s ease-out, box-shadow 0.3s ease-out',
+      boxShadow: '0 15px 30px -20px rgba(17, 24, 39, 0.55)',
+    });
+  }, []);
 
   // Get UI components for Project section
   const projectCardComponent = getComponent('ProjectCard');
@@ -21,7 +54,11 @@ const SingleProject = ({ project, index }: ProjectCardProps) => {
       className="w-full"
     >
       <div className="wow fadeInUp" data-wow-delay={`${index * 100}ms`}>
-        <div className="group relative overflow-hidden rounded-sm bg-white/30 backdrop-blur/30 backdrop-blurshadow-one duration-300 hover:shadow-two dark:bg-dark dark:hover:shadow-gray-dark">
+        <div className="group" style={{ perspective: '1600px' }} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
+          <div
+            className="relative overflow-hidden rounded-sm bg-white/30 backdrop-blur/30 backdrop-blurshadow-one duration-300 hover:shadow-two dark:bg-dark dark:hover:shadow-gray-dark"
+            style={hoverStyle}
+          >
           <Link href={`/projects/${project.slug?.current || project._id}`}>
             <div className="relative block aspect-[37/22] overflow-hidden">
               {project.mainImage ? (
@@ -145,6 +182,7 @@ const SingleProject = ({ project, index }: ProjectCardProps) => {
               </div>
             )}
           </div>
+        </div>
         </div>
       </div>
     </SanityStyledComponent>

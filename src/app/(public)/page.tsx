@@ -1,10 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import Hero from "@/components/Hero";
 import Testimonials from "@/components/Testimonials";
 import Blog from "@/components/Blog";
 import Contact from "@/components/Contact";
 import Services from "@/components/Services";
+import Products from "@/components/Products";
+import Projects from "@/components/Projects";
 import { useState, useEffect } from 'react';
 import { safeFetch } from '@/sanity/lib/client';
 import { siteSettingsQuery } from '@/sanity/lib/queries';
@@ -32,6 +35,56 @@ const HomePage = () => {
         <Hero />
       </div>
 
+      {/* Primary CTA Strip */}
+      <section className="bg-white/5 py-14 backdrop-blur">
+        <div className="container">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-bold text-white sm:text-4xl">
+              Hai un progetto in mente? Siamo pronti ad aiutarti.
+            </h2>
+            <p className="mt-4 text-white/80 text-lg">
+              Richiedi un preventivo gratuito, prenota una consulenza dedicata oppure contattaci subito per parlare con un esperto.
+            </p>
+            <div className="mt-10 flex flex-col items-stretch gap-4 sm:flex-row sm:flex-wrap sm:justify-center">
+              <Link
+                href="/contact#preventivo"
+                className="inline-flex items-center justify-center rounded-full bg-primary px-8 py-3 text-base font-semibold text-white shadow-lg shadow-primary/30 transition-all duration-200 hover:translate-y-[-2px] hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+              >
+                Richiedi Preventivo Gratuito
+              </Link>
+              <Link
+                href="/contact#consulenza"
+                className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-8 py-3 text-base font-semibold text-white backdrop-blur transition-all duration-200 hover:border-white/40 hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+              >
+                Prenota una Consulenza
+              </Link>
+              <Link
+                href="/contact#contatti"
+                className="inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-base font-semibold text-primary shadow-lg shadow-white/30 transition-all duration-200 hover:translate-y-[-2px] hover:bg-white/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+              >
+                Parla con il Team
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <div className="text-white">
+        <section className="py-16 lg:py-20">
+          <Projects
+            title="I Nostri Progetti"
+            subtitle="Scopri alcune delle realizzazioni che abbiamo seguito dall’idea alla messa in produzione."
+            className="text-white"
+            containerClassName="px-4 sm:px-6 lg:px-8"
+            headingWrapperClassName="max-w-3xl mx-auto"
+            titleClassName="text-white"
+            subtitleClassName="text-white/80"
+            gridClassName="gap-y-12"
+          />
+        </section>
+      </div>
+
       {/* Services Section */}
       <div className="text-white">
         <section className="py-16 lg:py-20">
@@ -45,6 +98,44 @@ const HomePage = () => {
               </p>
             </div>
             <Services />
+          </div>
+        </section>
+      </div>
+
+      {/* Products Section */}
+      <div className="text-white">
+        <section className="py-16 lg:py-20">
+          <div className="container">
+            <div className="text-center mb-16">
+              <h2 className="text-white mb-4 text-3xl font-bold sm:text-4xl lg:text-5xl">
+                I Nostri Prodotti
+              </h2>
+              <p className="text-white/80 text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
+                Scopri la nostra collezione di prodotti personalizzati in ceramica.
+              </p>
+            </div>
+            <Products />
+            <div className="text-center mt-12">
+              <Link
+                href="/shop"
+                className="inline-flex items-center px-8 py-4 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors duration-200 text-lg font-semibold group"
+              >
+                Vedi Tutti i Prodotti
+                <svg
+                  className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-200"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </Link>
+            </div>
           </div>
         </section>
       </div>
@@ -175,7 +266,9 @@ const HomePage = () => {
 
       {/* Contact Section */}
       <div className="text-white">
-        <section className="py-16 lg:py-20">
+        <div id="preventivo" className="relative -top-24 h-0" aria-hidden="true" />
+        <div id="consulenza" className="relative -top-24 h-0" aria-hidden="true" />
+        <section id="contatti" className="py-16 lg:py-20">
           <div className="container">
             <div className="text-center mb-16">
               <h2 className="text-white mb-4 text-3xl font-bold sm:text-4xl lg:text-5xl">

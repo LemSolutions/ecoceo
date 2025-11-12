@@ -185,27 +185,6 @@ const ServicePage = ({ params }: ServicePageProps) => {
                 )}
 
                 <div className="flex flex-col sm:flex-row gap-4">
-                  {service.url && (
-                    <a
-                      href={getTextValue(service.url)}
-                      className="inline-flex items-center justify-center rounded-sm bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/90"
-                    >
-                      Richiedi Preventivo
-                      <svg
-                        className="ml-2 h-4 w-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 5l7 7-7 7"
-                        />
-                      </svg>
-                    </a>
-                  )}
                   <a
                     href={`/services/${slug}/projects`}
                     className="inline-flex items-center justify-center rounded-sm bg-gray-800 px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-gray-900"

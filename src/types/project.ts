@@ -42,7 +42,13 @@ export interface ProjectCardProps {
 }
 
 export interface ProjectGridProps {
-  projects: Project[];
+  projects?: Project[];
   title?: string;
   subtitle?: string;
+  className?: string;
+  containerClassName?: string;
+  headingWrapperClassName?: string;
+  titleClassName?: string;
+  subtitleClassName?: string;
+  gridClassName?: string;
 }

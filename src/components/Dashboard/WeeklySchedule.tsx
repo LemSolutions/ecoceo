@@ -343,7 +343,7 @@ export default function WeeklySchedule({ onDataChange }: WeeklyScheduleProps) {
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-gray-900">Modifica Attività</h3>
-                    <p className="text-sm text-gray-600">Modifica i dettagli dell'attività ricorrente</p>
+                    <p className="text-sm text-gray-600">Modifica i dettagli dell&apos;attività ricorrente</p>
                   </div>
                 </div>
                 <button

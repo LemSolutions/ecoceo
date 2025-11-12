@@ -2,29 +2,73 @@
 
 import dynamic from 'next/dynamic';
 import Script from 'next/script';
-import { Inter } from "next/font/google";
+import { Inter, Poppins, Roboto, Open_Sans, Montserrat, Lato } from "next/font/google";
 import { Providers } from "./providers";
 import { CartProvider } from "@/contexts/CartContext";
 import { AnalyticsProvider } from "@/contexts/AnalyticsContext";
 import "../styles/index.css";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { client } from '@/sanity/lib/client';
 import { siteSettingsQuery } from '@/sanity/lib/queries';
 import { config } from '@fortawesome/fontawesome-svg-core';
-import '@fortawesome/fontawesome-svg-core/styles.css';
 import '@/lib/fontawesome';
 
-// Tell Font Awesome to skip adding the CSS automatically since it's already imported above
+// Tell Font Awesome to skip adding the CSS automatically
 config.autoAddCss = false;
 
+// Preload dei font più comuni per ottimizzazione
+const inter = Inter({ 
+  subsets: ["latin"],
+  display: 'swap',
+  preload: true,
+  variable: '--font-inter',
+});
+
+const poppins = Poppins({ 
+  subsets: ["latin"],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  preload: false, // Preload solo quando necessario
+  variable: '--font-poppins',
+});
+
+const roboto = Roboto({ 
+  subsets: ["latin"],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  preload: false,
+  variable: '--font-roboto',
+});
+
+const openSans = Open_Sans({ 
+  subsets: ["latin"],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  preload: false,
+  variable: '--font-open-sans',
+});
+
+const montserrat = Montserrat({ 
+  subsets: ["latin"],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  preload: false,
+  variable: '--font-montserrat',
+});
+
+const lato = Lato({ 
+  subsets: ["latin"],
+  weight: ['400', '700'],
+  display: 'swap',
+  preload: false,
+  variable: '--font-lato',
+});
 
 // Lazy load components
 const Header = dynamic(() => import("@/components/Header"), { ssr: true });
 const Footer = dynamic(() => import("@/components/Footer"), { ssr: true });
 const ScrollToTop = dynamic(() => import("@/components/ScrollToTop"), { ssr: false });
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
@@ -36,6 +80,27 @@ export default function RootLayout({
   const isDashboardPage = pathname?.startsWith('/dashboard');
   const isClientAreaPage = pathname?.startsWith('/area-clienti');
   const [siteSettings, setSiteSettings] = useState(null);
+
+  // Font mapping per Sanity
+  const fontMap: Record<string, any> = {
+    'Inter': inter,
+    'Poppins': poppins,
+    'Roboto': roboto,
+    'Open Sans': openSans,
+    'Montserrat': montserrat,
+    'Lato': lato,
+  };
+
+  // Seleziona i font in base alle impostazioni
+  const headingFont = useMemo(() => {
+    const fontName = siteSettings?.typography?.headingFont || 'Inter';
+    return fontMap[fontName] || inter;
+  }, [siteSettings?.typography?.headingFont]);
+
+  const bodyFont = useMemo(() => {
+    const fontName = siteSettings?.typography?.bodyFont || 'Inter';
+    return fontMap[fontName] || inter;
+  }, [siteSettings?.typography?.bodyFont]);
 
 
   useEffect(() => {
@@ -55,8 +120,11 @@ export default function RootLayout({
     }
   }, [isStudioPage, isDashboardPage, isClientAreaPage]);
 
+  // Combina le classi dei font
+  const fontClasses = `${inter.variable} ${headingFont.variable} ${bodyFont.variable}`;
+
   return (
-    <html suppressHydrationWarning lang="en">
+    <html suppressHydrationWarning lang="en" className={fontClasses}>
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -67,19 +135,7 @@ export default function RootLayout({
           <meta name="description" content={siteSettings.description} />
         )}
 
-        {/* Load Google Fonts based on typography settings */}
-        {siteSettings?.typography?.headingFont && (
-          <link
-            href={`https://fonts.googleapis.com/css2?family=${siteSettings.typography.headingFont}:wght@400;500;600;700&display=swap`}
-            rel="stylesheet"
-          />
-        )}
-        {siteSettings?.typography?.bodyFont && siteSettings.typography.bodyFont !== siteSettings.typography.headingFont && (
-          <link
-            href={`https://fonts.googleapis.com/css2?family=${siteSettings.typography.bodyFont}:wght@400;500;600&display=swap`}
-            rel="stylesheet"
-          />
-        )}
+        {/* Preconnect per Google Fonts (ottimizzazione) - non più necessario con next/font */}
         
         {/* Google Analytics */}
         <Script
@@ -96,10 +152,11 @@ export default function RootLayout({
         </Script>
       </head>
       <body 
-        className={`${inter.className} dynamic-gradient-bg`}
+        className={`${bodyFont.className} dynamic-gradient-bg`}
         style={{
-          fontFamily: siteSettings?.typography?.bodyFont || 'Inter'
-        }}
+          '--font-heading': `var(${headingFont.variable})`,
+          '--font-body': `var(${bodyFont.variable})`,
+        } as React.CSSProperties}
       >
         <Providers>
           <CartProvider>

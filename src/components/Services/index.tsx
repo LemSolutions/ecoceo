@@ -7,12 +7,45 @@ import { homepageServicesQuery } from '@/sanity/lib/queries';
 import { getImageUrl, getTextValue } from '@/sanity/lib/image';
 import { useSanityUIComponents } from '@/hooks/useSanityUIComponents';
 import SanityStyledComponent from '@/components/Common/SanityStyledComponent';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, type CSSProperties } from 'react';
+
+const BASE_CARD_STYLE: CSSProperties = {
+  transform: 'perspective(1200px) rotateX(0deg) rotateY(0deg) translateZ(0)',
+  boxShadow: '0 18px 35px -25px rgba(15, 23, 42, 0.55)',
+  transition: 'transform 0.35s ease-out, box-shadow 0.35s ease-out',
+};
 
 const Services = () => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [cardTransforms, setCardTransforms] = useState<Record<number, React.CSSProperties>>({});
   const { getComponent } = useSanityUIComponents();
+
+  const handleMouseMove = useCallback((index: number) => (event: React.MouseEvent<HTMLDivElement>) => {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const x = event.clientX - bounds.left;
+    const y = event.clientY - bounds.top;
+    const rotateX = ((y - bounds.height / 2) / bounds.height) * -10;
+    const rotateY = ((x - bounds.width / 2) / bounds.width) * 10;
+
+    setCardTransforms((prev) => ({
+      ...prev,
+      [index]: {
+        transform: `perspective(1200px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(
+          2,
+        )}deg) translateZ(10px)`,
+        boxShadow: '0 22px 45px -20px rgba(15, 23, 42, 0.65)',
+        transition: 'transform 0.09s ease-out, box-shadow 0.12s ease-out',
+      },
+    }));
+  }, []);
+
+  const handleMouseLeave = useCallback((index: number) => () => {
+    setCardTransforms((prev) => ({
+      ...prev,
+      [index]: BASE_CARD_STYLE,
+    }));
+  }, []);
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -60,98 +93,126 @@ const Services = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-4">
-      {services.map((service, index) => (
-        <SanityStyledComponent
-          key={service._id || index}
-          component={serviceCardComponent}
-          componentName="ServiceCard"
-          className="w-full"
-        >
-          <div className="wow fadeInUp" data-wow-delay={`${index * 100}ms`}>
-            <div className="group relative overflow-hidden rounded-sm bg-white/30 backdrop-blur/30 backdrop-blurshadow-one duration-300 hover:shadow-two dark:bg-dark dark:hover:shadow-gray-dark">
-              <div className="p-8">
-                <div className="mb-6 flex h-[70px] w-[70px] items-center justify-center rounded-md overflow-hidden">
-                  {service.image ? (
-                    <Image
-                      src={getImageUrl(service.image)}
-                      alt={getTextValue(service.name)}
-                      width={70}
-                      height={70}
-                      className="object-cover w-full h-full"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-primary bg-opacity-10 flex items-center justify-center text-4xl">
-                      {service.icon || "💼"}
+    <div>
+      <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+        {services.map((service, index) => (
+          <SanityStyledComponent
+            key={service._id || index}
+            component={serviceCardComponent}
+            componentName="ServiceCard"
+            className="w-full"
+          >
+            <div className="wow fadeInUp" data-wow-delay={`${index * 100}ms`}>
+              <div
+                className="group relative overflow-hidden rounded-lg bg-white/30 backdrop-blur/30 backdrop-blurshadow-one duration-300 hover:shadow-two dark:bg-dark dark:hover:shadow-gray-dark h-full"
+                style={cardTransforms[index] || BASE_CARD_STYLE}
+                onMouseMove={handleMouseMove(index)}
+                onMouseLeave={handleMouseLeave(index)}
+              >
+                <div className="p-10">
+                  <div className="mb-8 flex h-[100px] w-[100px] items-center justify-center rounded-lg overflow-hidden">
+                    {service.image ? (
+                      <Image
+                        src={getImageUrl(service.image)}
+                        alt={getTextValue(service.name)}
+                        width={100}
+                        height={100}
+                        className="object-cover w-full h-full"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-primary bg-opacity-10 flex items-center justify-center text-5xl">
+                        {service.icon || "💼"}
+                      </div>
+                    )}
+                  </div>
+                  
+                  <SanityStyledComponent
+                    component={serviceTitleComponent}
+                    componentName="ServiceTitle"
+                    as="h3"
+                    className="mb-6 text-2xl font-bold text-dark dark:text-white"
+                  >
+                    {getTextValue(service.name)}
+                  </SanityStyledComponent>
+                  
+                  <SanityStyledComponent
+                    component={serviceDescriptionComponent}
+                    componentName="ServiceDescription"
+                    as="p"
+                    className="mb-8 text-lg text-body-color dark:text-body-color-dark leading-relaxed"
+                  >
+                    {getTextValue(service.shortDescription)}
+                  </SanityStyledComponent>
+
+                  {service.features && service.features.length > 0 && (
+                    <div className="mb-8">
+                      <ul className="space-y-3">
+                        {service.features.slice(0, 4).map((feature, featureIndex) => (
+                          <li key={featureIndex} className="flex items-center text-base text-body-color dark:text-body-color-dark">
+                            <svg
+                              className="mr-3 h-5 w-5 text-primary"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                            {getTextValue(feature)}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   )}
-                </div>
-                
-                <SanityStyledComponent
-                  component={serviceTitleComponent}
-                  componentName="ServiceTitle"
-                  as="h3"
-                  className="mb-4 text-xl font-bold text-dark dark:text-white"
-                >
-                  {getTextValue(service.name)}
-                </SanityStyledComponent>
-                
-                <SanityStyledComponent
-                  component={serviceDescriptionComponent}
-                  componentName="ServiceDescription"
-                  as="p"
-                  className="mb-6 text-base text-body-color dark:text-body-color-dark"
-                >
-                  {getTextValue(service.shortDescription)}
-                </SanityStyledComponent>
 
-                {service.features && service.features.length > 0 && (
-                  <div className="mb-6">
-                    <ul className="space-y-2">
-                      {service.features.slice(0, 3).map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-center text-sm text-body-color dark:text-body-color-dark">
-                          <svg
-                            className="mr-2 h-4 w-4 text-primary"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                          {getTextValue(feature)}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                <Link
-                  href={service.url || `/services/${service.slug?.current}`}
-                  className="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors duration-200"
-                >
-                  Scopri di più
-                  <svg
-                    className="ml-1 h-4 w-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+                  <Link
+                    href={service.url || `/services/${service.slug?.current}`}
+                    className="inline-flex items-center text-base font-semibold text-primary hover:text-primary/80 transition-colors duration-200 group"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </Link>
+                    Scopri di più
+                    <svg
+                      className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-200"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        </SanityStyledComponent>
-      ))}
+          </SanityStyledComponent>
+        ))}
+      </div>
+
+      <div className="mt-16 flex flex-col items-stretch gap-4 sm:flex-row sm:flex-wrap sm:justify-center">
+        <Link
+          href="/contact#preventivo"
+          className="inline-flex items-center justify-center rounded-full bg-primary px-8 py-3 text-base font-semibold text-white shadow-lg shadow-primary/30 transition-all duration-200 hover:translate-y-[-2px] hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+        >
+          Chiedi un Preventivo Gratuito
+        </Link>
+        <Link
+          href="/contact#consulenza"
+          className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-8 py-3 text-base font-semibold text-white backdrop-blur transition-all duration-200 hover:border-white/40 hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+        >
+          Prenota una Consulenza
+        </Link>
+        <Link
+          href="/contact#contatti"
+          className="inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-base font-semibold text-primary shadow-lg shadow-white/30 transition-all duration-200 hover:translate-y-[-2px] hover:bg-white/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+        >
+          Contattaci Subito
+        </Link>
+      </div>
     </div>
   );
 };
