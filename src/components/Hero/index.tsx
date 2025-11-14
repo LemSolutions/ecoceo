@@ -126,8 +126,16 @@ const Hero = () => {
                           component={primaryButtonComponent}
                           componentName="PrimaryButton"
                           as="div"
-                          className="rounded-xs bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:opacity-80 cursor-pointer"
-                          onClick={() => window.location.href = getTextValue(hero.primaryButton.url)}
+                          className="hero-button-flash rounded-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out cursor-pointer shadow-lg"
+                          onClick={() => {
+                            const url = getTextValue(hero.primaryButton.url);
+                            const buttonText = getTextValue(hero.primaryButton.text).toLowerCase();
+                            if (url.includes('preventivo') || buttonText.includes('preventivo')) {
+                              window.location.href = 'mailto:commerciale@lemsolutions.it?subject=QUOTE LEM SOLUTIONS CERAMIC SYSTEMS';
+                            } else {
+                              window.location.href = url;
+                            }
+                          }}
                         >
                           {getTextValue(hero.primaryButton.text)}
                         </SanityStyledComponent>

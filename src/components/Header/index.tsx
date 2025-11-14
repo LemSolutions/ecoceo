@@ -14,7 +14,8 @@ import {
   faComments,
   faChevronDown,
   faArrowRight,
-  faChartBar
+  faChartBar,
+  faNewspaper
 } from '@fortawesome/free-solid-svg-icons';
 
 import { safeFetch } from '@/sanity/lib/client';
@@ -239,6 +240,18 @@ const Header = ({ siteSettings }: HeaderProps) => {
                         Blog
                         <FontAwesomeIcon 
                           icon={faFileText} 
+                          className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" 
+                        />
+                      </Link>
+                    </li>
+                    <li className="group relative">
+                      <Link
+                        href="/novita"
+                        className="novita-pulse group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg"
+                      >
+                        Novità
+                        <FontAwesomeIcon 
+                          icon={faNewspaper} 
                           className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" 
                         />
                       </Link>

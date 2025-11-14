@@ -397,4 +397,49 @@ export const dashboardStatsQuery = groq`
   }
 `
 
+// ===== NOVITÀ QUERIES =====
+
+// Query to get all active novità ordered by creation date
+export const novitaQuery = groq`
+  *[_type == "novita" && isActive == true] | order(_createdAt desc) {
+    _id,
+    title,
+    subtitle,
+    slug,
+    mainImage,
+    miniIntro,
+    isActive,
+    _createdAt
+  }
+`
+
+// Query to get a single novità by slug
+export const novitaBySlugQuery = groq`
+  *[_type == "novita" && slug.current == $slug][0] {
+    _id,
+    title,
+    subtitle,
+    slug,
+    mainImage,
+    miniIntro,
+    fullContent,
+    isActive,
+    _createdAt
+  }
+`
+
+// Query to get the latest active novità (for pop-up)
+export const latestNovitaQuery = groq`
+  *[_type == "novita" && isActive == true] | order(_createdAt desc) [0] {
+    _id,
+    title,
+    subtitle,
+    slug,
+    mainImage,
+    miniIntro,
+    isActive,
+    _createdAt
+  }
+`
+
 

@@ -11,6 +11,14 @@ const Contact = () => {
   const [siteSettings, setSiteSettings] = useState(null);
   const [loading, setLoading] = useState(true);
   const { getComponent } = useSanityUIComponents();
+  
+  // Form state
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
 
   useEffect(() => {
     const fetchContact = async () => {
@@ -30,6 +38,39 @@ const Contact = () => {
 
     fetchContact();
   }, []);
+
+  // Precompila il form con i parametri URL
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const subjectParam = urlParams.get('subject');
+      if (subjectParam) {
+        setFormData(prev => ({
+          ...prev,
+          subject: subjectParam === 'CONSULTING' ? 'CONSULTING' : subjectParam === 'INFO' ? 'INFO' : subjectParam
+        }));
+      }
+    }
+  }, []);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Prepara il corpo dell'email
+    const emailBody = `Nome: ${formData.name}\nEmail: ${formData.email}\n\nMessaggio:\n${formData.message}`;
+    const emailSubject = formData.subject || 'Richiesta di Contatto';
+    
+    // Apri il client email con mailto
+    window.location.href = `mailto:commerciale@lemsolutions.it?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+  };
 
   // Get UI components for Contact section
   const contactSectionComponent = getComponent('ContactSection');
@@ -74,14 +115,18 @@ const Contact = () => {
           <h2 className="mb-8 text-3xl font-bold text-dark dark:text-white">
             Invia un Messaggio
           </h2>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="mb-6">
               <SanityStyledComponent
                 component={contactInputComponent}
                 componentName="ContactInput"
                 as="input"
                 type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
                 placeholder="Il tuo nome"
+                required
                 className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:focus:border-primary dark:focus:bg-[#242A38]"
               />
             </div>
@@ -91,7 +136,11 @@ const Contact = () => {
                 componentName="ContactInput"
                 as="input"
                 type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
                 placeholder="La tua email"
+                required
                 className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:focus:border-primary dark:focus:bg-[#242A38]"
               />
             </div>
@@ -101,7 +150,11 @@ const Contact = () => {
                 componentName="ContactInput"
                 as="input"
                 type="text"
+                name="subject"
+                value={formData.subject}
+                onChange={handleInputChange}
                 placeholder="Oggetto"
+                required
                 className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:focus:border-primary dark:focus:bg-[#242A38]"
               />
             </div>
@@ -111,7 +164,11 @@ const Contact = () => {
                 componentName="ContactTextarea"
                 as="textarea"
                 rows={6}
+                name="message"
+                value={formData.message}
+                onChange={handleInputChange}
                 placeholder="Il tuo messaggio"
+                required
                 className="w-full resize-none rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:focus:border-primary dark:focus:bg-[#242A38]"
               />
             </div>

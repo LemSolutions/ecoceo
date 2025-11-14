@@ -853,3 +853,96 @@ body {
     background-position: 0 0, 0% 0%;
   }
 }
+
+/* Animazioni per il pulsante Novità */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.7);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(249, 115, 22, 0);
+    transform: scale(1.05);
+  }
+}
+
+@keyframes pulse-scale {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes flash {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes pulse-combined {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.7);
+  }
+  25% {
+    transform: scale(1.08);
+    opacity: 0.9;
+    box-shadow: 0 0 0 8px rgba(249, 115, 22, 0.4);
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 0.7;
+    box-shadow: 0 0 0 15px rgba(249, 115, 22, 0);
+  }
+  75% {
+    transform: scale(1.08);
+    opacity: 0.9;
+    box-shadow: 0 0 0 8px rgba(249, 115, 22, 0.4);
+  }
+}
+
+.novita-pulse {
+  animation: pulse-combined 2s ease-in-out infinite;
+}
+
+.novita-pulse:hover {
+  animation: none;
+  transform: scale(1.05);
+}
+
+/* Animazione lampeggiante per pulsante Hero */
+@keyframes flash-pulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.7);
+  }
+  25% {
+    opacity: 0.9;
+    box-shadow: 0 0 0 8px rgba(249, 115, 22, 0.4);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 0 15px rgba(249, 115, 22, 0);
+  }
+  75% {
+    opacity: 0.9;
+    box-shadow: 0 0 0 8px rgba(249, 115, 22, 0.4);
+  }
+}
+
+.hero-button-flash {
+  animation: flash-pulse 2s ease-in-out infinite;
+  border-radius: 9999px !important; /* rounded-full */
+}
+
+.hero-button-flash:hover {
+  animation: none;
+  opacity: 1 !important;
+  box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.7) !important;
+}

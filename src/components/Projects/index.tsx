@@ -122,20 +122,20 @@ const Projects = ({
         </div>
 
         <div className="mt-16 flex flex-col items-stretch gap-4 sm:flex-row sm:flex-wrap sm:justify-center">
-          <Link
-            href="/contact#preventivo"
-            className="inline-flex items-center justify-center rounded-full bg-primary px-8 py-3 text-base font-semibold text-white shadow-lg shadow-primary/30 transition-all duration-200 hover:translate-y-[-2px] hover:bg-primary/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+          <a
+            href="mailto:commerciale@lemsolutions.it?subject=QUOTE LEM SOLUTIONS CERAMIC SYSTEMS"
+            className="hero-button-flash inline-flex items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 px-8 py-3 text-base font-semibold text-white shadow-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
           >
             Richiedi Preventivo Gratuito
-          </Link>
+          </a>
           <Link
-            href="/contact#consulenza"
+            href="/contact?subject=CONSULTING"
             className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-8 py-3 text-base font-semibold text-white backdrop-blur transition-all duration-200 hover:border-white/40 hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
           >
             Prenota una Consulenza
           </Link>
           <Link
-            href="/contact"
+            href="/contact?subject=INFO"
             className="inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-base font-semibold text-primary shadow-lg shadow-white/30 transition-all duration-200 hover:translate-y-[-2px] hover:bg-white/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
           >
             Parlaci del Tuo Progetto

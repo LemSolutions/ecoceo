@@ -279,6 +279,32 @@ const Header = ({ siteSettings }: HeaderProps) => {
                     </li>
                     <li className="group relative">
                       <Link
+                        href="/novita"
+                        className="novita-pulse group px-3 md:px-4 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 border border-orange-400/30 backdrop-blur h-8 md:h-9 w-auto shadow-lg"
+                      >
+                        Novità
+                        <svg 
+                          xmlns="http://www.w3.org/2000/svg" 
+                          width="16" 
+                          height="16" 
+                          viewBox="0 0 24 24" 
+                          fill="none" 
+                          stroke="currentColor" 
+                          strokeWidth="2" 
+                          strokeLinecap="round" 
+                          strokeLinejoin="round" 
+                          className="lucide lucide-sparkles transition duration-300 group-hover:translate-x-0.5"
+                        >
+                          <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path>
+                          <path d="M5 3v4"></path>
+                          <path d="M19 17v4"></path>
+                          <path d="M3 5h4"></path>
+                          <path d="M17 19h4"></path>
+                        </svg>
+                      </Link>
+                    </li>
+                    <li className="group relative">
+                      <Link
                         href="/contact"
                         className="group px-3 md:px-4 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 border border-orange-400/30 backdrop-blur h-8 md:h-9 w-auto shadow-lg"
                       >

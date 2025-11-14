@@ -9,6 +9,7 @@ import contact from './contact'
 import service from './service'
 import project from './project'
 import siteSettings from './siteSettings'
+import novita from './novita'
 import clientVideo from './clientArea/video'
 import clientDocument from './clientArea/document'
 import clientKnowledge from './clientArea/knowledge'
@@ -26,6 +27,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     service, 
     project, 
     siteSettings, 
+    novita,
     clientVideo, 
     clientDocument, 
     clientKnowledge, 
