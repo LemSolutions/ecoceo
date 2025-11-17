@@ -82,9 +82,10 @@ const BlogPostPage = () => {
       <div>
         <section className="py-16 lg:py-20">
           <div className="container">
-            <div className="max-w-4xl mx-auto">
-              {/* Article Header */}
-              <article className="bg-white/30 backdrop-blur/30 backdrop-blur rounded-2xl shadow-lg overflow-hidden">
+            <div className="max-w-6xl mx-auto">
+              <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px]">
+                {/* Article Header */}
+                <article className="bg-white/30 backdrop-blur/30 backdrop-blur rounded-2xl shadow-lg overflow-hidden">
                 {/* Hero Image */}
                 {post.mainImage && (
                   <div className="relative aspect-[21/9] overflow-hidden">
@@ -205,7 +206,52 @@ const BlogPostPage = () => {
                     </div>
                   </div>
                 </div>
-              </article>
+                </article>
+
+                {/* Sidebar CTA */}
+                <aside className="space-y-6">
+                  <div className="bg-white/30 backdrop-blur/30 backdrop-blur rounded-2xl shadow-lg p-6">
+                    <p className="text-sm font-semibold text-primary uppercase tracking-wide mb-2">
+                      Collegamenti rapidi ai nostri servizi
+                    </p>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                      Scopri come possiamo aiutarti
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-6">
+                      Dalla progettazione delle grafiche in fotoceramica alle linee produttive complete, esplora ciò che realizziamo ogni giorno.
+                    </p>
+                    <div className="flex flex-col gap-3">
+                      <Link
+                        href="/services"
+                        className="inline-flex items-center justify-between rounded-xl bg-white px-4 py-3 text-sm font-semibold text-primary shadow-sm hover:shadow-md transition-all"
+                      >
+                        Servizi per la fotoceramica
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </Link>
+                      <Link
+                        href="/projects"
+                        className="inline-flex items-center justify-between rounded-xl bg-white px-4 py-3 text-sm font-semibold text-primary shadow-sm hover:shadow-md transition-all"
+                      >
+                        Progetti realizzati
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </Link>
+                      <Link
+                        href="/shop"
+                        className="inline-flex items-center justify-between rounded-xl bg-white px-4 py-3 text-sm font-semibold text-primary shadow-sm hover:shadow-md transition-all"
+                      >
+                        Prodotti disponibili
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </Link>
+                    </div>
+                  </div>
+                </aside>
+              </div>
 
               {/* Back to Blog Button */}
               <div className="text-center mt-12">

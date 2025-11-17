@@ -10,7 +10,7 @@ const ContactPage = () => {
       <div className="text-white">
         <Breadcrumb
           pageName="Contattaci"
-          description="Siamo qui per aiutarti a realizzare i tuoi progetti digitali. Contattaci per una consulenza gratuita e scopri come possiamo trasformare la tua presenza online."
+          description="LEM Solutions è il partner italiano di riferimento per la fotoceramica industriale: realizziamo targhe commemorative, rivestimenti ceramici personalizzati e progetti decorativi su misura per studi grafici, architetti e industrie artistiche."
         />
       </div>
 

@@ -167,25 +167,33 @@ const Services = () => {
                     </div>
                   )}
 
-                  <Link
-                    href={service.url || `/services/${service.slug?.current}`}
-                    className="inline-flex items-center text-base font-semibold text-primary hover:text-primary/80 transition-colors duration-200 group"
-                  >
-                    Scopri di più
-                    <svg
-                      className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-200"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                  <div className="flex flex-col gap-4">
+                    <Link
+                      href={service.url || `/services/${service.slug?.current}`}
+                      className="inline-flex items-center text-base font-semibold text-primary hover:text-primary/80 transition-colors duration-200 group"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </Link>
+                      Scopri di più
+                      <svg
+                        className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-200"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </Link>
+                    <Link
+                      href="/contact?subject=QUOTE"
+                      className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-4 py-2 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:from-red-500 hover:to-orange-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+                    >
+                      Richiedi Preventivo Gratuito
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>

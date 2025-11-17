@@ -276,7 +276,7 @@ const HomePage = () => {
                 Contattaci
               </h2>
               <p className="text-white/80 text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
-                Siamo qui per aiutarti a realizzare i tuoi progetti di stampa digitale su  ceramica  Contattaci per una consulenza gratuita.
+                Dal 1998 sviluppiamo soluzioni di fotoceramica professionale: consulenza dedicata, produzione certificata e assistenza rapida per portare sul mercato collezioni ceramiche personalizzate, targhe memoriali e superfici decorative ad alto impatto.
               </p>
             </div>
             <Contact />

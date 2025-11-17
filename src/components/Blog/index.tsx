@@ -166,7 +166,7 @@ const Blog = () => {
             </Link>
 
             {/* Content */}
-            <div className="p-6">
+            <div className="p-6 space-y-4">
               {/* Meta */}
               <div className="flex items-center text-sm text-gray-500 mb-4">
                 <div className="flex items-center">

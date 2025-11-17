@@ -107,12 +107,40 @@ const SingleProject = ({ project, index }: ProjectCardProps) => {
               component={projectDescriptionComponent}
               componentName="ProjectDescription"
               as="p"
-              className="mb-6 border-b border-body-color border-opacity-10 pb-6 text-base font-medium leading-relaxed text-body-color dark:border-white dark:border-opacity-10 dark:text-body-color-dark"
+              className="mb-6 text-base font-medium leading-relaxed text-body-color dark:text-body-color-dark"
             >
               {getTextValue(project.shortDescription)}
             </SanityStyledComponent>
+
+            <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <Link
+                href={`/projects/${project.slug?.current || project._id}`}
+                className="inline-flex items-center text-sm font-semibold text-primary hover:text-primary/80 transition-colors duration-200 group"
+              >
+                Scopri il progetto
+                <svg
+                  className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </Link>
+              <Link
+                href="/contact?subject=QUOTE"
+                className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-5 py-2 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:from-red-500 hover:to-orange-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+              >
+                Richiedi Preventivo Gratuito
+              </Link>
+            </div>
             
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between border-t border-body-color border-opacity-10 pt-6 dark:border-white dark:border-opacity-10">
               <div className="flex items-center">
                 {project.client && (
                   <div className="mr-4">

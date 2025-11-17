@@ -138,7 +138,8 @@ export const heroQuery = groq`
     primaryButton,
     secondaryButton,
     backgroundImage,
-    heroImage
+    heroImage,
+    videoUrl
   }
 `
 

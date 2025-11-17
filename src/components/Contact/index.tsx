@@ -19,6 +19,18 @@ const Contact = () => {
     subject: '',
     message: ''
   });
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [feedbackMessage, setFeedbackMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const SQL_BLOCKLIST = ['select', 'insert', 'update', 'delete', 'drop', 'truncate', 'union', '--', ';', '/*', '*/', '\' or ', '" or '];
+
+  const sanitizeInput = (value: string) => value.replace(/[<>$]/g, '').trim();
+
+  const containsSqlInjectionRisk = (value: string) => {
+    const lowerValue = value.toLowerCase();
+    return SQL_BLOCKLIST.some(keyword => lowerValue.includes(keyword));
+  };
 
   useEffect(() => {
     const fetchContact = async () => {
@@ -39,6 +51,16 @@ const Contact = () => {
     fetchContact();
   }, []);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const alreadySubmitted = sessionStorage.getItem('contactFormSubmitted');
+      if (alreadySubmitted === 'true') {
+        setHasSubmitted(true);
+        setFeedbackMessage('Richiesta già inviata. Ti contatteremo al più presto.');
+      }
+    }
+  }, []);
+
   // Precompila il form con i parametri URL
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -55,14 +77,33 @@ const Contact = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
+    const sanitizedValue = sanitizeInput(value);
+
+    if (containsSqlInjectionRisk(sanitizedValue)) {
+      setErrorMessage('Per motivi di sicurezza alcuni termini non sono consentiti nel messaggio.');
+      return;
+    }
+
+    setErrorMessage('');
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: sanitizedValue
     }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (hasSubmitted) {
+      setFeedbackMessage('Hai già inviato una richiesta in questa sessione. Ti contatteremo al più presto.');
+      return;
+    }
+
+    const fields = Object.values(formData);
+    if (fields.some(field => containsSqlInjectionRisk(field))) {
+      setErrorMessage('Termini vietati rilevati. Aggiorna il messaggio prima di inviarlo.');
+      return;
+    }
     
     // Prepara il corpo dell'email
     const emailBody = `Nome: ${formData.name}\nEmail: ${formData.email}\n\nMessaggio:\n${formData.message}`;
@@ -70,6 +111,12 @@ const Contact = () => {
     
     // Apri il client email con mailto
     window.location.href = `mailto:commerciale@lemsolutions.it?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('contactFormSubmitted', 'true');
+    }
+    setHasSubmitted(true);
+    setFeedbackMessage('Messaggio inviato con successo! Verrai contattato al più presto.');
   };
 
   // Get UI components for Contact section
@@ -178,11 +225,22 @@ const Contact = () => {
                 componentName="SubmitButton"
                 as="button"
                 type="submit"
-                className="rounded-sm bg-primary px-9 py-4 text-base font-medium text-white shadow-submit duration-300 hover:bg-primary/90 dark:shadow-submit-dark"
+                disabled={hasSubmitted}
+                className={`rounded-sm px-9 py-4 text-base font-medium text-white shadow-submit duration-300 dark:shadow-submit-dark ${hasSubmitted ? 'bg-gray-400 cursor-not-allowed' : 'bg-primary hover:bg-primary/90'}`}
               >
-                Invia Messaggio
+                {hasSubmitted ? 'Richiesta Inviata' : 'Invia Messaggio'}
               </SanityStyledComponent>
             </div>
+            {errorMessage && (
+              <p className="mt-4 text-sm text-red-600 dark:text-red-400">
+                {errorMessage}
+              </p>
+            )}
+            {feedbackMessage && (
+              <p className="mt-4 text-sm text-emerald-600 dark:text-emerald-400">
+                {feedbackMessage}
+              </p>
+            )}
           </form>
         </SanityStyledComponent>
       </div>

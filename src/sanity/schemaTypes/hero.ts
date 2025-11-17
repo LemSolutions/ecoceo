@@ -74,6 +74,16 @@ export default defineType({
       description: 'Main hero image displayed in the right column of the hero section',
     }),
     defineField({
+      name: 'videoUrl',
+      title: 'YouTube Video URL',
+      type: 'url',
+      description: 'Optional YouTube video to autoplay in the hero section (es. https://www.youtube.com/watch?v=VIDEO_ID)',
+      validation: (Rule) =>
+        Rule.uri({
+          scheme: ['http', 'https'],
+        }).optional(),
+    }),
+    defineField({
       name: 'isActive',
       title: 'Is Active',
       type: 'boolean',
