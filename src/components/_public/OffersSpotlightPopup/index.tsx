@@ -25,6 +25,7 @@ type SpotlightOffer = {
 const OffersSpotlightPopup = () => {
   const [offer, setOffer] = useState<SpotlightOffer | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [shouldTriggerNovita, setShouldTriggerNovita] = useState(false);
 
   useEffect(() => {
     const fetchOffer = async () => {
@@ -49,8 +50,10 @@ const OffersSpotlightPopup = () => {
 
   const close = () => {
     setIsOpen(false);
+    setShouldTriggerNovita(true);
     if (typeof window !== 'undefined') {
       localStorage.setItem(STORAGE_KEY, 'true');
+      localStorage.removeItem('novita_popup_seen');
     }
   };
 
@@ -74,7 +77,7 @@ const OffersSpotlightPopup = () => {
           <button
             aria-label="Chiudi popup offerte"
             onClick={close}
-            className="absolute top-4 right-4 rounded-full bg-white/10 p-2 hover:bg-white/20 transition"
+            className="absolute top-4 right-4 z-[2] rounded-full bg-white/10 p-2 hover:bg-white/20 transition"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
