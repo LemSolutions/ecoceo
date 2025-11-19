@@ -51,4 +51,5 @@ export interface ProjectGridProps {
   titleClassName?: string;
   subtitleClassName?: string;
   gridClassName?: string;
+  variant?: 'default' | 'homepage';
 }

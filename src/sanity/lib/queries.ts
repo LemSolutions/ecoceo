@@ -443,4 +443,80 @@ export const latestNovitaQuery = groq`
   }
 `
 
+// ===== OFFER QUERIES =====
+
+export const homepageOffersQuery = groq`
+  *[_type == "offer" && isActive == true && showInHomepage == true] 
+    | order(priority desc, _createdAt desc) {
+      _id,
+      title,
+      subtitle,
+      slug,
+      highlight,
+      badge,
+      mainImage,
+      description,
+      priceOriginal,
+      priceDiscounted,
+      ctaLabel,
+      ctaUrl
+  }
+`
+
+export const offersArchiveQuery = groq`
+  *[_type == "offer" && isActive == true] 
+    | order(priority desc, _createdAt desc) {
+      _id,
+      title,
+      subtitle,
+      slug,
+      highlight,
+      badge,
+      mainImage,
+      description,
+      details,
+      priceOriginal,
+      priceDiscounted,
+      ctaLabel,
+      ctaUrl,
+      startDate,
+      endDate
+  }
+`
+
+export const offerBySlugQuery = groq`
+  *[_type == "offer" && slug.current == $slug][0] {
+    _id,
+    title,
+    subtitle,
+    slug,
+    highlight,
+    badge,
+    mainImage,
+    description,
+    details,
+    priceOriginal,
+    priceDiscounted,
+    ctaLabel,
+    ctaUrl,
+    startDate,
+    endDate
+  }
+`
+
+export const spotlightOfferQuery = groq`
+  *[_type == "offer" && isActive == true && showInHomepage == true]
+    | order(priority desc, _createdAt desc) [0] {
+      _id,
+      title,
+      subtitle,
+      highlight,
+      badge,
+      description,
+      mainImage,
+      ctaLabel,
+      ctaUrl,
+      slug
+  }
+`
 

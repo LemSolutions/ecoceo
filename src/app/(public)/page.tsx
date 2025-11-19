@@ -9,6 +9,9 @@ import Services from "@/components/Services";
 import Products from "@/components/Products";
 import Projects from "@/components/Projects";
 import NovitaPopup from "@/components/_public/NovitaPopup";
+import Offers from "@/components/Offers";
+import OffersSpotlightPopup from "@/components/_public/OffersSpotlightPopup";
+import NovitaCarousel from "@/components/NovitaCarousel";
 import { useState, useEffect } from 'react';
 import { safeFetch } from '@/sanity/lib/client';
 import { siteSettingsQuery } from '@/sanity/lib/queries';
@@ -34,6 +37,39 @@ const HomePage = () => {
       {/* Hero Section */}
       <div className="text-white">
         <Hero />
+      </div>
+
+      {/* Offers Section */}
+      <div className="text-white">
+        <section className="py-12 lg:py-16 bg-gradient-to-b from-white/5 via-white/0 to-white/0">
+          <div className="container">
+            <Offers
+              variant="homepage"
+              heading="Offerte in Evidenza"
+              subheading="Bundle e promozioni per stampatori e studi grafici che vogliono produrre fotoceramiche premium senza attese."
+            />
+          </div>
+        </section>
+      </div>
+
+      {/* Novità Carousel */}
+      <div className="text-white">
+        <section className="py-10 lg:py-14">
+          <div className="container">
+            <div className="text-center mb-16">
+              <p className="uppercase tracking-[0.3em] text-orange-300 text-sm font-semibold mb-2">
+                Novità
+              </p>
+              <h2 className="text-white mb-4 text-3xl font-bold sm:text-4xl lg:text-5xl">
+                Ultimi Aggiornamenti
+              </h2>
+              <p className="text-white/80 text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
+                Notizie, lanci e promozioni dal mondo della fotoceramica professionale.
+              </p>
+            </div>
+            <NovitaCarousel />
+          </div>
+        </section>
       </div>
 
       {/* Primary CTA Strip */}
@@ -82,6 +118,7 @@ const HomePage = () => {
             titleClassName="text-white"
             subtitleClassName="text-white/80"
             gridClassName="gap-y-12"
+            variant="homepage"
           />
         </section>
       </div>
@@ -153,13 +190,13 @@ const HomePage = () => {
                 Resta sempre aggiornato sui nostri progetti, novità e contenuti esclusivi.
               </p>
             </div>
-            <div className="flex justify-center space-x-8">
+            <div className="flex justify-center space-x-8 flex-wrap gap-6">
               {/* Facebook */}
               <a
                 href="https://www.facebook.com/lemsolutionsmonza"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white/20 backdrop-blur/30 hover:bg-white/30 flex h-20 w-20 items-center justify-center rounded-full text-white hover:text-orange-300 transition duration-300 ease-in-out transform hover:scale-110 shadow-lg"
+                className="bg-white/20 backdrop-blur/30 hover:bg-white/30 flex h-20 w-20 items-center justify-center rounded-full text-white hover:text-orange-300 transition duration-500 ease-in-out shadow-lg animate-social-float"
                 title="Seguici su Facebook"
               >
                 <svg
@@ -177,7 +214,7 @@ const HomePage = () => {
                 href="https://www.instagram.com/lem_photoceramic/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white/20 backdrop-blur/30 hover:bg-white/30 flex h-20 w-20 items-center justify-center rounded-full text-white hover:text-orange-300 transition duration-300 ease-in-out transform hover:scale-110 shadow-lg"
+                className="bg-white/20 backdrop-blur/30 hover:bg-white/30 flex h-20 w-20 items-center justify-center rounded-full text-white hover:text-orange-300 transition duration-500 ease-in-out shadow-lg animate-social-float delay-100"
                 title="Seguici su Instagram"
               >
                 <svg
@@ -195,7 +232,7 @@ const HomePage = () => {
                 href="https://www.linkedin.com/company/105386112/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white/20 backdrop-blur/30 hover:bg-white/30 flex h-20 w-20 items-center justify-center rounded-full text-white hover:text-orange-300 transition duration-300 ease-in-out transform hover:scale-110 shadow-lg"
+                className="bg-white/20 backdrop-blur/30 hover:bg-white/30 flex h-20 w-20 items-center justify-center rounded-full text-white hover:text-orange-300 transition duration-500 ease-in-out shadow-lg animate-social-float delay-200"
                 title="Seguici su LinkedIn"
               >
                 <svg
@@ -213,7 +250,7 @@ const HomePage = () => {
                 href="https://www.youtube.com/watch?v=5Rpkhvj0eWY&pp=0gcJCfsJAYcqIYzv"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white/20 backdrop-blur/30 hover:bg-white/30 flex h-20 w-20 items-center justify-center rounded-full text-white hover:text-orange-300 transition duration-300 ease-in-out transform hover:scale-110 shadow-lg"
+                className="bg-white/20 backdrop-blur/30 hover:bg-white/30 flex h-20 w-20 items-center justify-center rounded-full text-white hover:text-orange-300 transition duration-500 ease-in-out shadow-lg animate-social-float delay-300"
                 title="Seguici su YouTube"
               >
                 <svg
@@ -284,8 +321,38 @@ const HomePage = () => {
         </section>
       </div>
 
-      {/* Novità Pop-up Modal */}
+      {/* Pop-up Modals */}
+      <OffersSpotlightPopup />
       <NovitaPopup />
+      <style jsx>{`
+        @keyframes socialFloat {
+          0% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-6px);
+          }
+          100% {
+            transform: translateY(0px);
+          }
+        }
+
+        .animate-social-float {
+          animation: socialFloat 4s ease-in-out infinite;
+        }
+
+        .delay-100 {
+          animation-delay: 0.2s;
+        }
+
+        .delay-200 {
+          animation-delay: 0.4s;
+        }
+
+        .delay-300 {
+          animation-delay: 0.6s;
+        }
+      `}</style>
     </>
   );
 };

@@ -5,7 +5,10 @@ import { testimonialsQuery } from '@/sanity/lib/queries';
 import { getImageUrl, getTextValue } from '@/sanity/lib/image';
 import { useSanityUIComponents } from '@/hooks/useSanityUIComponents';
 import SanityStyledComponent from '@/components/Common/SanityStyledComponent';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
+
+const AUTO_SCROLL_INTERVAL = 12000;
+const TRANSITION_DURATION = 2200;
 
 const SingleTestimonial = ({ testimonial, index }) => {
   const { getComponent } = useSanityUIComponents();
@@ -73,6 +76,8 @@ const SingleTestimonial = ({ testimonial, index }) => {
 const Testimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [autoPlay, setAutoPlay] = useState(true);
   const { getComponent } = useSanityUIComponents();
 
   useEffect(() => {
@@ -89,6 +94,38 @@ const Testimonials = () => {
 
     fetchTestimonials();
   }, []);
+
+  // Auto-scroll logic
+  const [cardsPerView, setCardsPerView] = useState(1);
+
+  useEffect(() => {
+    const updateCardsPerView = () => {
+      if (typeof window === 'undefined') return;
+      const width = window.innerWidth;
+      if (width >= 1280) {
+        setCardsPerView(3);
+      } else if (width >= 768) {
+        setCardsPerView(2);
+      } else {
+        setCardsPerView(1);
+      }
+    };
+
+    updateCardsPerView();
+    window.addEventListener('resize', updateCardsPerView);
+    return () => window.removeEventListener('resize', updateCardsPerView);
+  }, []);
+
+  useEffect(() => {
+    if (!autoPlay || testimonials.length <= cardsPerView) return;
+    const timer = setTimeout(() => {
+      setCurrentIndex((prev) => {
+        const maxIndex = Math.max(testimonials.length - cardsPerView, 0);
+        return prev >= maxIndex ? 0 : prev + 1;
+      });
+    }, AUTO_SCROLL_INTERVAL);
+    return () => clearTimeout(timer);
+  }, [autoPlay, testimonials.length, cardsPerView, currentIndex]);
 
   // Get UI components for Testimonials section
   const testimonialsSectionComponent = getComponent('TestimonialsSection');
@@ -117,14 +154,31 @@ const Testimonials = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
-      {testimonials.map((testimonial, index) => (
-        <SingleTestimonial 
-          key={testimonial._id || index} 
-          testimonial={testimonial} 
-          index={index}
-        />
-      ))}
+    <div
+      className="relative overflow-hidden"
+      onMouseEnter={() => setAutoPlay(false)}
+      onMouseLeave={() => setAutoPlay(true)}
+    >
+      <div
+        className="flex gap-8"
+        style={{
+          transform: `translateX(-${(100 / cardsPerView) * currentIndex}%)`,
+          width: `${(100 / cardsPerView) * testimonials.length}%`,
+          transition: autoPlay
+            ? `transform ${TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`
+            : undefined,
+        }}
+      >
+        {testimonials.map((testimonial, index) => (
+          <div
+            key={testimonial._id || index}
+            className="flex-shrink-0 w-full md:w-1/2 lg:w-1/3"
+          >
+            <SingleTestimonial testimonial={testimonial} index={index} />
+          </div>
+        ))}
+      </div>
+
     </div>
   );
 };
