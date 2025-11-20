@@ -3,11 +3,6 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 import Hero from "@/components/Hero";
-import Services from "@/components/Services";
-import Products from "@/components/Products";
-import Projects from "@/components/Projects";
-import Offers from "@/components/Offers";
-import NovitaCarousel from "@/components/NovitaCarousel";
 import { safeFetch } from "@/sanity/lib/client";
 import { siteSettingsQuery } from "@/sanity/lib/queries";
 
@@ -30,6 +25,31 @@ const BlogSection = dynamic(() => import("@/components/Blog"), {
 const ContactSection = dynamic(() => import("@/components/Contact"), {
   ssr: false,
   loading: () => <SectionLoading message="Caricamento contatti..." />,
+});
+
+const OffersSection = dynamic(() => import("@/components/Offers"), {
+  ssr: false,
+  loading: () => <SectionLoading message="Caricamento offerte..." />,
+});
+
+const NovitaCarouselSection = dynamic(() => import("@/components/NovitaCarousel"), {
+  ssr: false,
+  loading: () => <SectionLoading message="Caricamento novità..." />,
+});
+
+const ProjectsSection = dynamic(() => import("@/components/Projects"), {
+  ssr: false,
+  loading: () => <SectionLoading message="Caricamento progetti..." />,
+});
+
+const ServicesSection = dynamic(() => import("@/components/Services"), {
+  ssr: false,
+  loading: () => <SectionLoading message="Caricamento servizi..." />,
+});
+
+const ProductsSection = dynamic(() => import("@/components/Products"), {
+  ssr: false,
+  loading: () => <SectionLoading message="Caricamento prodotti..." />,
 });
 
 const OffersSpotlightPopup = dynamic(
@@ -69,7 +89,7 @@ const HomePage = () => {
       <div className="text-white">
         <section className="py-12 lg:py-16 bg-gradient-to-b from-white/5 via-white/0 to-white/0">
           <div className="container">
-            <Offers
+            <OffersSection
               variant="homepage"
               heading="Offerte in Evidenza"
               subheading="Bundle e promozioni per stampatori e studi grafici che vogliono produrre fotoceramiche premium senza attese."
@@ -93,7 +113,7 @@ const HomePage = () => {
                 Notizie, lanci e promozioni dal mondo della fotoceramica professionale.
               </p>
             </div>
-            <NovitaCarousel />
+            <NovitaCarouselSection />
           </div>
         </section>
       </div>
@@ -135,7 +155,7 @@ const HomePage = () => {
       {/* Projects Section */}
       <div className="text-white">
         <section className="py-16 lg:py-20">
-          <Projects
+          <ProjectsSection
             title="I Nostri Progetti"
             subtitle="Scopri alcune delle realizzazioni che abbiamo seguito dall’idea alla messa in produzione."
             className="text-white"
@@ -161,7 +181,7 @@ const HomePage = () => {
                 Servizi per ottenere un prodotto perfetto.
               </p>
             </div>
-            <Services />
+            <ServicesSection />
           </div>
         </section>
       </div>
@@ -178,7 +198,7 @@ const HomePage = () => {
                 Scopri la nostra collezione di prodotti personalizzati in ceramica.
               </p>
             </div>
-            <Products />
+            <ProductsSection />
             <div className="text-center mt-12">
               <Link
                 href="/shop"

@@ -7,7 +7,7 @@ import { getImageUrl, getTextValue } from '@/sanity/lib/image';
 import { useSanityUIComponents } from '@/hooks/useSanityUIComponents';
 import SanityStyledComponent from '@/components/Common/SanityStyledComponent';
 import SanityLink from '@/components/Common/SanityLink';
-import { useState, useEffect, type CSSProperties } from 'react';
+import { useState, useEffect, useRef, type CSSProperties } from 'react';
 
 const DEFAULT_HERO_VIDEO_URL = 'https://www.youtube.com/watch?v=5Rpkhvj0eWY';
 
@@ -64,6 +64,8 @@ const heroDescriptionGlowStyle: CSSProperties = {
 const Hero = () => {
   const [hero, setHero] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [videoActive, setVideoActive] = useState(true);
+  const mediaRef = useRef<HTMLDivElement | null>(null);
   const { getComponent } = useSanityUIComponents();
   const extractYoutubeId = (url?: string | null) => {
     if (!url) return null;
@@ -129,6 +131,43 @@ const Hero = () => {
   const secondaryButtonComponent = getComponent('SecondaryButton');
 
   const youtubeEmbedUrl = getYoutubeEmbedUrl(hero?.videoUrl || DEFAULT_HERO_VIDEO_URL);
+  const heroPoster = hero?.heroImage ? getImageUrl(hero.heroImage) : null;
+  const handleActivateVideo = () => {
+    setVideoActive(true);
+  };
+
+  useEffect(() => {
+    if (videoActive) return;
+    const node = mediaRef.current;
+    if (!node) return;
+
+    const checkImmediateVisibility = () => {
+      const rect = node.getBoundingClientRect();
+      if (rect.top <= window.innerHeight * 0.9) {
+        setVideoActive(true);
+        return true;
+      }
+      return false;
+    };
+
+    if (typeof window !== 'undefined' && checkImmediateVisibility()) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          setVideoActive(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.25 },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [videoActive]);
 
   if (loading) {
     return (
@@ -259,15 +298,41 @@ const Hero = () => {
                   <div
                     className="hero-video-wrapper relative w-full max-w-[780px] lg:max-w-[800px] xl:max-w-[820px] lg:ml-auto overflow-hidden rounded-[32px] aspect-[16/9] lg:aspect-[18/9] bg-black/70"
                     style={{ animation: 'heroFloat 11s ease-in-out infinite' }}
+                    ref={mediaRef}
                   >
-                    <iframe
-                      src={youtubeEmbedUrl ?? undefined}
-                      title="Video presentazione LEM Solutions"
-                      className="absolute inset-0 h-full w-full z-[2]"
-                      allow="autoplay; encrypted-media; picture-in-picture"
-                      allowFullScreen
-                      loading="lazy"
-                    />
+                    {videoActive ? (
+                      <iframe
+                        src={youtubeEmbedUrl ?? undefined}
+                        title="Video presentazione LEM Solutions"
+                        className="absolute inset-0 h-full w-full z-[2]"
+                        allow="autoplay; encrypted-media; picture-in-picture"
+                        allowFullScreen
+                        loading="lazy"
+                      />
+                    ) : (
+                      <button
+                        type="button"
+                        className="absolute inset-0 z-[2] flex w-full items-center justify-center focus:outline-none relative overflow-hidden"
+                        onClick={handleActivateVideo}
+                        aria-label="Riproduci il video di presentazione"
+                      >
+                        {heroPoster ? (
+                          <Image
+                            src={heroPoster}
+                            alt="Anteprima video LEM Solutions"
+                            fill
+                            sizes="(min-width: 1024px) 50vw, 100vw"
+                            className="object-cover"
+                            priority
+                          />
+                        ) : (
+                          <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/30 to-black/60" />
+                        )}
+                        <span className="relative z-[3] flex h-20 w-20 items-center justify-center rounded-full bg-white/90 text-orange-500 shadow-2xl shadow-black/30">
+                          ►
+                        </span>
+                      </button>
+                    )}
                     <div className="pointer-events-none absolute inset-0 z-[3] bg-gradient-to-tr from-orange-500/25 via-transparent to-white/20 mix-blend-screen animate-pulse" />
                   </div>
                 ) : (

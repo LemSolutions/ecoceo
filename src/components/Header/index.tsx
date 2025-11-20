@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 import { getImageUrl } from '@/sanity/lib/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,7 +21,10 @@ import {
 
 import { safeFetch } from '@/sanity/lib/client';
 import { navbarServicesQuery } from '@/sanity/lib/queries';
-import MiniCart from '@/components/Shop/MiniCart';
+const MiniCart = dynamic(() => import('@/components/Shop/MiniCart'), {
+  ssr: false,
+  loading: () => <div className="h-7 w-7 rounded-full bg-white/20 animate-pulse" />,
+});
 
 interface HeaderProps {
   siteSettings?: any;
@@ -46,11 +50,9 @@ const Header = ({ siteSettings }: HeaderProps) => {
     const fetchServices = async () => {
       try {
         const servicesData = await safeFetch(navbarServicesQuery);
-        console.log('Services fetched:', servicesData);
-        
+
         // If no services from Sanity, use fallback services
         if (!servicesData || servicesData.length === 0) {
-          console.log('No services from Sanity, using fallback');
           setServices([
             { _id: 'fallback-1', name: 'Web Design', slug: { current: 'web-design' } },
             { _id: 'fallback-2', name: 'Sviluppo Web', slug: { current: 'sviluppo-web' } },
