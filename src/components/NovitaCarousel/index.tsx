@@ -7,7 +7,7 @@ import { safeFetch } from '@/sanity/lib/client';
 import { novitaQuery } from '@/sanity/lib/queries';
 import { getImageUrl, getTextValue } from '@/sanity/lib/image';
 
-const AUTO_INTERVAL = 1000;
+const AUTO_INTERVAL = 3000;
 
 const NovitaCarousel = () => {
   const [items, setItems] = useState<any[]>([]);
@@ -106,13 +106,13 @@ const NovitaCarousel = () => {
       onMouseEnter={() => setAutoPlay(false)}
       onMouseLeave={() => setAutoPlay(true)}
     >
-      <div className="relative h-[280px] sm:h-[360px] lg:h-full lg:min-h-[480px] bg-black/40 flex items-center justify-center">
+      <div className="relative h-[280px] sm:h-[360px] lg:h-full lg:min-h-[480px] bg-black/40 flex items-center justify-center group">
         {visibleItems[current]?.mainImage ? (
           <Image
             src={getImageUrl(visibleItems[current].mainImage)}
             alt={getTextValue(visibleItems[current].title)}
             fill
-            className="object-contain"
+            className="object-cover transition-all duration-500 ease-out group-hover:scale-95 group-hover:object-contain"
             sizes="(min-width: 1280px) 60vw, (min-width: 768px) 70vw, 100vw"
             priority
           />
@@ -121,7 +121,7 @@ const NovitaCarousel = () => {
             Novità LEM
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
         <div className="absolute top-6 left-6 inline-flex items-center rounded-full bg-white/95 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-orange-600 shadow-lg shadow-black/20">
           {new Date(visibleItems[current]?._createdAt || Date.now()).toLocaleDateString('it-IT', {
             year: 'numeric',
@@ -163,7 +163,7 @@ const NovitaCarousel = () => {
               goToPrev();
               setAutoPlay(false);
             }}
-            className="inline-flex items-center rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-white/90 hover:bg-white/10 transition"
+            className="inline-flex items-center rounded-full px-5 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur shadow-lg transition-all"
           >
             Precedente
           </button>
@@ -172,7 +172,7 @@ const NovitaCarousel = () => {
               goToNext();
               setAutoPlay(false);
             }}
-            className="inline-flex items-center rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-white/90 hover:bg-white/10 transition"
+            className="inline-flex items-center rounded-full px-5 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur shadow-lg transition-all"
           >
             Successiva
           </button>

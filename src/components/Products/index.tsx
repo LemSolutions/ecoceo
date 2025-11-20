@@ -58,7 +58,7 @@ const Products = () => {
         <p className="text-white/80 mb-6">Al momento non ci sono prodotti disponibili nello shop.</p>
         <Link
           href="/shop"
-          className="inline-block bg-primary text-white px-6 py-3 rounded hover:bg-primary/80 transition"
+          className="inline-block bg-white text-blue-600 px-6 py-3 rounded font-semibold hover:bg-white/90 transition"
         >
           Vai allo Shop
         </Link>
@@ -200,10 +200,10 @@ const Products = () => {
                       Aggiungi al Carrello
                     </button>
                     
-                    <Link
-                      href="/shop"
-                      className="w-full inline-flex items-center justify-center px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200 group"
-                    >
+                <Link
+                  href="/shop"
+                  className="w-full inline-flex items-center justify-center px-6 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-white/90 transition-colors duration-200 group"
+                >
                       Vai allo Shop
                       <svg
                         className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200"

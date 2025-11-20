@@ -7,8 +7,9 @@ import { useSanityUIComponents } from '@/hooks/useSanityUIComponents';
 import SanityStyledComponent from '@/components/Common/SanityStyledComponent';
 import { useState, useEffect, useMemo } from 'react';
 
-const AUTO_SCROLL_INTERVAL = 12000;
-const TRANSITION_DURATION = 2200;
+const AUTO_SCROLL_INTERVAL = 3000;
+const TRANSITION_DURATION = 1800;
+const GAP_PX = 32; // gap-8 in Tailwind
 
 const SingleTestimonial = ({ testimonial, index }) => {
   const { getComponent } = useSanityUIComponents();
@@ -77,7 +78,7 @@ const Testimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [autoPlay, setAutoPlay] = useState(true);
+  const [transitionEnabled, setTransitionEnabled] = useState(true);
   const { getComponent } = useSanityUIComponents();
 
   useEffect(() => {
@@ -117,15 +118,32 @@ const Testimonials = () => {
   }, []);
 
   useEffect(() => {
-    if (!autoPlay || testimonials.length <= cardsPerView) return;
+    if (testimonials.length <= cardsPerView) return;
     const timer = setTimeout(() => {
-      setCurrentIndex((prev) => {
-        const maxIndex = Math.max(testimonials.length - cardsPerView, 0);
-        return prev >= maxIndex ? 0 : prev + 1;
-      });
+      setCurrentIndex((prev) => prev + 1);
     }, AUTO_SCROLL_INTERVAL);
     return () => clearTimeout(timer);
-  }, [autoPlay, testimonials.length, cardsPerView, currentIndex]);
+  }, [testimonials.length, cardsPerView, currentIndex]);
+
+  useEffect(() => {
+    if (testimonials.length <= cardsPerView) return;
+    if (currentIndex >= testimonials.length) {
+      setTransitionEnabled(false);
+      setCurrentIndex(0);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setTransitionEnabled(true));
+      });
+    }
+  }, [currentIndex, testimonials.length, cardsPerView]);
+
+  useEffect(() => {
+    setCurrentIndex(0);
+  }, [cardsPerView, testimonials.length]);
+
+  const extendedTestimonials = useMemo(() => {
+    if (testimonials.length <= cardsPerView) return testimonials;
+    return [...testimonials, ...testimonials.slice(0, cardsPerView)];
+  }, [testimonials, cardsPerView]);
 
   // Get UI components for Testimonials section
   const testimonialsSectionComponent = getComponent('TestimonialsSection');
@@ -154,24 +172,20 @@ const Testimonials = () => {
   }
 
   return (
-    <div
-      className="relative overflow-hidden"
-      onMouseEnter={() => setAutoPlay(false)}
-      onMouseLeave={() => setAutoPlay(true)}
-    >
+    <div className="relative overflow-hidden">
       <div
         className="flex gap-8"
         style={{
-          transform: `translateX(-${(100 / cardsPerView) * currentIndex}%)`,
-          width: `${(100 / cardsPerView) * testimonials.length}%`,
-          transition: autoPlay
+          transform: `translateX(calc(-${(100 / cardsPerView) * currentIndex}% - ${GAP_PX * currentIndex}px))`,
+          width: `calc(${(100 / cardsPerView) * extendedTestimonials.length}% + ${(extendedTestimonials.length - 1) * GAP_PX}px)`,
+          transition: transitionEnabled
             ? `transform ${TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)`
-            : undefined,
+            : 'none',
         }}
       >
-        {testimonials.map((testimonial, index) => (
+        {extendedTestimonials.map((testimonial, index) => (
           <div
-            key={testimonial._id || index}
+            key={`${testimonial._id || 'testimonial'}-${index}`}
             className="flex-shrink-0 w-full md:w-1/2 lg:w-1/3"
           >
             <SingleTestimonial testimonial={testimonial} index={index} />

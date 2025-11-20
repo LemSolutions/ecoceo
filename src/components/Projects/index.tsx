@@ -139,7 +139,7 @@ const Projects = ({
           </a>
           <Link
             href="/contact?subject=CONSULTING"
-            className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-8 py-3 text-base font-semibold text-white backdrop-blur transition-all duration-200 hover:border-white/40 hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+            className="group inline-flex items-center justify-center rounded-full px-8 py-3 text-base font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur shadow-lg transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300/60"
           >
             Prenota una Consulenza
           </Link>
@@ -290,7 +290,7 @@ const HomepageProjectCard = ({ project, index }: ProjectCardProps) => {
 
           <Link
             href={`/contact?subject=${encodeURIComponent(`PROGETTO ${getTextValue(project.title)}`)}`}
-            className="inline-flex items-center justify-center rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/15"
+            className="group inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur shadow-lg transition-all"
           >
             Richiedi una demo
           </Link>

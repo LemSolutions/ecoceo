@@ -139,7 +139,7 @@ const Offers: React.FC<OffersProps> = ({
               }`}
             >
               <div
-                className={`relative overflow-hidden ${
+                className={`relative overflow-hidden group ${
                   isSpotlight
                     ? 'h-72 lg:h-auto lg:min-h-[420px] lg:w-1/2 bg-black/30 flex items-center justify-center'
                     : 'h-56'
@@ -151,9 +151,7 @@ const Offers: React.FC<OffersProps> = ({
                       src={getImageUrl(offer.mainImage)}
                       alt={getTextValue(offer.title)}
                       fill
-                      className={`transition-transform duration-500 ${
-                        isSpotlight ? 'object-contain' : 'object-cover'
-                      }`}
+                      className="transition-all duration-500 ease-out object-cover group-hover:scale-95 group-hover:object-contain"
                       sizes={
                         isSpotlight
                           ? '(min-width: 1280px) 45vw, (min-width: 1024px) 55vw, 100vw'
@@ -198,9 +196,9 @@ const Offers: React.FC<OffersProps> = ({
               >
                 <div>
                   <h3
-                    className={`font-bold text-white mb-2 ${
+                    className={`font-bold mb-2 ${
                       isSpotlight ? 'text-3xl lg:text-4xl' : 'text-2xl'
-                    }`}
+                    } ${isSpotlight ? 'text-orange-400' : 'text-white'}`}
                   >
                     {getTextValue(offer.title)}
                   </h3>
@@ -254,7 +252,7 @@ const Offers: React.FC<OffersProps> = ({
                   {slugPath && (
                     <Link
                       href={slugPath}
-                      className="inline-flex items-center justify-center rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-white/90 transition hover:bg-white/15"
+                      className="group inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur shadow-lg transition-all"
                     >
                       Dettagli
                       <svg
