@@ -31,6 +31,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
   const [services, setServices] = useState([]);
+  const [servicesLoading, setServicesLoading] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -69,6 +70,8 @@ const Header = ({ siteSettings }: HeaderProps) => {
           { _id: 'fallback-4', name: 'Consulenza IT', slug: { current: 'consulenza-it' } }
         ]);
       }
+
+      setServicesLoading(false);
     };
 
     fetchServices();
@@ -150,38 +153,39 @@ const Header = ({ siteSettings }: HeaderProps) => {
                         />
                       </Link>
                     </li>
-                    {services.length > 0 && (
-                      <li className="group relative">
-                        <div className="relative">
-                          <button
-                            className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg"
-                            onMouseEnter={() => setIsServicesDropdownOpen(true)}
-                            onMouseLeave={() => setIsServicesDropdownOpen(false)}
-                          >
-                            Servizi
-                            <FontAwesomeIcon 
-                              icon={faChevronDown} 
-                              className="ml-1 h-4 w-4 transition-transform duration-200" 
-                            />
-                          </button>
-                          {/* Dropdown Menu */}
-                          <div
-                            className={`absolute left-0 mt-2 w-64 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition-all duration-200 lg:block ${
-                              isServicesDropdownOpen ? "opacity-100 visible" : "opacity-0 invisible"
-                            }`}
-                            onMouseEnter={() => setIsServicesDropdownOpen(true)}
-                            onMouseLeave={() => setIsServicesDropdownOpen(false)}
-                            style={{ backgroundColor: '#ffffff' }}
-                          >
-                            <div className="py-1">
-                              <Link
-                                href="/services"
-                                className="block px-4 py-3 text-sm hover:bg-blue-50 transition-colors duration-150 border-b border-gray-200"
-                                style={{ color: '#1f2937' }}
-                              >
-                                <div className="font-medium" style={{ color: '#111827' }}>Tutti i Servizi</div>
-                              </Link>
-                              {services.map((service, index) => (
+                    <li className="group relative">
+                      <div className="relative">
+                        <button
+                          className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg min-w-[110px]"
+                          onMouseEnter={() => setIsServicesDropdownOpen(true)}
+                          onMouseLeave={() => setIsServicesDropdownOpen(false)}
+                          disabled={servicesLoading}
+                        >
+                          Servizi
+                          <FontAwesomeIcon 
+                            icon={faChevronDown} 
+                            className="ml-1 h-4 w-4 transition-transform duration-200" 
+                          />
+                        </button>
+                        {/* Dropdown Menu */}
+                        <div
+                          className={`absolute left-0 mt-2 w-64 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition-all duration-200 lg:block ${
+                            isServicesDropdownOpen ? "opacity-100 visible" : "opacity-0 invisible"
+                          }`}
+                          onMouseEnter={() => setIsServicesDropdownOpen(true)}
+                          onMouseLeave={() => setIsServicesDropdownOpen(false)}
+                          style={{ backgroundColor: '#ffffff' }}
+                        >
+                          <div className="py-1">
+                            <Link
+                              href="/services"
+                              className="block px-4 py-3 text-sm hover:bg-blue-50 transition-colors duration-150 border-b border-gray-200"
+                              style={{ color: '#1f2937' }}
+                            >
+                              <div className="font-medium" style={{ color: '#111827' }}>Tutti i Servizi</div>
+                            </Link>
+                            {services.length > 0 ? (
+                              services.map((service, index) => (
                                 <Link
                                   key={service._id || index}
                                   href={service.url || `/services/${service.slug?.current}`}
@@ -190,12 +194,16 @@ const Header = ({ siteSettings }: HeaderProps) => {
                                 >
                                   <div className="font-medium" style={{ color: '#111827' }}>{service.name}</div>
                                 </Link>
-                              ))}
-                            </div>
+                              ))
+                            ) : (
+                              <div className="px-4 py-3 text-sm text-gray-500">
+                                Servizi in aggiornamento...
+                              </div>
+                            )}
                           </div>
                         </div>
-                      </li>
-                    )}
+                      </div>
+                    </li>
                     <li className="group relative">
                       <Link
                         href="/about"

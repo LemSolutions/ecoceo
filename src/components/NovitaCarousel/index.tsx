@@ -90,9 +90,25 @@ const NovitaCarousel = () => {
 
   if (loading) {
     return (
-      <div className="text-center py-12 text-white/70">
-        Caricamento novità...
-      </div>
+      <article className="relative grid gap-0 rounded-[32px] overflow-hidden bg-white/5 border border-white/10 shadow-[0_35px_100px_-40px_rgba(0,0,0,0.9)] lg:grid-cols-[60%_40%] animate-pulse">
+        <div className="relative h-[280px] sm:h-[360px] lg:h-full lg:min-h-[480px] bg-white/10" />
+        <div className="p-8 lg:p-10 space-y-6">
+          <div className="h-4 w-24 bg-white/20 rounded-full" />
+          <div className="space-y-3">
+            <div className="h-10 bg-white/20 rounded-lg" />
+            <div className="h-10 bg-white/10 rounded-lg w-3/4" />
+          </div>
+          <div className="space-y-3">
+            {[...Array(4)].map((_, idx) => (
+              <div key={idx} className="h-4 bg-white/10 rounded-full" />
+            ))}
+          </div>
+          <div className="flex flex-wrap gap-4">
+            <div className="h-12 w-40 bg-white/20 rounded-full" />
+            <div className="h-12 w-32 bg-white/10 rounded-full" />
+          </div>
+        </div>
+      </article>
     );
   }
 
