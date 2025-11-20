@@ -132,9 +132,13 @@ export default function RootLayout({
           <link rel="icon" href={siteSettings.favicon} />
         )}
         <title>{siteSettings?.title || 'LEM Solutions | Fotoceramica Professionale'}</title>
-        {siteSettings?.description && (
-          <meta name="description" content={siteSettings.description} />
-        )}
+        <meta
+          name="description"
+          content={
+            siteSettings?.description ||
+            "LEM Solutions offre consulenza, prodotti e supporto per la fotoceramica professionale."
+          }
+        />
 
         {/* Preconnect per Google Fonts (ottimizzazione) - non più necessario con next/font */}
         
