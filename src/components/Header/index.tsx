@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getImageUrl } from '@/sanity/lib/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
@@ -36,44 +36,45 @@ const Header = ({ siteSettings }: HeaderProps) => {
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
   const [services, setServices] = useState([]);
   const [servicesLoading, setServicesLoading] = useState(true);
+  const servicesFetchedRef = useRef(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsSticky(window.scrollY > 100);
+      const y = window.scrollY;
+      setIsSticky(y > 100);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
+    if (servicesFetchedRef.current) return;
+
     const fetchServices = async () => {
+      servicesFetchedRef.current = true;
       try {
         const servicesData = await safeFetch(navbarServicesQuery);
-
-        // If no services from Sanity, use fallback services
         if (!servicesData || servicesData.length === 0) {
           setServices([
             { _id: 'fallback-1', name: 'Web Design', slug: { current: 'web-design' } },
             { _id: 'fallback-2', name: 'Sviluppo Web', slug: { current: 'sviluppo-web' } },
             { _id: 'fallback-3', name: 'E-commerce', slug: { current: 'e-commerce' } },
-            { _id: 'fallback-4', name: 'Consulenza IT', slug: { current: 'consulenza-it' } }
+            { _id: 'fallback-4', name: 'Consulenza IT', slug: { current: 'consulenza-it' } },
           ]);
         } else {
           setServices(servicesData);
         }
       } catch (error) {
-        console.error('Error fetching services:', error);
-        // Use fallback services on error
         setServices([
           { _id: 'fallback-1', name: 'Web Design', slug: { current: 'web-design' } },
           { _id: 'fallback-2', name: 'Sviluppo Web', slug: { current: 'sviluppo-web' } },
           { _id: 'fallback-3', name: 'E-commerce', slug: { current: 'e-commerce' } },
-          { _id: 'fallback-4', name: 'Consulenza IT', slug: { current: 'consulenza-it' } }
+          { _id: 'fallback-4', name: 'Consulenza IT', slug: { current: 'consulenza-it' } },
         ]);
+      } finally {
+        setServicesLoading(false);
       }
-
-      setServicesLoading(false);
     };
 
     fetchServices();

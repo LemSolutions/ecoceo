@@ -171,6 +171,7 @@ const HomePage = () => {
 
       {/* Services Section */}
       <div className="text-white">
+        <div id="services-section-anchor" className="relative -top-24 h-0" aria-hidden="true" />
         <section className="py-16 lg:py-20">
           <div className="container">
             <div className="text-center mb-16">
