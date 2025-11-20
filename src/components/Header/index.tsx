@@ -5,22 +5,19 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useState, useEffect, useRef } from "react";
 import { getImageUrl } from '@/sanity/lib/image';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faHome, 
-  faUser, 
-  faShoppingBag, 
-  faBriefcase, 
-  faFileText, 
-  faComments,
-  faChevronDown,
-  faArrowRight,
-  faChartBar,
-  faNewspaper
-} from '@fortawesome/free-solid-svg-icons';
-
 import { safeFetch } from '@/sanity/lib/client';
 import { navbarServicesQuery } from '@/sanity/lib/queries';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome } from '@fortawesome/free-solid-svg-icons/faHome';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
+import { faUser } from '@fortawesome/free-solid-svg-icons/faUser';
+import { faShoppingBag } from '@fortawesome/free-solid-svg-icons/faShoppingBag';
+import { faBriefcase } from '@fortawesome/free-solid-svg-icons/faBriefcase';
+import { faFileLines } from '@fortawesome/free-solid-svg-icons/faFileLines';
+import { faNewspaper } from '@fortawesome/free-solid-svg-icons/faNewspaper';
+import { faComments } from '@fortawesome/free-solid-svg-icons/faComments';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight';
+import { faChartColumn } from '@fortawesome/free-solid-svg-icons/faChartColumn';
 const MiniCart = dynamic(() => import('@/components/Shop/MiniCart'), {
   ssr: false,
   loading: () => <div className="h-7 w-7 rounded-full bg-white/20 animate-pulse" />,
@@ -150,10 +147,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                         className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg"
                       >
                         Home
-                        <FontAwesomeIcon 
-                          icon={faHome} 
-                          className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" 
-                        />
+                        <FontAwesomeIcon icon={faHome} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
                       </Link>
                     </li>
                     <li className="group relative">
@@ -165,10 +159,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                           disabled={servicesLoading}
                         >
                           Servizi
-                          <FontAwesomeIcon 
-                            icon={faChevronDown} 
-                            className="ml-1 h-4 w-4 transition-transform duration-200" 
-                          />
+                          <FontAwesomeIcon icon={faChevronDown} className="ml-1 h-4 w-4 transition-transform duration-200" />
                         </button>
                         {/* Dropdown Menu */}
                         <div
@@ -213,10 +204,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                         className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg"
                       >
                         About
-                        <FontAwesomeIcon 
-                          icon={faUser} 
-                          className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" 
-                        />
+                        <FontAwesomeIcon icon={faUser} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
                       </Link>
                     </li>
                     <li className="group relative">
@@ -225,10 +213,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                         className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg"
                       >
                         Shop
-                        <FontAwesomeIcon 
-                          icon={faShoppingBag} 
-                          className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" 
-                        />
+                        <FontAwesomeIcon icon={faShoppingBag} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
                       </Link>
                     </li>
                     <li className="group relative">
@@ -237,10 +222,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                         className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg"
                       >
                         Progetti
-                        <FontAwesomeIcon 
-                          icon={faBriefcase} 
-                          className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" 
-                        />
+                        <FontAwesomeIcon icon={faBriefcase} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
                       </Link>
                     </li>
                     <li className="group relative">
@@ -249,10 +231,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                         className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg"
                       >
                         Blog
-                        <FontAwesomeIcon 
-                          icon={faFileText} 
-                          className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" 
-                        />
+                        <FontAwesomeIcon icon={faFileLines} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
                       </Link>
                     </li>
                     <li className="group relative">
@@ -261,10 +240,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                         className="novita-pulse group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg"
                       >
                         Novità
-                        <FontAwesomeIcon 
-                          icon={faNewspaper} 
-                          className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" 
-                        />
+                        <FontAwesomeIcon icon={faNewspaper} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
                       </Link>
                     </li>
                     <li className="group relative">
@@ -273,10 +249,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                         className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg"
                       >
                         Support
-                        <FontAwesomeIcon 
-                          icon={faComments} 
-                          className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" 
-                        />
+                        <FontAwesomeIcon icon={faComments} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
                       </Link>
                     </li>
                     {/* Dashboard button removed */}
@@ -289,20 +262,14 @@ const Header = ({ siteSettings }: HeaderProps) => {
                       className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-gray-900 to-black hover:from-black hover:to-gray-900 h-7 md:h-8 w-full shadow-lg"
                     >
                       Dashboard
-                      <FontAwesomeIcon 
-                        icon={faChartBar} 
-                        className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" 
-                      />
+                      <FontAwesomeIcon icon={faChartColumn} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
                     </Link>
                     <Link
                       href="/area-clienti"
                       className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 h-7 md:h-8 w-full shadow-lg"
                     >
                       Area Clienti
-                      <FontAwesomeIcon 
-                        icon={faArrowRight} 
-                        className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" 
-                      />
+                        <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
                     </Link>
                   </div>
                 </nav>
@@ -314,10 +281,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                   className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 h-7 md:h-8 w-auto shadow-lg"
                 >
                   Area Clienti
-                  <FontAwesomeIcon 
-                    icon={faArrowRight} 
-                    className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" 
-                  />
+                  <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
                 </Link>
               </div>
             </div>
