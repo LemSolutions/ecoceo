@@ -131,6 +131,7 @@ export default function RootLayout({
         {siteSettings?.favicon && (
           <link rel="icon" href={siteSettings.favicon} />
         )}
+        <title>{siteSettings?.title || 'LEM Solutions | Fotoceramica Professionale'}</title>
         {siteSettings?.description && (
           <meta name="description" content={siteSettings.description} />
         )}
