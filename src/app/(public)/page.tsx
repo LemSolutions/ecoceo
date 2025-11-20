@@ -1,20 +1,46 @@
 "use client";
-
 import Link from "next/link";
+import dynamic from "next/dynamic";
+import { useState, useEffect } from "react";
 import Hero from "@/components/Hero";
-import Testimonials from "@/components/Testimonials";
-import Blog from "@/components/Blog";
-import Contact from "@/components/Contact";
 import Services from "@/components/Services";
 import Products from "@/components/Products";
 import Projects from "@/components/Projects";
-import NovitaPopup from "@/components/_public/NovitaPopup";
 import Offers from "@/components/Offers";
-import OffersSpotlightPopup from "@/components/_public/OffersSpotlightPopup";
 import NovitaCarousel from "@/components/NovitaCarousel";
-import { useState, useEffect } from 'react';
-import { safeFetch } from '@/sanity/lib/client';
-import { siteSettingsQuery } from '@/sanity/lib/queries';
+import { safeFetch } from "@/sanity/lib/client";
+import { siteSettingsQuery } from "@/sanity/lib/queries";
+
+const SectionLoading = ({ message }: { message: string }) => (
+  <div className="text-center py-16 text-white/60 text-sm tracking-wide animate-pulse">
+    {message}
+  </div>
+);
+
+const TestimonialsSection = dynamic(() => import("@/components/Testimonials"), {
+  ssr: false,
+  loading: () => <SectionLoading message="Caricamento testimonianze..." />,
+});
+
+const BlogSection = dynamic(() => import("@/components/Blog"), {
+  ssr: false,
+  loading: () => <SectionLoading message="Caricamento articoli..." />,
+});
+
+const ContactSection = dynamic(() => import("@/components/Contact"), {
+  ssr: false,
+  loading: () => <SectionLoading message="Caricamento contatti..." />,
+});
+
+const OffersSpotlightPopup = dynamic(
+  () => import("@/components/_public/OffersSpotlightPopup"),
+  { ssr: false, loading: () => null },
+);
+
+const NovitaPopup = dynamic(() => import("@/components/_public/NovitaPopup"), {
+  ssr: false,
+  loading: () => null,
+});
 
 const HomePage = () => {
   const [siteSettings, setSiteSettings] = useState(null);
@@ -295,7 +321,7 @@ const HomePage = () => {
                 Le testimonianze dei nostri clienti soddisfatti che hanno scelto di lavorare con noi.
               </p>
             </div>
-            <Testimonials />
+            <TestimonialsSection />
           </div>
         </section>
       </div>
@@ -312,7 +338,7 @@ const HomePage = () => {
               Scopri il mondo della stampa digitale su ceramica
               </p>
             </div>
-            <Blog />
+            <BlogSection />
           </div>
         </section>
       </div>
@@ -331,7 +357,7 @@ const HomePage = () => {
                 Dal 1998 sviluppiamo soluzioni di fotoceramica professionale: consulenza dedicata, produzione certificata e assistenza rapida per portare sul mercato collezioni ceramiche personalizzate, targhe memoriali e superfici decorative ad alto impatto.
               </p>
             </div>
-            <Contact />
+            <ContactSection />
           </div>
         </section>
       </div>
