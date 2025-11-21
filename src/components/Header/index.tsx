@@ -143,8 +143,8 @@ const Header = ({ siteSettings }: HeaderProps) => {
                     isMobileMenuOpen ? "visible top-full opacity-100" : "invisible top-[120%] opacity-0"
                   }`}
                 >
-                  <ul className="block lg:flex lg:space-x-4 space-y-3 lg:space-y-0">
-                    <li className="group relative">
+                  <ul className="block lg:flex lg:space-x-4 space-y-3 lg:space-y-0 lg:items-center">
+                    <li className="group relative flex justify-end lg:justify-start">
                       <Link
                         href="/"
                         className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg"
@@ -153,7 +153,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                         <FontAwesomeIcon icon={faHome} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
                       </Link>
                     </li>
-                    <li className="group relative z-50">
+                    <li className="group relative z-50 flex justify-end lg:justify-start">
                       <div className="relative">
                         <button
                           className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg min-w-[110px]"
@@ -168,7 +168,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                         </button>
                         {/* Dropdown Menu */}
                         <div
-                          className={`absolute left-0 mt-2 w-64 rounded-md bg-white shadow-xl ring-1 ring-black ring-opacity-5 transition-all duration-200 lg:block z-[100] ${
+                          className={`absolute right-0 lg:left-0 mt-2 w-64 rounded-md bg-white shadow-xl ring-1 ring-black ring-opacity-5 transition-all duration-200 lg:block z-[100] ${
                             isServicesDropdownOpen ? "opacity-100 visible" : "opacity-0 invisible"
                           }`}
                           onMouseEnter={() => setIsServicesDropdownOpen(true)}
@@ -178,7 +178,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                           <div className="py-1">
                             <Link
                               href="/services"
-                              className="block px-4 py-3 text-sm hover:bg-blue-50 transition-colors duration-150 border-b border-gray-200"
+                              className="block px-4 py-3 text-sm hover:bg-blue-50 transition-colors duration-150 border-b border-gray-200 text-right lg:text-left"
                               style={{ color: '#1f2937' }}
                             >
                               <div className="font-medium" style={{ color: '#111827' }}>Tutti i Servizi</div>
@@ -188,14 +188,14 @@ const Header = ({ siteSettings }: HeaderProps) => {
                                 <Link
                                   key={service._id || index}
                                   href={service.url || `/services/${service.slug?.current}`}
-                                  className="block px-4 py-3 text-sm hover:bg-blue-50 transition-colors duration-150"
+                                  className="block px-4 py-3 text-sm hover:bg-blue-50 transition-colors duration-150 text-right lg:text-left"
                                   style={{ color: '#1f2937' }}
                                 >
                                   <div className="font-medium" style={{ color: '#111827' }}>{service.name}</div>
                                 </Link>
                               ))
                             ) : (
-                              <div className="px-4 py-3 text-sm text-gray-500">
+                              <div className="px-4 py-3 text-sm text-gray-500 text-right lg:text-left">
                                 Servizi in aggiornamento...
                               </div>
                             )}
@@ -203,7 +203,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                         </div>
                       </div>
                     </li>
-                    <li className="group relative">
+                    <li className="group relative flex justify-end lg:justify-start">
                       <Link
                         href="/about"
                         className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg"
@@ -212,7 +212,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                         <FontAwesomeIcon icon={faUser} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
                       </Link>
                     </li>
-                    <li className="group relative">
+                    <li className="group relative flex justify-end lg:justify-start">
                       <Link
                         href="/shop"
                         className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg"
@@ -221,7 +221,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                         <FontAwesomeIcon icon={faShoppingBag} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
                       </Link>
                     </li>
-                    <li className="group relative">
+                    <li className="group relative flex justify-end lg:justify-start">
                       <Link
                         href="/projects"
                         className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg"
@@ -230,7 +230,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                         <FontAwesomeIcon icon={faBriefcase} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
                       </Link>
                     </li>
-                    <li className="group relative">
+                    <li className="group relative flex justify-end lg:justify-start">
                       <Link
                         href="/blog"
                         className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg"
@@ -239,7 +239,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                         <FontAwesomeIcon icon={faFileLines} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
                       </Link>
                     </li>
-                    <li className="group relative">
+                    <li className="group relative flex justify-end lg:justify-start">
                       <Link
                         href="/novita"
                         className="novita-pulse group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg"
@@ -248,7 +248,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                         <FontAwesomeIcon icon={faNewspaper} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
                       </Link>
                     </li>
-                    <li className="group relative">
+                    <li className="group relative flex justify-end lg:justify-start">
                       <Link
                         href="/contact"
                         className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg"
@@ -260,16 +260,6 @@ const Header = ({ siteSettings }: HeaderProps) => {
                     {/* Dashboard button removed */}
                   </ul>
                   
-                  {/* Mobile CTA Buttons */}
-                  <div className="mt-6 lg:hidden space-y-3">
-                    <Link
-                      href="/area-clienti"
-                      className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 h-7 md:h-8 w-full shadow-lg"
-                    >
-                      Area Clienti
-                        <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
-                    </Link>
-                  </div>
                 </nav>
               </div>
               <div className="flex items-center justify-end pr-16 lg:pr-0 gap-4">
