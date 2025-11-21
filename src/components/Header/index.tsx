@@ -263,13 +263,6 @@ const Header = ({ siteSettings }: HeaderProps) => {
                   {/* Mobile CTA Buttons */}
                   <div className="mt-6 lg:hidden space-y-3">
                     <Link
-                      href="/dashboard"
-                      className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-gray-900 to-black hover:from-black hover:to-gray-900 h-7 md:h-8 w-full shadow-lg"
-                    >
-                      Dashboard
-                      <FontAwesomeIcon icon={faChartColumn} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
-                    </Link>
-                    <Link
                       href="/area-clienti"
                       className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 h-7 md:h-8 w-full shadow-lg"
                     >
