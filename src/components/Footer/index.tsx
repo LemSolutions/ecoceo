@@ -177,7 +177,9 @@ const Footer = () => {
           {/* Social Media Section */}
           <div className="border-t border-gray-300/30 py-8 mt-8">
             <div className="text-center text-white">
-              <h3 className="text-white text-2xl font-bold mb-6">Seguici sui Social</h3>
+              <h3 className="text-2xl font-bold mb-6 text-white tracking-wide uppercase">
+                Seguici sui Social
+              </h3>
               <div className="flex justify-center space-x-6">
                 {/* Facebook */}
                 <a
@@ -215,7 +217,7 @@ const Footer = () => {
 
                 {/* LinkedIn */}
                 <a
-                  href="https://www.linkedin.com/company/105386112/"
+                  href="https://www.linkedin.com/in/lino-morano-2ba8712b8/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-white/20 backdrop-blur/30 hover:bg-white/30 flex h-16 w-16 items-center justify-center rounded-full text-white hover:text-orange-300 transition duration-300 ease-in-out transform hover:scale-110"

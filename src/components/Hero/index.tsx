@@ -293,7 +293,7 @@ const Hero = () => {
 
             {/* Right Column - Media */}
             <div className="w-full px-4 lg:w-1/2">
-              <div className="wow fadeInUp" data-wow-delay=".4s">
+              <div className="wow fadeInUp mt-16 lg:mt-0" data-wow-delay=".4s">
                 {youtubeEmbedUrl ? (
                   <div
                     className="hero-video-wrapper relative w-full max-w-[780px] lg:max-w-[800px] xl:max-w-[820px] lg:ml-auto overflow-hidden rounded-[32px] aspect-[16/9] lg:aspect-[18/9] bg-black/70"

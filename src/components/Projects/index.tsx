@@ -227,8 +227,8 @@ const HomepageProjectCard = ({ project, index }: ProjectCardProps) => {
       >
         <div>
           <h3
-            className={`font-bold text-white mb-2 ${
-              isSpotlight ? 'text-3xl lg:text-4xl' : 'text-2xl'
+            className={`font-bold mb-2 ${
+              isSpotlight ? '!text-black text-3xl lg:text-4xl' : 'text-white text-2xl'
             }`}
           >
             {getTextValue(project.title)}

@@ -277,7 +277,7 @@ const HomePage = () => {
 
               {/* LinkedIn */}
               <a
-                href="https://www.linkedin.com/company/105386112/"
+                href="https://www.linkedin.com/in/lino-morano-2ba8712b8/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-white/10 backdrop-blur/30 hover:bg-white/20 flex h-20 w-20 items-center justify-center rounded-full text-[#0a66c2] transition duration-500 ease-in-out shadow-lg animate-social-float delay-200 border border-white/30"

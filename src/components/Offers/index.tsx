@@ -197,8 +197,8 @@ const Offers: React.FC<OffersProps> = ({
                 <div>
                   <h3
                     className={`font-bold mb-2 ${
-                      isSpotlight ? 'text-3xl lg:text-4xl' : 'text-2xl'
-                    } ${isSpotlight ? 'text-orange-400' : 'text-white'}`}
+                      isSpotlight ? '!text-black text-3xl lg:text-4xl' : 'text-2xl text-white'
+                    }`}
                   >
                     {getTextValue(offer.title)}
                   </h3>

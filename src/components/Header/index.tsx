@@ -139,11 +139,11 @@ const Header = ({ siteSettings }: HeaderProps) => {
                 </button>
                 <nav
                   id="navbarCollapse"
-                  className={`navbar border-body-color/50 dark:border-body-color/20 dark:bg-dark absolute right-0 z-30 w-[280px] rounded-lg border-[.5px] bg-white/30 px-6 py-4 duration-300 lg:visible lg:static lg:w-auto lg:border-none lg:!bg-transparent lg:p-0 lg:opacity-100 ${
+                  className={`navbar border-body-color/50 dark:border-body-color/20 dark:bg-dark absolute right-0 z-30 w-[280px] rounded-lg border-[.5px] bg-white/20 backdrop-blur-xl px-6 py-4 duration-300 lg:visible lg:static lg:w-auto lg:border-none lg:!bg-transparent lg:p-0 lg:opacity-100 ${
                     isMobileMenuOpen ? "visible top-full opacity-100" : "invisible top-[120%] opacity-0"
                   }`}
                 >
-                  <ul className="block lg:flex lg:space-x-4">
+                  <ul className="block lg:flex lg:space-x-4 space-y-3 lg:space-y-0">
                     <li className="group relative">
                       <Link
                         href="/"
@@ -153,10 +153,11 @@ const Header = ({ siteSettings }: HeaderProps) => {
                         <FontAwesomeIcon icon={faHome} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
                       </Link>
                     </li>
-                    <li className="group relative">
+                    <li className="group relative z-50">
                       <div className="relative">
                         <button
                           className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg min-w-[110px]"
+                          onClick={() => setIsServicesDropdownOpen(!isServicesDropdownOpen)}
                           onMouseEnter={() => setIsServicesDropdownOpen(true)}
                           onMouseLeave={() => setIsServicesDropdownOpen(false)}
                           disabled={servicesLoading}
@@ -167,7 +168,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                         </button>
                         {/* Dropdown Menu */}
                         <div
-                          className={`absolute left-0 mt-2 w-64 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition-all duration-200 lg:block ${
+                          className={`absolute left-0 mt-2 w-64 rounded-md bg-white shadow-xl ring-1 ring-black ring-opacity-5 transition-all duration-200 lg:block z-[100] ${
                             isServicesDropdownOpen ? "opacity-100 visible" : "opacity-0 invisible"
                           }`}
                           onMouseEnter={() => setIsServicesDropdownOpen(true)}
