@@ -9,6 +9,7 @@ import Link from 'next/link';
 const Blog = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
@@ -18,9 +19,17 @@ const Blog = () => {
     const fetchPosts = async () => {
       try {
         const postsData = await safeFetch(postsQuery);
-        setPosts(postsData);
+        setPosts(Array.isArray(postsData) ? postsData : []);
+        setErrorMessage('');
       } catch (error) {
         console.error('Error fetching posts data:', error);
+        const planLimitReached = (error as Error)?.message?.toLowerCase?.().includes('plan_limit_reached');
+        setErrorMessage(
+          planLimitReached
+            ? 'Limite di banda Sanity raggiunto. Riprova più tardi o aggiorna il piano su sanity.io/manage.'
+            : 'Impossibile caricare gli articoli. Riprova più tardi.'
+        );
+        setPosts([]);
       } finally {
         setLoading(false);
       }
@@ -51,6 +60,22 @@ const Blog = () => {
       <div className="text-center py-16">
         <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
         <p className="mt-4 text-lg text-gray-600">Caricamento articoli...</p>
+      </div>
+    );
+  }
+
+  if (errorMessage) {
+    return (
+      <div className="text-center py-16">
+        <div className="max-w-md mx-auto space-y-4">
+          <div className="w-24 h-24 bg-red-100 rounded-full flex items-center justify-center mx-auto">
+            <svg className="w-12 h-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" />
+            </svg>
+          </div>
+          <h3 className="text-2xl font-bold text-gray-900">Impossibile mostrare gli articoli</h3>
+          <p className="text-gray-600">{errorMessage}</p>
+        </div>
       </div>
     );
   }

@@ -85,7 +85,7 @@ const Testimonials = () => {
     const fetchTestimonials = async () => {
       try {
         const testimonialsData = await safeFetch(testimonialsQuery);
-        setTestimonials(testimonialsData);
+        setTestimonials(Array.isArray(testimonialsData) ? testimonialsData : []);
       } catch (error) {
         console.error('Error fetching testimonials data:', error);
       } finally {

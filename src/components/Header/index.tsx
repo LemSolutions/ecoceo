@@ -260,6 +260,16 @@ const Header = ({ siteSettings }: HeaderProps) => {
                     {/* Dashboard button removed */}
                   </ul>
                   
+                  {/* Mobile CTA Buttons */}
+                  <div className="mt-6 lg:hidden space-y-3 flex justify-end">
+                    <Link
+                      href="/area-clienti"
+                      className="group px-4 py-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-sm font-semibold transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 shadow-lg w-64"
+                    >
+                      Area Clienti
+                        <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
+                    </Link>
+                  </div>
                 </nav>
               </div>
               <div className="flex items-center justify-end pr-16 lg:pr-0 gap-4">
