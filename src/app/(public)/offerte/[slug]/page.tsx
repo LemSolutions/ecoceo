@@ -61,22 +61,30 @@ const OfferDetailPage = () => {
         <Breadcrumb
           pageName={getTextValue(offer.title)}
           description={getTextValue(offer.subtitle) || 'Offerta speciale'}
+          showIntro={false}
         />
       </div>
 
       <section className="py-16 lg:py-24 text-white">
         <div className="container">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_380px]">
+          <div className="space-y-10">
             <article className="bg-white/10 backdrop-blur-md rounded-3xl overflow-hidden shadow-2xl border border-white/10">
               {offer.mainImage && (
-                <div className="relative h-80">
-                  <Image
-                    src={getImageUrl(offer.mainImage)}
-                    alt={getTextValue(offer.title)}
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="relative h-[420px] overflow-hidden bg-gradient-to-br from-black via-black/70 to-black/40 rounded-b-[36px]">
+                  <div className="absolute inset-0 opacity-40 blur-3xl bg-gradient-to-r from-orange-500/40 via-rose-500/30 to-transparent" />
+                  <div className="absolute inset-0 opacity-30 blur-3xl bg-gradient-to-l from-blue-600/40 via-purple-500/20 to-transparent" />
+                  <div className="relative h-full w-full flex items-center justify-center">
+                    <div className="relative h-full w-full">
+                      <Image
+                        src={getImageUrl(offer.mainImage)}
+                        alt={getTextValue(offer.title)}
+                        fill
+                        className="object-contain p-6"
+                        sizes="(min-width: 1024px) 50vw, 100vw"
+                      />
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                 </div>
               )}
 
@@ -101,54 +109,54 @@ const OfferDetailPage = () => {
                     <PortableText value={offer.details} />
                   </div>
                 )}
+
+                {(offer.priceDiscounted || offer.priceOriginal) && (
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+                    <div>
+                      <p className="text-sm uppercase tracking-[0.4em] text-white/60 mb-2">
+                        Investimento
+                      </p>
+                      <div className="flex items-end gap-3">
+                        {offer.priceDiscounted && (
+                          <span className="text-4xl font-bold text-orange-300">
+                            €
+                            {new Intl.NumberFormat('it-IT', {
+                              minimumFractionDigits: 0,
+                            }).format(offer.priceDiscounted)}
+                          </span>
+                        )}
+                        {offer.priceOriginal && (
+                          <span className="text-lg text-white/50 line-through">
+                            €
+                            {new Intl.NumberFormat('it-IT', {
+                              minimumFractionDigits: 0,
+                            }).format(offer.priceOriginal)}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+                      <Link
+                        href={
+                          offer.ctaUrl ||
+                          'mailto:commerciale@lemsolutions.it?subject=Offerta Fotoceramica'
+                        }
+                        className="flex-1 sm:flex-none sm:min-w-[240px] inline-flex justify-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-8 py-4 text-base font-semibold text-white shadow-xl shadow-orange-500/40 hover:brightness-110 whitespace-nowrap"
+                      >
+                        {offer.ctaLabel || 'Richiedi Preventivo'}
+                      </Link>
+                      <Link
+                        href="/offerte"
+                        className="flex-1 inline-flex items-center justify-center rounded-full border border-blue-400/30 px-8 py-4 text-base font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 shadow-xl"
+                      >
+                        Torna alle Offerte
+                      </Link>
+                    </div>
+                  </div>
+                )}
               </div>
             </article>
-
-            <aside className="bg-white/5 border border-white/10 rounded-3xl p-8 space-y-6 shadow-xl">
-              {(offer.priceDiscounted || offer.priceOriginal) && (
-                <div>
-                  <p className="text-sm uppercase tracking-[0.4em] text-white/60 mb-2">
-                    Investimento
-                  </p>
-                  <div className="flex items-end gap-3">
-                    {offer.priceDiscounted && (
-                      <span className="text-4xl font-bold text-orange-300">
-                        €
-                        {new Intl.NumberFormat('it-IT', {
-                          minimumFractionDigits: 0,
-                        }).format(offer.priceDiscounted)}
-                      </span>
-                    )}
-                    {offer.priceOriginal && (
-                      <span className="text-lg text-white/50 line-through">
-                        €
-                        {new Intl.NumberFormat('it-IT', {
-                          minimumFractionDigits: 0,
-                        }).format(offer.priceOriginal)}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              <div className="space-y-3">
-                <Link
-                  href={
-                    offer.ctaUrl ||
-                    'mailto:commerciale@lemsolutions.it?subject=Offerta Fotoceramica'
-                  }
-                  className="w-full inline-flex justify-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-500/50 hover:brightness-110"
-                >
-                  {offer.ctaLabel || 'Richiedi Preventivo'}
-                </Link>
-                <Link
-                  href="/offerte"
-                  className="w-full inline-flex justify-center rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white/90 hover:bg-white/10"
-                >
-                  Torna alle Offerte
-                </Link>
-              </div>
-            </aside>
           </div>
         </div>
       </section>

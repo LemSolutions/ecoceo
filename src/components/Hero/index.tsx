@@ -296,7 +296,7 @@ const Hero = () => {
               <div className="wow fadeInUp mt-16 lg:mt-0" data-wow-delay=".4s">
                 {youtubeEmbedUrl ? (
                   <div
-                    className="hero-video-wrapper relative w-full max-w-[780px] lg:max-w-[800px] xl:max-w-[820px] lg:ml-auto overflow-hidden rounded-[32px] aspect-[16/9] lg:aspect-[18/9] bg-black/70"
+                    className="hero-video-wrapper relative w-full max-w-[780px] lg:max-w-[800px] xl:max-w-[820px] lg:ml-auto xl:ml-[30px] overflow-hidden rounded-[32px] aspect-[16/9] lg:aspect-[18/9] bg-black/70"
                     style={{ animation: 'heroFloat 11s ease-in-out infinite' }}
                     ref={mediaRef}
                   >
@@ -337,7 +337,7 @@ const Hero = () => {
                   </div>
                 ) : (
                   <div
-                    className="hero-video-wrapper relative w-full max-w-[780px] lg:max-w-[800px] xl:max-w-[820px] lg:ml-auto rounded-[32px]"
+                    className="hero-video-wrapper relative w-full max-w-[780px] lg:max-w-[800px] xl:max-w-[820px] lg:ml-auto xl:ml-[30px] rounded-[32px]"
                     style={{ animation: 'heroFloat 11s ease-in-out infinite' }}
                   >
                     {hero?.heroImage ? (

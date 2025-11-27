@@ -14,6 +14,7 @@ declare global {
 }
 
 const STORAGE_KEY = 'novita_popup_seen';
+const OFFER_GATE_EVENT = 'offers-spotlight-ready';
 
 // Funzione di utilità per resettare il popup (per testing)
 // Chiama: window.resetNovitaPopup() nella console del browser
@@ -32,6 +33,34 @@ const NovitaPopup: React.FC<NovitaPopupProps> = ({ onClose }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [allNovita, setAllNovita] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [canShowAfterOffers, setCanShowAfterOffers] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const checkStatus = () => {
+      try {
+        const offersSeen = localStorage.getItem('offers_spotlight_seen') === 'true';
+        if (offersSeen) {
+          setCanShowAfterOffers(true);
+        }
+      } catch (error) {
+        console.error('Error reading offers spotlight status:', error);
+      }
+    };
+
+    checkStatus();
+
+    const handleGate = () => {
+      checkStatus();
+    };
+
+    window.addEventListener(OFFER_GATE_EVENT, handleGate);
+
+    return () => {
+      window.removeEventListener(OFFER_GATE_EVENT, handleGate);
+    };
+  }, []);
 
   // Verifica se il pop-up è già stato visto
   const hasSeenPopup = (): boolean => {
@@ -42,13 +71,6 @@ const NovitaPopup: React.FC<NovitaPopupProps> = ({ onClose }) => {
       console.error('Error reading localStorage:', error);
       return false;
     }
-  };
-
-  // Verifica se il browser è Chrome
-  const isChrome = (): boolean => {
-    if (typeof window === 'undefined') return false;
-    const userAgent = window.navigator.userAgent;
-    return /Chrome/.test(userAgent) && !/Edg|OPR|Brave/.test(userAgent);
   };
 
   // Verifica se Iubenda cookie banner è stato gestito
@@ -67,17 +89,12 @@ const NovitaPopup: React.FC<NovitaPopupProps> = ({ onClose }) => {
       const iubendaStorage = localStorage.getItem('_iub_cs-43054480') || 
                            localStorage.getItem('iubenda_consent');
       
-      // Se Iubenda non è ancora caricato o non ha mostrato il banner, aspetta
-      // Controlla se lo script Iubenda è presente
+      // Se Iubenda non è ancora caricato o non ha mostrato il banner,
+      // proseguiamo comunque per non bloccare l'esperienza utente
       const iubendaScriptLoaded = typeof window._iub !== 'undefined' || 
                                   document.querySelector('script[src*="iubenda"]');
       
-      // Se Iubenda è configurato ma non abbiamo ancora il consenso, aspetta
-      if (iubendaScriptLoaded && !hasIubendaCookie && !iubendaStorage) {
-        return false;
-      }
-      
-      // Se non c'è Iubenda o abbiamo già il consenso, procedi
+      // Procedi in ogni caso
       return true;
     } catch (error) {
       console.error('Error checking Iubenda consent:', error);
@@ -116,7 +133,7 @@ const NovitaPopup: React.FC<NovitaPopupProps> = ({ onClose }) => {
 
   // Logica di apertura automatica
   useEffect(() => {
-    if (loading) {
+    if (loading || !canShowAfterOffers) {
       console.log('🔍 NovitaPopup: Loading...');
       return;
     }
@@ -126,70 +143,49 @@ const NovitaPopup: React.FC<NovitaPopupProps> = ({ onClose }) => {
       return;
     }
 
-    console.log('🔍 NovitaPopup: Verifica condizioni apertura');
+      console.log('🔍 NovitaPopup: Verifica condizioni apertura');
     console.log('  - hasSeenPopup:', hasSeenPopup());
-    console.log('  - isChrome:', isChrome());
     console.log('  - novità trovate:', allNovita.length);
     console.log('  - hasIubendaConsent:', hasIubendaConsent());
 
     // Verifica le condizioni per l'apertura:
     // 1. Non deve essere già stato visto
-    // 2. Deve essere Chrome
-    // 3. Deve esserci almeno una novità disponibile
-    // 4. Iubenda cookie banner deve essere stato gestito (se presente)
-    if (!hasSeenPopup() && isChrome() && allNovita.length > 0 && hasIubendaConsent()) {
-      console.log('✅ NovitaPopup: Tutte le condizioni soddisfatte, apertura in 2 secondi...');
-      // Delay maggiore per assicurarsi che:
-      // - La pagina sia completamente caricata
-      // - Il cookie banner di Iubenda (se presente) sia stato gestito
-      // - Non ci siano conflitti di z-index
-      const timer = setTimeout(() => {
-        console.log('🎉 NovitaPopup: Apertura popup!');
-        setIsOpen(true);
-      }, 2000); // Delay aumentato a 2 secondi per rispettare Iubenda
-
-      return () => clearTimeout(timer);
+    // 2. Deve esserci almeno una novità disponibile
+    // 3. Iubenda cookie banner non deve bloccare (se presente)
+    if (
+      canShowAfterOffers &&
+      !hasSeenPopup() &&
+      allNovita.length > 0 &&
+      hasIubendaConsent()
+    ) {
+      console.log('🎉 NovitaPopup: Apertura popup immediata!');
+      setIsOpen(true);
     } else {
       console.log('❌ NovitaPopup: Condizioni non soddisfatte');
     }
-  }, [loading, allNovita]);
+  }, [loading, allNovita, canShowAfterOffers]);
 
   // Monitora il consenso Iubenda se non è ancora disponibile
   useEffect(() => {
-    if (loading || !allNovita || allNovita.length === 0 || hasSeenPopup() || !isChrome()) {
-      if (!isChrome()) {
-        console.log('❌ NovitaPopup: Browser non è Chrome');
-      }
+    if (
+      loading ||
+      !canShowAfterOffers ||
+      !allNovita ||
+      allNovita.length === 0 ||
+      hasSeenPopup()
+    ) {
       return;
     }
     
     // Se Iubenda è presente ma non abbiamo ancora il consenso, aspetta
     if (!hasIubendaConsent()) {
       console.log('⏳ NovitaPopup: In attesa del consenso Iubenda...');
-      // Controlla periodicamente se il consenso è stato dato
-      const checkInterval = setInterval(() => {
-        if (hasIubendaConsent() && !hasSeenPopup()) {
-          console.log('✅ NovitaPopup: Consenso Iubenda ricevuto, apertura popup!');
-          setIsOpen(true);
-          clearInterval(checkInterval);
-        }
-      }, 1000);
-
-      // Timeout di sicurezza: dopo 10 secondi, mostra comunque il pop-up
-      const timeout = setTimeout(() => {
-        console.log('⏰ NovitaPopup: Timeout raggiunto, apertura forzata');
-        clearInterval(checkInterval);
-        if (!hasSeenPopup()) {
-          setIsOpen(true);
-        }
-      }, 10000);
-
-      return () => {
-        clearInterval(checkInterval);
-        clearTimeout(timeout);
-      };
+      if (hasIubendaConsent() && !hasSeenPopup()) {
+        console.log('✅ NovitaPopup: Consenso Iubenda disponibile, apertura!');
+        setIsOpen(true);
+      }
     }
-  }, [loading, allNovita]);
+  }, [loading, allNovita, canShowAfterOffers]);
 
   // Gestione chiusura
   const handleClose = (): void => {
@@ -210,7 +206,7 @@ const NovitaPopup: React.FC<NovitaPopupProps> = ({ onClose }) => {
   };
 
   // Non renderizzare se non è aperto o non ci sono novità
-  if (!isOpen || allNovita.length === 0) {
+  if (!canShowAfterOffers || !isOpen || allNovita.length === 0) {
     return null;
   }
 

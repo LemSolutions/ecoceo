@@ -8,6 +8,7 @@ import { spotlightOfferQuery } from '@/sanity/lib/queries';
 import { getImageUrl, getTextValue } from '@/sanity/lib/image';
 
 const STORAGE_KEY = 'offers_spotlight_seen';
+const NOVITA_EVENT = 'offers-spotlight-ready';
 
 type SpotlightOffer = {
   _id: string;
@@ -25,7 +26,11 @@ type SpotlightOffer = {
 const OffersSpotlightPopup = () => {
   const [offer, setOffer] = useState<SpotlightOffer | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [shouldTriggerNovita, setShouldTriggerNovita] = useState(false);
+  const notifyNovitaPopup = () => {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new Event(NOVITA_EVENT));
+    }
+  };
 
   useEffect(() => {
     const fetchOffer = async () => {
@@ -33,13 +38,19 @@ const OffersSpotlightPopup = () => {
         const data = await safeFetch(spotlightOfferQuery);
         if (data?._id) {
           setOffer(data);
-          const seen = typeof window !== 'undefined' && localStorage.getItem(STORAGE_KEY) === 'true';
+          const seen =
+            typeof window !== 'undefined' && localStorage.getItem(STORAGE_KEY) === 'true';
           if (!seen) {
-            setTimeout(() => setIsOpen(true), 1200);
+            setIsOpen(true);
+          } else {
+            notifyNovitaPopup();
           }
+        } else {
+          notifyNovitaPopup();
         }
       } catch (error) {
         console.error('Error fetching spotlight offer', error);
+        notifyNovitaPopup();
       }
     };
 
@@ -50,10 +61,10 @@ const OffersSpotlightPopup = () => {
 
   const close = () => {
     setIsOpen(false);
-    setShouldTriggerNovita(true);
     if (typeof window !== 'undefined') {
       localStorage.setItem(STORAGE_KEY, 'true');
       localStorage.removeItem('novita_popup_seen');
+      notifyNovitaPopup();
     }
   };
 

@@ -89,6 +89,8 @@ const Offers: React.FC<OffersProps> = ({
     );
   }
 
+  const spotlightEnabled = isHomepage && offers.length > 2;
+
   const sectionHeading =
     heading || (isHomepage ? 'Offerte Attive' : 'Le Nostre Offerte');
   const sectionSubheading =
@@ -113,13 +115,13 @@ const Offers: React.FC<OffersProps> = ({
 
       <div
         className={`grid gap-8 ${
-          isHomepage
+          spotlightEnabled
             ? 'grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 auto-rows-fr'
             : 'grid-cols-1 md:grid-cols-2'
         }`}
       >
         {offers.map((offer, index) => {
-          const isSpotlight = isHomepage && index === 0;
+          const isSpotlight = spotlightEnabled && index === 0;
           const discounted = formatCurrency(offer.priceDiscounted);
           const original = formatCurrency(offer.priceOriginal);
           const slugPath =
@@ -132,33 +134,41 @@ const Offers: React.FC<OffersProps> = ({
           return (
             <div
               key={offer._id}
-              className={`group relative overflow-hidden rounded-2xl border border-white/10 transition-all duration-300 hover:-translate-y-2 ${
+              className={`group relative overflow-hidden rounded-2xl border border-white/10 transition-all duration-300 hover:-translate-y-2 flex flex-col ${
                 isSpotlight
-                  ? 'lg:col-span-2 xl:col-span-3 bg-gradient-to-r from-white/15 via-white/5 to-white/10 shadow-[0_50px_120px_-45px_rgba(0,0,0,0.95)] lg:flex lg:min-h-[420px] animate-offer-glow'
+                  ? 'lg:col-span-2 xl:col-span-3 bg-gradient-to-r from-white/15 via-white/5 to-white/10 shadow-[0_50px_120px_-45px_rgba(0,0,0,0.95)] lg:flex lg:flex-row lg:gap-8 lg:min-h-[420px] animate-offer-glow'
                   : 'bg-white/10 backdrop-blur-lg shadow-[0_25px_60px_-30px_rgba(0,0,0,0.8)]'
               }`}
             >
               <div
                 className={`relative overflow-hidden group ${
                   isSpotlight
-                    ? 'h-72 lg:h-auto lg:min-h-[420px] lg:w-1/2 bg-black/30 flex items-center justify-center'
-                    : 'h-56'
+                    ? 'lg:w-1/2 bg-black/30 flex items-center justify-center'
+                    : ''
                 }`}
               >
                 {offer.mainImage ? (
-                  <div className="relative h-full w-full overflow-hidden">
-                    <Image
-                      src={getImageUrl(offer.mainImage)}
-                      alt={getTextValue(offer.title)}
-                      fill
-                      className="transition-all duration-500 ease-out object-cover group-hover:scale-95 group-hover:object-contain"
-                      sizes={
+                  <div className="relative w-full">
+                    <div
+                      className={`relative w-full ${
                         isSpotlight
-                          ? '(min-width: 1280px) 45vw, (min-width: 1024px) 55vw, 100vw'
-                          : '(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw'
-                      }
-                      priority={isSpotlight}
-                    />
+                          ? 'h-[360px] sm:h-[420px] lg:h-[520px]'
+                          : 'h-[320px]'
+                      }`}
+                    >
+                      <Image
+                        src={getImageUrl(offer.mainImage)}
+                        alt={getTextValue(offer.title)}
+                        fill
+                        className="transition-all duration-500 ease-out object-contain w-full h-full p-2 sm:p-4 lg:p-6 drop-shadow-2xl group-hover:scale-[1.03]"
+                        sizes={
+                          isSpotlight
+                            ? '(min-width: 1280px) 45vw, (min-width: 1024px) 55vw, 100vw'
+                            : '(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw'
+                        }
+                        priority={isSpotlight}
+                      />
+                    </div>
                   </div>
                 ) : (
                   <div className="h-full w-full bg-gradient-to-br from-orange-400/60 to-red-500/80 flex items-center justify-center text-white font-semibold text-lg">
@@ -166,10 +176,10 @@ const Offers: React.FC<OffersProps> = ({
                   </div>
                 )}
                 <div
-                  className={`absolute inset-0 ${
+                  className={`absolute inset-0 pointer-events-none transition-opacity duration-500 ${
                     isSpotlight
-                      ? 'bg-gradient-to-r from-black/80 via-black/40 to-transparent'
-                      : 'bg-gradient-to-t from-black/70 via-black/20 to-transparent'
+                      ? 'bg-gradient-to-r from-black/70 via-black/25 to-transparent opacity-90 group-hover:opacity-45'
+                      : 'bg-gradient-to-t from-black/60 via-black/15 to-transparent opacity-85 group-hover:opacity-35'
                   }`}
                 />
 
@@ -188,63 +198,64 @@ const Offers: React.FC<OffersProps> = ({
               </div>
 
               <div
-                className={`p-6 space-y-4 ${
-                  isSpotlight
-                    ? 'lg:w-1/2 lg:p-8 lg:space-y-6'
-                    : ''
+                className={`px-6 pt-6 pb-4 flex flex-col h-full ${
+                  isSpotlight ? 'lg:w-1/2 lg:px-8 lg:pt-8 lg:pb-6' : ''
                 }`}
               >
-                <div>
-                  <h3
-                    className={`font-bold mb-2 ${
-                      isSpotlight ? '!text-black text-3xl lg:text-4xl' : 'text-2xl text-white'
-                    }`}
-                  >
-                    {getTextValue(offer.title)}
-                  </h3>
-                  {offer.subtitle && (
-                    <p
-                      className={`text-white/70 uppercase tracking-widest ${
-                        isSpotlight ? 'text-base' : 'text-sm'
+                <div className={`space-y-3 ${isSpotlight ? 'lg:flex-1' : ''}`}>
+                  <div>
+                    <h3
+                      className={`font-bold mb-2 ${
+                        isSpotlight ? '!text-black text-3xl lg:text-4xl' : 'text-2xl text-white'
                       }`}
                     >
-                      {getTextValue(offer.subtitle)}
-                    </p>
-                  )}
-                </div>
-
-                {offer.description && (
-                  <p
-                    className={`text-white/80 leading-relaxed ${
-                      isSpotlight ? 'text-lg line-clamp-4' : 'text-base line-clamp-3'
-                    }`}
-                  >
-                    {getTextValue(offer.description)}
-                  </p>
-                )}
-
-                {(discounted || original) && (
-                  <div className="flex items-end gap-3">
-                    {discounted && (
-                      <span className="text-3xl font-bold text-orange-300">
-                        {discounted}
-                      </span>
-                    )}
-                    {original && (
-                      <span className="text-base text-white/60 line-through">
-                        {original}
-                      </span>
+                      {getTextValue(offer.title)}
+                    </h3>
+                    {offer.subtitle && (
+                      <p
+                        className={`text-white/70 uppercase tracking-widest ${
+                          isSpotlight ? 'text-base' : 'text-sm'
+                        }`}
+                      >
+                        {getTextValue(offer.subtitle)}
+                      </p>
                     )}
                   </div>
-                )}
 
-                <div className="flex flex-col sm:flex-row gap-3">
+                  {offer.description && (
+                    <p
+                      className={`text-white/80 leading-relaxed ${
+                        isSpotlight ? 'text-lg line-clamp-4' : 'text-base line-clamp-3'
+                      }`}
+                    >
+                      {getTextValue(offer.description)}
+                    </p>
+                  )}
+
+                  {(discounted || original) && (
+                    <div className="flex items-end gap-3">
+                      {discounted && (
+                        <span className="text-3xl font-bold text-orange-300 whitespace-nowrap">
+                          {discounted}
+                        </span>
+                      )}
+                      {original && (
+                        <span className="text-base text-white/60 line-through whitespace-nowrap">
+                          {original}
+                        </span>
+                      )}
+                    </div>
+                  )}
+
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-3 items-center mt-3 pb-0">
                   <Link
                     href={
                       offer.ctaUrl ||
                       'mailto:commerciale@lemsolutions.it?subject=OFFERTA FOTOCERAMICA'
                     }
-                    className="flex-1 inline-flex justify-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-500/40 transition hover:brightness-110"
+                    className="flex-1 inline-flex justify-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-500/40 transition hover:brightness-110 sm:min-w-[200px]"
                   >
                     {offer.ctaLabel || 'Richiedi Preventivo'}
                   </Link>
@@ -252,7 +263,7 @@ const Offers: React.FC<OffersProps> = ({
                   {slugPath && (
                     <Link
                       href={slugPath}
-                      className="group inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur shadow-lg transition-all"
+                      className="group inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur shadow-lg transition-all sm:flex-1 sm:min-w-[200px]"
                     >
                       Dettagli
                       <svg
