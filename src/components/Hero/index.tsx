@@ -9,7 +9,7 @@ import SanityStyledComponent from '@/components/Common/SanityStyledComponent';
 import SanityLink from '@/components/Common/SanityLink';
 import { useState, useEffect, useRef, type CSSProperties } from 'react';
 
-const DEFAULT_HERO_VIDEO_URL = 'https://www.youtube.com/watch?v=5Rpkhvj0eWY';
+const DEFAULT_HERO_VIDEO_URL = 'https://youtu.be/YrucyxBXu5Y?si=ie4u3ik3uEQrzk8G';
 
 const HERO_FLOAT_ANIMATION = `
   @keyframes heroFloat {
@@ -72,9 +72,15 @@ const Hero = () => {
     try {
       const parsedUrl = new URL(url);
       const hostname = parsedUrl.hostname.replace('www.', '');
+      
+      // Gestisci link youtu.be (es: https://youtu.be/YrucyxBXu5Y?si=...)
       if (hostname.includes('youtu.be')) {
-        return parsedUrl.pathname.replace('/', '');
+        // Rimuovi il primo slash e prendi solo l'ID (ignora i parametri query)
+        const pathParts = parsedUrl.pathname.split('/').filter(p => p);
+        return pathParts[0] || null;
       }
+      
+      // Gestisci link youtube.com
       if (hostname.includes('youtube.com')) {
         if (parsedUrl.pathname.startsWith('/embed/')) {
           return parsedUrl.pathname.split('/').pop();
@@ -82,6 +88,7 @@ const Hero = () => {
         if (parsedUrl.pathname.startsWith('/shorts/')) {
           return parsedUrl.pathname.split('/').pop();
         }
+        // Per link standard: youtube.com/watch?v=VIDEO_ID
         return parsedUrl.searchParams.get('v');
       }
       return null;
@@ -130,7 +137,9 @@ const Hero = () => {
   const primaryButtonComponent = getComponent('PrimaryButton');
   const secondaryButtonComponent = getComponent('SecondaryButton');
 
-  const youtubeEmbedUrl = getYoutubeEmbedUrl(hero?.videoUrl || DEFAULT_HERO_VIDEO_URL);
+  // Forza l'uso del nuovo video (ignora quello da Sanity se presente)
+  // Se vuoi usare il video da Sanity, rimuovi DEFAULT_HERO_VIDEO_URL e usa: hero?.videoUrl || DEFAULT_HERO_VIDEO_URL
+  const youtubeEmbedUrl = getYoutubeEmbedUrl(DEFAULT_HERO_VIDEO_URL);
   const heroPoster = hero?.heroImage ? getImageUrl(hero.heroImage) : null;
   const handleActivateVideo = () => {
     setVideoActive(true);
