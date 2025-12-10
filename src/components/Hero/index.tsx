@@ -9,7 +9,115 @@ import SanityStyledComponent from '@/components/Common/SanityStyledComponent';
 import SanityLink from '@/components/Common/SanityLink';
 import { useState, useEffect, useRef, type CSSProperties } from 'react';
 
-const DEFAULT_HERO_VIDEO_URL = 'https://youtu.be/YrucyxBXu5Y?si=ie4u3ik3uEQrzk8G';
+// Componente per il video di sfondo YouTube con blur e controllo Intersection Observer
+const HeroVideoBackground = () => {
+  const heroSectionRef = useRef<HTMLElement | null>(null);
+  const videoContainerRef = useRef<HTMLDivElement | null>(null);
+  const [isVisible, setIsVisible] = useState(true);
+  
+  const VIDEO_ID = 'YrucyxBXu5Y'; // Video di sfondo: https://youtu.be/YrucyxBXu5Y?si=PrsOKjUbUJvNzjQ0
+  // URL YouTube embed con autoplay, mute, loop e parametri ottimizzati per nascondere tutti i controlli
+  const youtubeEmbedUrl = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${VIDEO_ID}&controls=0&modestbranding=1&rel=0&playsinline=1&enablejsapi=1&start=0&disablekb=1&fs=0&iv_load_policy=3&showinfo=0&cc_load_policy=0&origin=${typeof window !== 'undefined' ? window.location.origin : ''}`;
+
+  useEffect(() => {
+    // Trova la sezione Hero usando l'ID
+    const heroSection = document.getElementById('home');
+    if (!heroSection) return;
+
+    heroSectionRef.current = heroSection;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        // Quando la Hero è visibile almeno al 90%, mostra il video
+        // Quando è meno visibile, nascondi il video con transizione fluida
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.9) {
+          setIsVisible(true);
+        } else {
+          setIsVisible(false);
+        }
+      },
+      { 
+        threshold: 0.9,
+        rootMargin: '0px'
+      }
+    );
+
+    observer.observe(heroSection);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  return (
+    <div
+      ref={videoContainerRef}
+      className="player-controls-background absolute inset-0 z-0 overflow-hidden"
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transition: 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+        pointerEvents: 'none',
+        willChange: 'opacity',
+      }}
+    >
+      {/* Container del video senza blur */}
+      <div 
+        className="absolute inset-0 w-full h-full"
+      >
+        <iframe
+          src={youtubeEmbedUrl}
+          title="Hero Background Video"
+          className="absolute inset-0 w-full h-full"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowFullScreen={false}
+          style={{
+            border: 'none',
+            pointerEvents: 'none',
+          }}
+          loading="eager"
+        />
+        {/* CSS per nascondere completamente i controlli YouTube */}
+        <style jsx>{`
+          .player-controls-background iframe {
+            pointer-events: none !important;
+          }
+          .player-controls-background :global(.ytp-chrome-top),
+          .player-controls-background :global(.ytp-chrome-bottom),
+          .player-controls-background :global(.ytp-chrome-controls),
+          .player-controls-background :global(.ytp-show-cards-title),
+          .player-controls-background :global(.ytp-watermark),
+          .player-controls-background :global(.ytp-title),
+          .player-controls-background :global(.ytp-pause-overlay),
+          .player-controls-background :global(.ytp-suggested-action),
+          .player-controls-background :global(.ytp-ce-element),
+          .player-controls-background :global(.ytp-impression-link),
+          .player-controls-background :global(.ytp-impression-link-content),
+          .player-controls-background :global(.ytp-impression-link-logo),
+          .player-controls-background :global(.ytp-impression-link-text),
+          .player-controls-background :global(.ytp-impression-link-text-link),
+          .player-controls-background :global(.ytp-impression-link-text-link:hover),
+          .player-controls-background :global(.ytp-impression-link-text-link:visited),
+          .player-controls-background :global(.ytp-impression-link-text-link:active),
+          .player-controls-background :global(.ytp-impression-link-text-link:focus),
+          .player-controls-background :global(.ytp-impression-link-text-link:link),
+          .player-controls-background :global(.ytp-impression-link-text-link:visited),
+          .player-controls-background :global(.ytp-impression-link-text-link:hover),
+          .player-controls-background :global(.ytp-impression-link-text-link:active),
+          .player-controls-background :global(.ytp-impression-link-text-link:focus),
+          .player-controls-background :global(.ytp-impression-link-text-link:link) {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+          }
+        `}</style>
+      </div>
+      {/* Overlay scuro per migliorare la leggibilità del testo */}
+      <div className="absolute inset-0 bg-black/30 z-[1]" />
+    </div>
+  );
+};
 
 const HERO_FLOAT_ANIMATION = `
   @keyframes heroFloat {
@@ -64,55 +172,7 @@ const heroDescriptionGlowStyle: CSSProperties = {
 const Hero = () => {
   const [hero, setHero] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [videoActive, setVideoActive] = useState(true);
-  const mediaRef = useRef<HTMLDivElement | null>(null);
   const { getComponent } = useSanityUIComponents();
-  const extractYoutubeId = (url?: string | null) => {
-    if (!url) return null;
-    try {
-      const parsedUrl = new URL(url);
-      const hostname = parsedUrl.hostname.replace('www.', '');
-      
-      // Gestisci link youtu.be (es: https://youtu.be/YrucyxBXu5Y?si=...)
-      if (hostname.includes('youtu.be')) {
-        // Rimuovi il primo slash e prendi solo l'ID (ignora i parametri query)
-        const pathParts = parsedUrl.pathname.split('/').filter(p => p);
-        return pathParts[0] || null;
-      }
-      
-      // Gestisci link youtube.com
-      if (hostname.includes('youtube.com')) {
-        if (parsedUrl.pathname.startsWith('/embed/')) {
-          return parsedUrl.pathname.split('/').pop();
-        }
-        if (parsedUrl.pathname.startsWith('/shorts/')) {
-          return parsedUrl.pathname.split('/').pop();
-        }
-        // Per link standard: youtube.com/watch?v=VIDEO_ID
-        return parsedUrl.searchParams.get('v');
-      }
-      return null;
-    } catch (error) {
-      console.warn('Invalid YouTube URL provided for hero video:', error);
-      return null;
-    }
-  };
-
-  const getYoutubeEmbedUrl = (videoUrl?: string | null) => {
-    const videoId = extractYoutubeId(videoUrl);
-    if (!videoId) return null;
-    const params = new URLSearchParams({
-      autoplay: '1',
-      mute: '1',
-      loop: '1',
-      playlist: videoId,
-      controls: '0',
-      modestbranding: '1',
-      rel: '0',
-      playsinline: '1',
-    });
-    return `https://www.youtube.com/embed/${videoId}?${params.toString()}`;
-  };
 
   useEffect(() => {
     const fetchHero = async () => {
@@ -136,47 +196,6 @@ const Hero = () => {
   const heroDescriptionComponent = getComponent('HeroDescription');
   const primaryButtonComponent = getComponent('PrimaryButton');
   const secondaryButtonComponent = getComponent('SecondaryButton');
-
-  // Forza l'uso del nuovo video (ignora quello da Sanity se presente)
-  // Se vuoi usare il video da Sanity, rimuovi DEFAULT_HERO_VIDEO_URL e usa: hero?.videoUrl || DEFAULT_HERO_VIDEO_URL
-  const youtubeEmbedUrl = getYoutubeEmbedUrl(DEFAULT_HERO_VIDEO_URL);
-  const heroPoster = hero?.heroImage ? getImageUrl(hero.heroImage) : null;
-  const handleActivateVideo = () => {
-    setVideoActive(true);
-  };
-
-  useEffect(() => {
-    if (videoActive) return;
-    const node = mediaRef.current;
-    if (!node) return;
-
-    const checkImmediateVisibility = () => {
-      const rect = node.getBoundingClientRect();
-      if (rect.top <= window.innerHeight * 0.9) {
-        setVideoActive(true);
-        return true;
-      }
-      return false;
-    };
-
-    if (typeof window !== 'undefined' && checkImmediateVisibility()) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (entry.isIntersecting) {
-          setVideoActive(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.25 },
-    );
-
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, [videoActive]);
 
   if (loading) {
     return (
@@ -204,7 +223,11 @@ const Hero = () => {
           backgroundPosition: 'center',
         } : {}}
       >
-        <div className="container">
+        {/* Video di sfondo YouTube con blur e controllo Intersection Observer */}
+        <HeroVideoBackground />
+        
+        {/* Contenuto principale della Hero con z-index più alto per essere sopra il video */}
+        <div className="container relative z-[2]">
           <div className="-mx-4 flex flex-wrap items-center">
             {/* Left Column - Text Content */}
             <div className="w-full px-4 lg:w-1/2">
@@ -249,7 +272,7 @@ const Hero = () => {
                       component={heroTitleComponent}
                       componentName="HeroTitle"
                       as="h1"
-                      className="mb-5 text-3xl font-bold leading-tight text-black sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight lg:text-6xl lg:leading-tight xl:text-7xl xl:leading-tight"
+                      className="mb-5 text-3xl font-bold leading-tight text-black sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight lg:text-6xl lg:leading-tight xl:text-7xl xl:leading-tight relative px-4 py-3 rounded-lg backdrop-blur bg-white/70"
                     >
                       {getTextValue(hero.title)}
                     </SanityStyledComponent>
@@ -258,7 +281,7 @@ const Hero = () => {
                       component={heroDescriptionComponent}
                       componentName="HeroDescription"
                       as="p"
-                      className="mb-12 text-base leading-relaxed text-black/80 sm:text-lg md:text-xl lg:text-2xl"
+                      className="mb-12 text-base leading-relaxed text-black/80 sm:text-lg md:text-xl lg:text-2xl relative px-4 py-3 rounded-lg backdrop-blur bg-white/70"
                     >
                       {getTextValue(hero.paragraph)}
                     </SanityStyledComponent>
@@ -300,71 +323,8 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* Right Column - Media */}
+            {/* Right Column - Vuota per mantenere il layout compatto */}
             <div className="w-full px-4 lg:w-1/2">
-              <div className="wow fadeInUp mt-16 lg:mt-0" data-wow-delay=".4s">
-                {youtubeEmbedUrl ? (
-                  <div
-                    className="hero-video-wrapper relative w-full max-w-[780px] lg:max-w-[800px] xl:max-w-[820px] lg:ml-auto xl:ml-[30px] overflow-hidden rounded-[32px] aspect-[16/9] lg:aspect-[18/9] bg-black/70"
-                    style={{ animation: 'heroFloat 11s ease-in-out infinite' }}
-                    ref={mediaRef}
-                  >
-                    {videoActive ? (
-                      <iframe
-                        src={youtubeEmbedUrl ?? undefined}
-                        title="Video presentazione LEM Solutions"
-                        className="absolute inset-0 h-full w-full z-[2]"
-                        allow="autoplay; encrypted-media; picture-in-picture"
-                        allowFullScreen
-                        loading="lazy"
-                      />
-                    ) : (
-                      <button
-                        type="button"
-                        className="absolute inset-0 z-[2] flex w-full items-center justify-center focus:outline-none relative overflow-hidden"
-                        onClick={handleActivateVideo}
-                        aria-label="Riproduci il video di presentazione"
-                      >
-                        {heroPoster ? (
-                          <Image
-                            src={heroPoster}
-                            alt="Anteprima video LEM Solutions"
-                            fill
-                            sizes="(min-width: 1024px) 50vw, 100vw"
-                            className="object-cover"
-                            priority
-                          />
-                        ) : (
-                          <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/30 to-black/60" />
-                        )}
-                        <span className="relative z-[3] flex h-20 w-20 items-center justify-center rounded-full bg-white/90 text-orange-500 shadow-2xl shadow-black/30">
-                          ►
-                        </span>
-                      </button>
-                    )}
-                    <div className="pointer-events-none absolute inset-0 z-[3] bg-gradient-to-tr from-orange-500/25 via-transparent to-white/20 mix-blend-screen animate-pulse" />
-                  </div>
-                ) : (
-                  <div
-                    className="hero-video-wrapper relative w-full max-w-[780px] lg:max-w-[800px] xl:max-w-[820px] lg:ml-auto xl:ml-[30px] rounded-[32px]"
-                    style={{ animation: 'heroFloat 11s ease-in-out infinite' }}
-                  >
-                    {hero?.heroImage ? (
-                      <Image
-                        src={getImageUrl(hero.heroImage)}
-                        alt="Hero Image"
-                        width={900}
-                        height={560}
-                        className="relative z-[2] mx-auto w-full lg:mr-0 rounded-[32px]"
-                      />
-                    ) : (
-                      <div className="relative z-[2] w-full aspect-[16/9] lg:aspect-[18/9] bg-gradient-to-br from-primary/20 to-primary/40 rounded-[32px] flex items-center justify-center text-xl font-semibold text-primary">
-                        Hero Media
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
             </div>
           </div>
         </div>
