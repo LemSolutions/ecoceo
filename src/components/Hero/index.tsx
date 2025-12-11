@@ -63,7 +63,7 @@ const HeroVideoBackground = () => {
   return (
     <div
       ref={videoContainerRef}
-      className="player-controls-background absolute inset-0 z-0 overflow-hidden"
+      className="player-controls-background absolute inset-0 z-0 overflow-hidden hidden md:block"
       style={{
         opacity: isVisible ? fadeOpacity : 0,
         transition: 'opacity 1.6s cubic-bezier(0.22, 0.61, 0.36, 1)',
@@ -125,6 +125,68 @@ const HeroVideoBackground = () => {
       </div>
       {/* Overlay scuro per migliorare la leggibilità del testo */}
       <div className="absolute inset-0 bg-black/30 z-[1]" />
+    </div>
+  );
+};
+
+// Componente per il video mobile con animazione su e giù
+const HeroVideoMobile = () => {
+  const VIDEO_ID = 'eeMQwUy38Ow';
+  const youtubeEmbedUrl = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${VIDEO_ID}&controls=0&modestbranding=1&rel=0&playsinline=1&enablejsapi=1&start=0&disablekb=1&fs=0&iv_load_policy=3&showinfo=0&cc_load_policy=0&origin=${typeof window !== 'undefined' ? window.location.origin : ''}`;
+
+  return (
+    <div className="md:hidden w-full mt-16 rounded-lg overflow-hidden shadow-lg video-float-mobile">
+      <div 
+        className="relative w-full aspect-video"
+      >
+        <iframe
+          src={youtubeEmbedUrl}
+          title="Hero Video Mobile"
+          className="absolute inset-0 w-full h-full rounded-lg"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowFullScreen={false}
+          style={{
+            border: 'none',
+          }}
+          loading="lazy"
+        />
+        <style jsx>{`
+          .video-float-mobile {
+            animation: videoFloatMobile 6s ease-in-out infinite;
+            will-change: transform;
+          }
+          
+          @keyframes videoFloatMobile {
+            0% {
+              transform: translateY(0px);
+            }
+            12.5% {
+              transform: translateY(-40px);
+            }
+            25% {
+              transform: translateY(-50px);
+            }
+            37.5% {
+              transform: translateY(-40px);
+            }
+            50% {
+              transform: translateY(0px);
+            }
+            62.5% {
+              transform: translateY(40px);
+            }
+            75% {
+              transform: translateY(50px);
+            }
+            87.5% {
+              transform: translateY(40px);
+            }
+            100% {
+              transform: translateY(0px);
+            }
+          }
+        `}</style>
+      </div>
     </div>
   );
 };
@@ -233,7 +295,7 @@ const Hero = () => {
           backgroundPosition: 'center',
         } : {}}
       >
-        {/* Video di sfondo YouTube con blur e controllo Intersection Observer */}
+        {/* Video di sfondo YouTube con blur e controllo Intersection Observer - Solo desktop */}
         <HeroVideoBackground />
         
         {/* Contenuto principale della Hero con z-index più alto per essere sopra il video */}
@@ -275,6 +337,8 @@ const Hero = () => {
                         Go to Sanity Studio
                       </SanityStyledComponent>
                     </div>
+                    {/* Video mobile sotto il bottone */}
+                    <HeroVideoMobile />
                   </>
                 ) : (
                   <>
@@ -282,7 +346,7 @@ const Hero = () => {
                       component={heroTitleComponent}
                       componentName="HeroTitle"
                       as="h1"
-                      className="mb-5 text-3xl font-bold leading-tight text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight lg:text-6xl lg:leading-tight xl:text-7xl xl:leading-tight relative px-4 py-3 rounded-lg backdrop-blur bg-white/15"
+                      className="mb-5 text-3xl font-bold leading-tight text-gray-900 sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight md:text-white lg:text-6xl lg:leading-tight xl:text-7xl xl:leading-tight relative px-4 py-3 rounded-lg md:backdrop-blur md:bg-white/15"
                     >
                       {getTextValue(hero.title)}
                     </SanityStyledComponent>
@@ -291,7 +355,7 @@ const Hero = () => {
                       component={heroDescriptionComponent}
                       componentName="HeroDescription"
                       as="p"
-                      className="mb-12 text-base leading-relaxed text-white sm:text-lg md:text-xl lg:text-2xl relative px-4 py-3 rounded-lg backdrop-blur bg-white/15"
+                      className="mb-12 text-base leading-relaxed text-gray-800 sm:text-lg md:text-xl md:text-white lg:text-2xl relative px-4 py-3 rounded-lg md:backdrop-blur md:bg-white/15"
                     >
                       {getTextValue(hero.paragraph)}
                     </SanityStyledComponent>
@@ -328,6 +392,8 @@ const Hero = () => {
                         </SanityStyledComponent>
                       )}
                     </div>
+                    {/* Video mobile sotto i bottoni */}
+                    <HeroVideoMobile />
                   </>
                 )}
               </div>
