@@ -197,7 +197,7 @@ const ServicesPage = () => {
 
             {/* CTA Section */}
             <div className="mt-16 text-center">
-              <div className="rounded-sm bg-primary bg-opacity-5 p-8 dark:bg-opacity-10">
+              <div className="rounded-sm bg-transparent p-8">
                 <h2 className="mb-4 text-2xl font-bold text-black dark:text-white">
                   Hai un Progetto Specifico?
                 </h2>
@@ -213,7 +213,7 @@ const ServicesPage = () => {
                   </a>
                   <a
                     href="/about"
-                    className="inline-flex items-center justify-center rounded-sm border border-primary px-8 py-4 text-base font-semibold text-primary duration-300 ease-in-out hover:bg-primary hover:text-white"
+                    className="inline-flex items-center justify-center rounded-sm bg-white px-8 py-4 text-base font-semibold text-cyan-500 duration-300 ease-in-out hover:bg-white/90"
                   >
                     Chi Siamo
                   </a>

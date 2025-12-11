@@ -11,7 +11,7 @@ const AUTO_SCROLL_INTERVAL = 5000; // 5 secondi
 const TRANSITION_DURATION = 600; // Durata transizione fluida (600ms)
 const TRANSITION_TIMING = 'ease-in-out'; // Funzione di temporizzazione rilassante
 
-const SingleTestimonial = ({ testimonial, index, isActive = false, isSide = false }) => {
+const SingleTestimonial = ({ testimonial, index, isActive = false, isSide = false, isLeft = false }) => {
   const { getComponent } = useSanityUIComponents();
   const testimonialCardComponent = getComponent('TestimonialCard');
   const testimonialContentComponent = getComponent('TestimonialContent');
@@ -24,16 +24,18 @@ const SingleTestimonial = ({ testimonial, index, isActive = false, isSide = fals
       className="w-full flex-shrink-0"
     >
       <div className="wow fadeInUp" data-wow-delay={`${index * 100}ms`}>
-        <div className={`group/tes relative rounded-sm bg-white/30 backdrop-blur/30 backdrop-blurp-8 shadow-testimonial dark:bg-dark lg:px-12 xl:p-14 transition-all duration-300 ${
+        <div className={`group/tes relative rounded-sm bg-white/30 backdrop-blur/30 backdrop-blurp-8 shadow-testimonial dark:bg-dark p-4 md:lg:px-12 md:xl:p-14 transition-all duration-300 ${
           isActive 
             ? 'opacity-100 scale-100' 
+            : isLeft 
+            ? 'opacity-90 scale-95' 
             : isSide 
             ? 'opacity-60 scale-90 blur-sm' 
             : 'opacity-0 scale-75'
         }`}>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="relative h-16 w-16 overflow-hidden rounded-full">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <div className="flex items-center gap-3 md:gap-4">
+              <div className="relative h-12 w-12 md:h-16 md:w-16 overflow-hidden rounded-full flex-shrink-0">
                 {testimonial.image ? (
                   <img
                     src={getImageUrl(testimonial.image)}
@@ -42,25 +44,25 @@ const SingleTestimonial = ({ testimonial, index, isActive = false, isSide = fals
                   />
                 ) : (
                   <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                    <span className="text-gray-500 text-sm">{getTextValue(testimonial.name)?.charAt(0)}</span>
+                    <span className="text-gray-500 text-xs md:text-sm">{getTextValue(testimonial.name)?.charAt(0)}</span>
                   </div>
                 )}
               </div>
-              <div>
+              <div className="min-w-0 flex-1">
                 <SanityStyledComponent
                   component={testimonialAuthorComponent}
                   componentName="TestimonialAuthor"
                   as="h3"
-                  className="text-xl font-semibold text-dark dark:text-white"
+                  className="text-base md:text-xl font-semibold text-dark dark:text-white truncate"
                 >
                   {getTextValue(testimonial.name)}
                 </SanityStyledComponent>
-                <p className="text-sm text-body-color">{getTextValue(testimonial.designation)}</p>
+                <p className="text-xs md:text-sm text-body-color truncate">{getTextValue(testimonial.designation)}</p>
               </div>
             </div>
-            <div className="flex gap-1">
+            <div className="flex gap-1 flex-shrink-0">
               {[...Array(5)].map((_, i) => (
-                <span key={i} className="text-yellow-500">
+                <span key={i} className="text-yellow-500 text-sm md:text-base">
                   {i < (testimonial.star || 5) ? "★" : "☆"}
                 </span>
               ))}
@@ -70,7 +72,7 @@ const SingleTestimonial = ({ testimonial, index, isActive = false, isSide = fals
             component={testimonialContentComponent}
             componentName="TestimonialContent"
             as="p"
-            className="mt-8 text-base leading-relaxed text-body-color dark:text-body-color-dark"
+            className="mt-4 md:mt-8 text-sm md:text-base leading-tight md:leading-relaxed text-body-color dark:text-body-color-dark testimonial-text-mobile"
           >
             "{getTextValue(testimonial.content)}"
           </SanityStyledComponent>
@@ -86,9 +88,19 @@ const Testimonials = () => {
   const [currentPosition, setCurrentPosition] = useState(0); // Posizione nel container esteso
   const [isPaused, setIsPaused] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const autoScrollTimerRef = useRef<NodeJS.Timeout | null>(null);
   const carouselTrackRef = useRef<HTMLDivElement | null>(null);
   const { getComponent } = useSanityUIComponents();
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const fetchTestimonials = async () => {
@@ -126,25 +138,27 @@ const Testimonials = () => {
 
   const extendedTestimonials = createExtendedArray();
 
-  // Calcola translateX: ogni recensione occupa 33.333% della larghezza
-  // Spostiamo il container di -33.333% per ogni movimento
+  // Calcola translateX: su mobile ogni recensione occupa 100% della larghezza, su desktop 33.333%
   const getTranslateX = () => {
     if (extendedTestimonials.length === 0) return 0;
-    // Ogni recensione occupa 100/3 = 33.333% della larghezza
-    // La posizione 0 mostra le prime 3 recensioni
-    // currentPosition indica quale recensione è al centro
-    return -(currentPosition - 1) * (100 / 3);
+    if (isMobile) {
+      return -(currentPosition - 1) * 100;
+    } else {
+      return -(currentPosition - 1) * (100 / 3);
+    }
   };
 
   // Funzione per determinare se una recensione è attiva o laterale
   const getTestimonialState = (index: number) => {
     const centerIndex = currentPosition;
     if (index === centerIndex) {
-      return { isActive: true, isSide: false };
-    } else if (index === centerIndex - 1 || index === centerIndex + 1) {
-      return { isActive: false, isSide: true };
+      return { isActive: true, isSide: false, isLeft: false };
+    } else if (index === centerIndex - 1) {
+      return { isActive: false, isSide: true, isLeft: true };
+    } else if (index === centerIndex + 1) {
+      return { isActive: false, isSide: true, isLeft: false };
     }
-    return { isActive: false, isSide: false };
+    return { isActive: false, isSide: false, isLeft: false };
   };
 
   // Funzione per andare alla recensione successiva con movimento continuo infinito
@@ -171,7 +185,9 @@ const Testimonials = () => {
       // Reset invisibile PRIMA dell'animazione - triplo requestAnimationFrame per sincronizzazione perfetta
       if (carouselTrackRef.current) {
         carouselTrackRef.current.style.transition = 'none';
-        const resetTranslateX = -(resetPosition - 1) * (100 / 3);
+        const resetTranslateX = isMobile 
+          ? -(resetPosition - 1) * 100 
+          : -(resetPosition - 1) * (100 / 3);
         carouselTrackRef.current.style.transform = `translateX(${resetTranslateX}%)`;
         void carouselTrackRef.current.offsetHeight;
         
@@ -207,7 +223,7 @@ const Testimonials = () => {
         setIsTransitioning(false);
     }, TRANSITION_DURATION);
     }
-  }, [testimonials.length, isTransitioning, currentPosition, extendedTestimonials.length]);
+  }, [testimonials.length, isTransitioning, currentPosition, extendedTestimonials.length, isMobile]);
 
   // Funzione per andare alla recensione precedente con movimento continuo infinito
   // Come un cane che si morde la coda - movimento fluido e passionale senza mai fermarsi
@@ -233,7 +249,9 @@ const Testimonials = () => {
       // Reset invisibile PRIMA dell'animazione - triplo requestAnimationFrame per sincronizzazione perfetta
       if (carouselTrackRef.current) {
         carouselTrackRef.current.style.transition = 'none';
-        const resetTranslateX = -(resetPosition - 1) * (100 / 3);
+        const resetTranslateX = isMobile 
+          ? -(resetPosition - 1) * 100 
+          : -(resetPosition - 1) * (100 / 3);
         carouselTrackRef.current.style.transform = `translateX(${resetTranslateX}%)`;
         void carouselTrackRef.current.offsetHeight;
         
@@ -269,7 +287,7 @@ const Testimonials = () => {
         setIsTransitioning(false);
     }, TRANSITION_DURATION);
     }
-  }, [testimonials.length, isTransitioning, currentPosition, extendedTestimonials.length]);
+  }, [testimonials.length, isTransitioning, currentPosition, extendedTestimonials.length, isMobile]);
 
   // Auto-scroll logic con pausa su hover
   useEffect(() => {
@@ -352,17 +370,33 @@ const Testimonials = () => {
           backface-visibility: hidden;
           perspective: 1000px;
         }
+        .testimonial-text-mobile {
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          line-height: 1.3;
+        }
+        @media (min-width: 768px) {
+          .testimonial-text-mobile {
+            display: block;
+            -webkit-line-clamp: unset;
+            -webkit-box-orient: unset;
+            overflow: visible;
+            line-height: 1.6;
+          }
+        }
       `}</style>
 
       {/* Frecce di navigazione */}
       <button
         onClick={goToPrevious}
         disabled={isTransitioning}
-        className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white backdrop-blur-sm rounded-full p-3 shadow-lg transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white backdrop-blur-sm rounded-full p-2 md:p-3 shadow-lg transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50 disabled:cursor-not-allowed"
         aria-label="Recensione precedente"
       >
         <svg 
-          className="w-6 h-6 text-gray-700" 
+          className="w-5 h-5 md:w-6 md:h-6 text-gray-700" 
           fill="none" 
           stroke="currentColor" 
           viewBox="0 0 24 24"
@@ -374,11 +408,11 @@ const Testimonials = () => {
       <button
         onClick={goToNext}
         disabled={isTransitioning}
-        className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white backdrop-blur-sm rounded-full p-3 shadow-lg transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white backdrop-blur-sm rounded-full p-2 md:p-3 shadow-lg transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50 disabled:cursor-not-allowed"
         aria-label="Recensione successiva"
       >
         <svg 
-          className="w-6 h-6 text-gray-700" 
+          className="w-5 h-5 md:w-6 md:h-6 text-gray-700" 
           fill="none" 
           stroke="currentColor" 
           viewBox="0 0 24 24"
@@ -389,7 +423,7 @@ const Testimonials = () => {
 
       {/* Container del carosello */}
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="relative flex items-center justify-center overflow-hidden min-h-[400px]">
+        <div className="relative flex items-center justify-center overflow-hidden min-h-[250px] md:min-h-[400px]">
           {/* Container principale con overflow nascosto per mostrare solo 3 schede */}
           <div className="relative w-full overflow-hidden">
             {/* Carousel track - contiene TUTTE le recensioni e si muove continuamente */}
@@ -402,20 +436,24 @@ const Testimonials = () => {
             >
               {/* Renderizza TUTTE le recensioni dell'array esteso - movimento continuo */}
               {extendedTestimonials.map((testimonial, index) => {
-                const { isActive, isSide } = getTestimonialState(index);
-                // Usa l'indice come chiave univoca per ogni recensione nell'array esteso
+                const { isActive, isSide, isLeft } = getTestimonialState(index);
                 return (
                   <div 
                     key={`extended-${index}`}
-                    className="w-[33.333%] flex-shrink-0 px-2 md:px-4 lg:px-6"
-            >
-              <SingleTestimonial 
+                    className={`flex-shrink-0 ${
+                      isMobile 
+                        ? 'w-full px-2'
+                        : 'w-[33.333%] px-2 md:px-4 lg:px-6'
+                    }`}
+                  >
+                    <SingleTestimonial 
                       testimonial={testimonial} 
                       index={index}
                       isActive={isActive}
                       isSide={isSide}
-              />
-            </div>
+                      isLeft={isLeft}
+                    />
+                  </div>
                 );
               })}
             </div>
