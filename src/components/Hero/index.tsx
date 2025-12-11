@@ -14,8 +14,9 @@ const HeroVideoBackground = () => {
   const heroSectionRef = useRef<HTMLElement | null>(null);
   const videoContainerRef = useRef<HTMLDivElement | null>(null);
   const [isVisible, setIsVisible] = useState(true);
+  const [fadeOpacity, setFadeOpacity] = useState(1);
   
-  const VIDEO_ID = 'HIXpZtCOs_s'; // Video di sfondo: https://youtu.be/HIXpZtCOs_s
+  const VIDEO_ID = 'eeMQwUy38Ow'; // Video di sfondo: https://youtu.be/eeMQwUy38Ow
   // URL YouTube embed con autoplay, mute, loop e parametri ottimizzati per nascondere tutti i controlli
   const youtubeEmbedUrl = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${VIDEO_ID}&controls=0&modestbranding=1&rel=0&playsinline=1&enablejsapi=1&start=0&disablekb=1&fs=0&iv_load_policy=3&showinfo=0&cc_load_policy=0&origin=${typeof window !== 'undefined' ? window.location.origin : ''}`;
 
@@ -29,16 +30,25 @@ const HeroVideoBackground = () => {
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
-        // Quando la Hero è visibile almeno al 90%, mostra il video
-        // Quando è meno visibile, nascondi il video con transizione fluida
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.9) {
-          setIsVisible(true);
-        } else {
-          setIsVisible(false);
-        }
+        const ratio = entry.intersectionRatio;
+
+        // Fade progress: scompare subito appena si esce dalla Hero
+        const fadeStart = 0.98; // inizio dissolvenza con minimo movimento
+        const fadeEnd = 0.6;   // opacità zero poco dopo
+        const clamped =
+          ratio >= fadeStart
+            ? 1
+            : ratio <= fadeEnd
+              ? 0
+              : (ratio - fadeEnd) / (fadeStart - fadeEnd);
+
+        // Ease-out per una dissolvenza più morbida e lenta
+        const eased = Math.pow(clamped, 1.5);
+        setFadeOpacity(eased);
+        setIsVisible(ratio > 0.05);
       },
       { 
-        threshold: 0.9,
+        threshold: Array.from({ length: 21 }, (_, i) => i * 0.05),
         rootMargin: '0px'
       }
     );
@@ -55,8 +65,8 @@ const HeroVideoBackground = () => {
       ref={videoContainerRef}
       className="player-controls-background absolute inset-0 z-0 overflow-hidden"
       style={{
-        opacity: isVisible ? 1 : 0,
-        transition: 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+        opacity: isVisible ? fadeOpacity : 0,
+        transition: 'opacity 1.6s cubic-bezier(0.22, 0.61, 0.36, 1)',
         pointerEvents: 'none',
         willChange: 'opacity',
       }}
@@ -272,7 +282,7 @@ const Hero = () => {
                       component={heroTitleComponent}
                       componentName="HeroTitle"
                       as="h1"
-                      className="mb-5 text-3xl font-bold leading-tight text-black sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight lg:text-6xl lg:leading-tight xl:text-7xl xl:leading-tight relative px-4 py-3 rounded-lg backdrop-blur bg-white/70"
+                      className="mb-5 text-3xl font-bold leading-tight text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight lg:text-6xl lg:leading-tight xl:text-7xl xl:leading-tight relative px-4 py-3 rounded-lg backdrop-blur bg-white/15"
                     >
                       {getTextValue(hero.title)}
                     </SanityStyledComponent>
@@ -281,7 +291,7 @@ const Hero = () => {
                       component={heroDescriptionComponent}
                       componentName="HeroDescription"
                       as="p"
-                      className="mb-12 text-base leading-relaxed text-black/80 sm:text-lg md:text-xl lg:text-2xl relative px-4 py-3 rounded-lg backdrop-blur bg-white/70"
+                      className="mb-12 text-base leading-relaxed text-white sm:text-lg md:text-xl lg:text-2xl relative px-4 py-3 rounded-lg backdrop-blur bg-white/15"
                     >
                       {getTextValue(hero.paragraph)}
                     </SanityStyledComponent>
