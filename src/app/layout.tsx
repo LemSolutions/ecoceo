@@ -69,6 +69,7 @@ const lato = Lato({
 const Header = dynamic(() => import("@/components/Header"), { ssr: true });
 const Footer = dynamic(() => import("@/components/Footer"), { ssr: true });
 const ScrollToTop = dynamic(() => import("@/components/ScrollToTop"), { ssr: false });
+const CookieConsent = dynamic(() => import("@/components/Common/CookieConsent"), { ssr: false });
 
 export default function RootLayout({
   children,
@@ -170,6 +171,7 @@ export default function RootLayout({
               {children}
               {!isStudioPage && !isDashboardPage && !isClientAreaPage && <Footer />}
               {!isStudioPage && !isDashboardPage && !isClientAreaPage && <ScrollToTop />}
+              {!isStudioPage && !isDashboardPage && !isClientAreaPage && <CookieConsent />}
             </AnalyticsProvider>
           </CartProvider>
         </Providers>
@@ -177,9 +179,10 @@ export default function RootLayout({
         {/* Iubenda Script - caricato dopo il rendering */}
         <Script
           id="iubenda-script"
-          src="https://cdn.iubenda.com/iubenda.js"
           strategy="lazyOnload"
-        />
+        >
+          {`(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);`}
+        </Script>
       </body>
     </html>
   );

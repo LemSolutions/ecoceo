@@ -6,6 +6,7 @@ import { getImageUrl } from '@/sanity/lib/image';
 import { safeFetch } from '@/sanity/lib/client';
 import { siteSettingsQuery } from '@/sanity/lib/queries';
 import { useState, useEffect } from 'react';
+import { CookieConsentLink } from '@/components/Common/CookieConsent';
 
 const Footer = () => {
   const [siteSettings, setSiteSettings] = useState(null);
@@ -313,18 +314,19 @@ const Footer = () => {
               <div className="flex flex-wrap justify-center gap-6">
                 <a 
                   href="https://www.iubenda.com/privacy-policy/43054480" 
-                  className="iubenda-nostyle iubenda-noiframe iubenda-embed text-gray-300 hover:text-orange-300 text-sm transition duration-300" 
+                  className="iubenda-black iubenda-noiframe iubenda-embed iubenda-noiframe text-gray-300 hover:text-orange-300 text-sm transition duration-300" 
                   title="Privacy Policy"
                 >
                   Privacy Policy
                 </a>
                 <a 
                   href="https://www.iubenda.com/privacy-policy/43054480/cookie-policy" 
-                  className="iubenda-nostyle iubenda-noiframe iubenda-embed text-gray-300 hover:text-orange-300 text-sm transition duration-300" 
+                  className="iubenda-black iubenda-noiframe iubenda-embed iubenda-noiframe text-gray-300 hover:text-orange-300 text-sm transition duration-300" 
                   title="Cookie Policy"
                 >
                   Cookie Policy
                 </a>
+                <CookieConsentLink />
               </div>
             </div>
           </div>

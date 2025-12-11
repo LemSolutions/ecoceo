@@ -15,7 +15,7 @@ const HeroVideoBackground = () => {
   const videoContainerRef = useRef<HTMLDivElement | null>(null);
   const [isVisible, setIsVisible] = useState(true);
   
-  const VIDEO_ID = 'YrucyxBXu5Y'; // Video di sfondo: https://youtu.be/YrucyxBXu5Y?si=PrsOKjUbUJvNzjQ0
+  const VIDEO_ID = 'HIXpZtCOs_s'; // Video di sfondo: https://youtu.be/HIXpZtCOs_s
   // URL YouTube embed con autoplay, mute, loop e parametri ottimizzati per nascondere tutti i controlli
   const youtubeEmbedUrl = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${VIDEO_ID}&controls=0&modestbranding=1&rel=0&playsinline=1&enablejsapi=1&start=0&disablekb=1&fs=0&iv_load_policy=3&showinfo=0&cc_load_policy=0&origin=${typeof window !== 'undefined' ? window.location.origin : ''}`;
 
