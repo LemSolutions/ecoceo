@@ -17,7 +17,7 @@ const TestimonialsSection = dynamic(() => import("@/components/Testimonials"), {
   loading: () => <SectionLoading message="Caricamento testimonianze..." />,
 });
 
-const BlogSection = dynamic(() => import("@/components/Blog"), {
+const BlogSection = dynamic(() => import("@/components/Blog/BlogSectionWrapper"), {
   ssr: false,
   loading: () => <SectionLoading message="Caricamento articoli..." />,
 });
@@ -243,10 +243,10 @@ const HomePage = () => {
                 href="https://www.facebook.com/lemsolutionsmonza"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white/10 backdrop-blur/30 hover:bg-white/20 flex h-20 w-20 items-center justify-center rounded-full text-[#0866ff] transition duration-500 ease-in-out shadow-lg animate-social-float border border-white/30"
+                className="social-icon-move-animation social-icon-glassmorphism social-icon-hover bg-white/20 backdrop-blur-md hover:bg-white/30 hover:backdrop-blur-sm flex h-20 w-20 items-center justify-center rounded-full text-[#0866ff] transition-all duration-500 ease-out shadow-xl animate-social-float border border-white/40 hover:scale-125 hover:shadow-2xl hover:shadow-[#0866ff]/50 hover:border-white/60 relative overflow-visible"
                 title="Seguici su Facebook"
               >
-                <svg width="40" height="40" viewBox="0 0 24 24" className="fill-current">
+                <svg width="40" height="40" viewBox="0 0 24 24" className="fill-current relative z-10">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
                 </svg>
               </a>
@@ -256,7 +256,7 @@ const HomePage = () => {
                 href="https://www.instagram.com/lem__solutions?utm_source=qr&igsh=ZnFoMTVqOHZpM2Zq"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white/10 backdrop-blur/30 hover:bg-white/20 flex h-20 w-20 items-center justify-center rounded-full text-[#f58529] transition duration-500 ease-in-out shadow-lg animate-social-float delay-100 border border-white/30"
+                className="social-icon-move-animation social-icon-glassmorphism relative bg-white/20 backdrop-blur-md hover:bg-white/30 hover:backdrop-blur-sm flex h-20 w-20 items-center justify-center rounded-full text-[#f58529] transition-all duration-500 ease-out shadow-xl animate-social-float delay-100 border border-white/40 hover:scale-125 hover:shadow-2xl hover:shadow-[#f58529]/50 hover:border-white/60"
                 title="Seguici su Instagram"
               >
                 <svg width="40" height="40" viewBox="0 0 24 24">
@@ -280,10 +280,10 @@ const HomePage = () => {
                 href="https://www.linkedin.com/in/lino-morano-2ba8712b8/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white/10 backdrop-blur/30 hover:bg-white/20 flex h-20 w-20 items-center justify-center rounded-full text-[#0a66c2] transition duration-500 ease-in-out shadow-lg animate-social-float delay-200 border border-white/30"
+                className="social-icon-move-animation social-icon-glassmorphism social-icon-hover bg-white/20 backdrop-blur-md hover:bg-white/30 hover:backdrop-blur-sm flex h-20 w-20 items-center justify-center rounded-full text-[#0a66c2] transition-all duration-500 ease-out shadow-xl animate-social-float delay-200 border border-white/40 hover:scale-125 hover:shadow-2xl hover:shadow-[#0a66c2]/50 hover:border-white/60 relative overflow-visible"
                 title="Seguici su LinkedIn"
               >
-                <svg width="40" height="40" viewBox="0 0 24 24" className="fill-current">
+                <svg width="40" height="40" viewBox="0 0 24 24" className="fill-current relative z-10">
                   <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                 </svg>
               </a>
@@ -293,10 +293,10 @@ const HomePage = () => {
                 href="https://www.youtube.com/watch?v=5Rpkhvj0eWY&pp=0gcJCfsJAYcqIYzv"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white/10 backdrop-blur/30 hover:bg-white/20 flex h-20 w-20 items-center justify-center rounded-full text-[#ff0000] transition duration-500 ease-in-out shadow-lg animate-social-float delay-300 border border-white/30"
+                className="social-icon-move-animation social-icon-glassmorphism social-icon-hover bg-white/20 backdrop-blur-md hover:bg-white/30 hover:backdrop-blur-sm flex h-20 w-20 items-center justify-center rounded-full text-[#ff0000] transition-all duration-500 ease-out shadow-xl animate-social-float delay-300 border border-white/40 hover:scale-125 hover:shadow-2xl hover:shadow-[#ff0000]/50 hover:border-white/60 relative overflow-visible"
                 title="Seguici su YouTube"
               >
-                <svg width="40" height="40" viewBox="0 0 24 24" className="fill-current">
+                <svg width="40" height="40" viewBox="0 0 24 24" className="fill-current relative z-10">
                   <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                 </svg>
               </a>
@@ -306,10 +306,10 @@ const HomePage = () => {
                 href="https://www.tiktok.com/@lem.solutions.cer?_r=1&_t=ZN-91YKpbcDm10"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-white/10 backdrop-blur/30 hover:bg-white/20 flex h-20 w-20 items-center justify-center rounded-full text-[#010101] transition duration-500 ease-in-out shadow-lg animate-social-float delay-400 border border-white/30"
+                className="social-icon-move-animation social-icon-glassmorphism social-icon-hover bg-white/20 backdrop-blur-md hover:bg-white/30 hover:backdrop-blur-sm flex h-20 w-20 items-center justify-center rounded-full text-[#010101] transition-all duration-500 ease-out shadow-xl animate-social-float delay-400 border border-white/40 hover:scale-125 hover:shadow-2xl hover:shadow-white/50 hover:border-white/60 relative overflow-visible"
                 title="Seguici su TikTok"
               >
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="relative z-10">
                   <path
                     fill="#25F4EE"
                     d="M10 9.4v2.5c-.4-.1-.7-.2-1.1-.2-2.1 0-3.8 1.7-3.8 3.8 0 1.2.6 2.3 1.5 3-1.7-.7-2.9-2.4-2.9-4.3 0-2.6 2.1-4.8 4.8-4.8.5 0 1 .1 1.5.2V9.4z"
@@ -399,12 +399,99 @@ const HomePage = () => {
           }
         }
 
+        @keyframes cameraFlash {
+          0% {
+            opacity: 0;
+            transform: scale(1);
+          }
+          30% {
+            opacity: 0.8;
+            transform: scale(1.05);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1.1);
+          }
+          70% {
+            opacity: 0.6;
+            transform: scale(1.05);
+          }
+          100% {
+            opacity: 0;
+            transform: scale(1);
+          }
+        }
+
         .animate-social-float {
           animation: socialFloat 4s ease-in-out infinite;
         }
 
         .delay-100 {
           animation-delay: 0.2s;
+        }
+
+        .social-icon-glassmorphism {
+          position: relative;
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15),
+                      0 4px 16px 0 rgba(0, 0, 0, 0.1),
+                      inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+          transition: backdrop-filter 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                      -webkit-backdrop-filter 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                      box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                      transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                      background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                      border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+          will-change: transform, backdrop-filter, box-shadow;
+        }
+
+        .social-icon-glassmorphism:hover {
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          box-shadow: 0 12px 48px 0 rgba(0, 0, 0, 0.2),
+                      0 6px 24px 0 rgba(0, 0, 0, 0.15),
+                      inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .social-icon-hover {
+          position: relative;
+        }
+
+        .social-icon-hover:hover {
+          transform: scale(1.25) !important;
+        }
+
+        .instagram-flash-effect {
+          position: relative;
+        }
+
+        .instagram-flash-effect::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
+          opacity: 0;
+          pointer-events: none;
+          z-index: 1;
+          transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .instagram-flash-effect:hover::before {
+          animation: cameraFlash 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .instagram-flash-effect:hover {
+          transform: scale(1.25) !important;
+        }
+
+        .instagram-flash-effect svg {
+          position: relative;
+          z-index: 2;
         }
 
         .delay-200 {
@@ -414,9 +501,37 @@ const HomePage = () => {
         .delay-300 {
           animation-delay: 0.6s;
         }
+
+        /* Animazione movimento unificata per tutti i social */
+        @keyframes socialIconMove {
+          0% {
+            transform: translateX(0) translateY(0) rotate(0deg);
+          }
+          25% {
+            transform: translateX(-3px) translateY(-3px) rotate(-5deg);
+          }
+          50% {
+            transform: translateX(3px) translateY(-3px) rotate(5deg);
+          }
+          75% {
+            transform: translateX(-2px) translateY(2px) rotate(-3deg);
+          }
+          100% {
+            transform: translateX(0) translateY(0) rotate(0deg);
+          }
+        }
+
+        .social-icon-move-animation:hover svg {
+          animation: socialIconMove 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        .social-icon-move-animation:not(:hover) svg {
+          animation: none;
+        }
       `}</style>
     </>
   );
 };
 
 export default HomePage;
+

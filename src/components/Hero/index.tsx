@@ -63,7 +63,7 @@ const HeroVideoBackground = () => {
   return (
     <div
       ref={videoContainerRef}
-      className="player-controls-background absolute inset-0 z-0 overflow-hidden hidden md:block"
+      className="player-controls-background absolute inset-0 z-0 overflow-hidden hidden lg:block"
       style={{
         opacity: isVisible ? fadeOpacity : 0,
         transition: 'opacity 1.6s cubic-bezier(0.22, 0.61, 0.36, 1)',
@@ -135,7 +135,7 @@ const HeroVideoMobile = () => {
   const youtubeEmbedUrl = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${VIDEO_ID}&controls=0&modestbranding=1&rel=0&playsinline=1&enablejsapi=1&start=0&disablekb=1&fs=0&iv_load_policy=3&showinfo=0&cc_load_policy=0&origin=${typeof window !== 'undefined' ? window.location.origin : ''}`;
 
   return (
-    <div className="md:hidden w-full mt-16 rounded-lg overflow-hidden shadow-lg video-float-mobile">
+    <div className="lg:hidden w-full max-w-2xl mx-auto mt-16 rounded-lg overflow-hidden shadow-lg video-float-mobile">
       <div 
         className="relative w-full aspect-video"
       >

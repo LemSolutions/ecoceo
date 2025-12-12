@@ -11,6 +11,7 @@ const Blog = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedPostId, setSelectedPostId] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 9;
 
@@ -29,12 +30,106 @@ const Blog = () => {
     fetchPosts();
   }, []);
 
-  // Filter posts based on search and category
+  // Normalizza una parola per il confronto (rimuove plurali e desinenze simili)
+  const normalizeWord = (word: string) => {
+    let normalized = word.toLowerCase();
+    // Rimuovi desinenze plurali comuni
+    if (normalized.endsWith('che')) normalized = normalized.slice(0, -3) + 'ca';
+    if (normalized.endsWith('ci')) normalized = normalized.slice(0, -2) + 'co';
+    if (normalized.endsWith('gi')) normalized = normalized.slice(0, -2) + 'go';
+    if (normalized.endsWith('i') && normalized.length > 3) normalized = normalized.slice(0, -1);
+    if (normalized.endsWith('e') && normalized.length > 3) normalized = normalized.slice(0, -1);
+    return normalized;
+  };
+
+  // Extract a unique keyword for each post from its title
+  const extractPostKeywords = () => {
+    const stopWords = new Set(['il', 'la', 'lo', 'gli', 'le', 'di', 'a', 'da', 'in', 'con', 'su', 'per', 'tra', 'fra', 'e', 'o', 'ma', 'se', 'che', 'un', 'una', 'uno', 'dei', 'delle', 'degli', 'del', 'della', 'dello', 'dalle', 'dai', 'dal', 'dall', 'dalla', 'dallo', 'alle', 'ai', 'al', 'all', 'alla', 'allo', 'sulle', 'sui', 'sul', 'sull', 'sulla', 'sullo', 'per', 'perché', 'come', 'quando', 'dove', 'chi', 'cosa', 'quale', 'quali', 'questo', 'questa', 'questi', 'queste', 'quello', 'quella', 'quelli', 'quelle', 'più', 'meno', 'molto', 'molti', 'molte', 'tanto', 'tanti', 'tante', 'tutto', 'tutti', 'tutte', 'ogni', 'ognuno', 'ognuna', 'alcuni', 'alcune', 'alcuno', 'alcuna', 'nessun', 'nessuna', 'nessuno', 'nessune', 'qualche', 'qualcosa', 'qualcuno', 'qualcuna', 'altro', 'altri', 'altre', 'altra']);
+    
+    const usedNormalized = new Set<string>();
+    const result: Array<{ postId: string; keyword: string; title: string }> = [];
+    
+    // Estrai tutte le parole candidate per ogni post
+    const postsWithCandidates = posts.map(post => {
+      const title = getTextValue(post.title).toLowerCase();
+      const words = title.split(/\s+/).filter(word => {
+        const cleanWord = word.replace(/[^\w]/g, '').toLowerCase();
+        return cleanWord.length > 3 && !stopWords.has(cleanWord);
+      });
+      
+      return {
+        postId: post._id,
+        title: getTextValue(post.title),
+        candidates: words
+      };
+    });
+    
+    // Assegna parole chiave uniche
+    postsWithCandidates.forEach(({ postId, title, candidates }) => {
+      let keyword = null;
+      
+      // Prova ogni candidato finché non trovi uno unico
+      for (const candidate of candidates) {
+        const normalized = normalizeWord(candidate);
+        const capitalized = candidate.charAt(0).toUpperCase() + candidate.slice(1);
+        
+        // Controlla se la parola normalizzata è già stata usata
+        if (!usedNormalized.has(normalized)) {
+          keyword = capitalized;
+          usedNormalized.add(normalized);
+          break;
+        }
+      }
+      
+      // Se non hai trovato una parola unica, prova combinazioni
+      if (!keyword && candidates.length >= 2) {
+        // Prova combinazione di due parole
+        for (let i = 0; i < candidates.length - 1; i++) {
+          const combo = candidates[i].charAt(0).toUpperCase() + candidates[i].slice(1) + 
+                       candidates[i + 1].charAt(0).toUpperCase() + candidates[i + 1].slice(1);
+          const normalized = normalizeWord(combo);
+          if (!usedNormalized.has(normalized)) {
+            keyword = combo;
+            usedNormalized.add(normalized);
+            break;
+          }
+        }
+      }
+      
+      // Se ancora non hai trovato, usa un fallback con numero
+      if (!keyword) {
+        let counter = 1;
+        const baseWord = candidates[0] ? 
+          candidates[0].charAt(0).toUpperCase() + candidates[0].slice(1) : 
+          'Articolo';
+        let fallback = baseWord + counter;
+        while (usedNormalized.has(normalizeWord(fallback))) {
+          counter++;
+          fallback = baseWord + counter;
+        }
+        keyword = fallback;
+        usedNormalized.add(normalizeWord(fallback));
+      }
+      
+      result.push({
+        postId: postId,
+        keyword: keyword,
+        title: title
+      });
+    });
+    
+    return result;
+  };
+
+  const postKeywords = extractPostKeywords();
+
+  // Filter posts based on search, category, and selected post
   const filteredPosts = posts.filter(post => {
     const matchesSearch = getTextValue(post.title).toLowerCase().includes(searchTerm.toLowerCase()) ||
                          getTextValue(post.body?.[0]?.children?.[0]?.text || '').toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'all' || post.categories?.includes(selectedCategory);
-    return matchesSearch && matchesCategory;
+    const matchesPost = !selectedPostId || post._id === selectedPostId;
+    return matchesSearch && matchesCategory && matchesPost;
   });
 
   // Pagination
@@ -118,6 +213,27 @@ const Blog = () => {
             ))}
           </div>
         </div>
+
+        {/* Post Keyword Buttons - One button per blog post */}
+        {postKeywords.length > 0 && (
+          <div className="mt-6 pt-6 border-t border-gray-200">
+            <div className="flex flex-wrap gap-2">
+              {postKeywords.map(({ postId, keyword }) => (
+                <button
+                  key={postId}
+                  onClick={() => setSelectedPostId(selectedPostId === postId ? '' : postId)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                    selectedPostId === postId
+                      ? 'bg-primary text-white shadow-md'
+                      : 'bg-white/80 backdrop-blur-sm text-primary hover:bg-white/90 hover:shadow-sm border border-white/50'
+                  }`}
+                >
+                  {keyword}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Results Count */}
         <div className="mt-6 pt-6 border-t border-gray-200">
@@ -275,6 +391,7 @@ const Blog = () => {
               onClick={() => {
                 setSearchTerm('');
                 setSelectedCategory('all');
+                setSelectedPostId('');
               }}
               className="inline-flex items-center bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors"
             >

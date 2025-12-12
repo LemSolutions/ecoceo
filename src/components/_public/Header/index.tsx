@@ -42,7 +42,11 @@ const Header = ({ siteSettings }: HeaderProps) => {
     fetchServices();
   }, []);
 
-
+  // Funzione per chiudere il menu mobile quando si clicca su un link
+  const handleLinkClick = () => {
+    setIsMobileMenuOpen(false);
+    setIsServicesDropdownOpen(false);
+  };
 
   return (
     <>
@@ -95,9 +99,9 @@ const Header = ({ siteSettings }: HeaderProps) => {
                   className="ring-primary absolute top-1/2 right-4 block translate-y-[-50%] rounded-lg px-3 py-[6px] focus:ring-2 lg:hidden"
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 >
-                  <span className="relative my-1.5 block h-0.5 w-[30px] bg-black transition-all duration-300 dark:bg-white/30 backdrop-blur/30 backdrop-blur"></span>
-                  <span className="relative my-1.5 block h-0.5 w-[30px] bg-black transition-all duration-300 dark:bg-white/30 backdrop-blur/30 backdrop-blur"></span>
-                  <span className="relative my-1.5 block h-0.5 w-[30px] bg-black transition-all duration-300 dark:bg-white/30 backdrop-blur/30 backdrop-blur"></span>
+                  <span className={`relative my-1.5 block h-0.5 w-[30px] transition-all duration-300 ${isSticky ? 'bg-black' : 'bg-black dark:bg-white'}`}></span>
+                  <span className={`relative my-1.5 block h-0.5 w-[30px] transition-all duration-300 ${isSticky ? 'bg-black' : 'bg-black dark:bg-white'}`}></span>
+                  <span className={`relative my-1.5 block h-0.5 w-[30px] transition-all duration-300 ${isSticky ? 'bg-black' : 'bg-black dark:bg-white'}`}></span>
                 </button>
                 <nav
                   id="navbarCollapse"
@@ -109,7 +113,8 @@ const Header = ({ siteSettings }: HeaderProps) => {
                     <li className="group relative">
                       <Link
                         href="/"
-                        className="group px-3 md:px-4 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 border border-orange-400/30 backdrop-blur h-8 md:h-9 w-auto shadow-lg"
+                        onClick={handleLinkClick}
+                        className="group px-3 md:px-4 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 border border-orange-400/30 h-8 md:h-9 w-auto shadow-lg"
                       >
                         Home
                         <svg 
@@ -133,7 +138,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                       <li className="group relative">
                         <div className="relative">
                           <button
-                            className="group px-3 md:px-4 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 border border-orange-400/30 backdrop-blur h-8 md:h-9 w-auto shadow-lg"
+                            className="group px-3 md:px-4 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 border border-orange-400/30 h-8 md:h-9 w-auto shadow-lg"
                             onMouseEnter={() => setIsServicesDropdownOpen(true)}
                             onMouseLeave={() => setIsServicesDropdownOpen(false)}
                           >
@@ -163,6 +168,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                             <div className="py-1">
                               <Link
                                 href="/services"
+                                onClick={handleLinkClick}
                                 className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-150 border-b border-gray-100"
                               >
                                 <div className="font-medium text-dark dark:text-white">Tutti i Servizi</div>
@@ -171,6 +177,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                                 <Link
                                   key={service._id || index}
                                   href={service.url || `/services/${service.slug?.current}`}
+                                  onClick={handleLinkClick}
                                   className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-150"
                                 >
                                   <div className="font-medium text-dark dark:text-white">{service.name}</div>
@@ -184,7 +191,8 @@ const Header = ({ siteSettings }: HeaderProps) => {
                     <li className="group relative">
                       <Link
                         href="/about"
-                        className="group px-3 md:px-4 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 border border-orange-400/30 backdrop-blur h-8 md:h-9 w-auto shadow-lg"
+                        onClick={handleLinkClick}
+                        className="group px-3 md:px-4 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 border border-orange-400/30 h-8 md:h-9 w-auto shadow-lg"
                       >
                         About
                         <svg 
@@ -207,7 +215,8 @@ const Header = ({ siteSettings }: HeaderProps) => {
                     <li className="group relative">
                       <Link
                         href="/shop"
-                        className="group px-3 md:px-4 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 border border-orange-400/30 backdrop-blur h-8 md:h-9 w-auto shadow-lg"
+                        onClick={handleLinkClick}
+                        className="group px-3 md:px-4 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 border border-orange-400/30 h-8 md:h-9 w-auto shadow-lg"
                       >
                         Shop
                         <svg 
@@ -231,7 +240,8 @@ const Header = ({ siteSettings }: HeaderProps) => {
                     <li className="group relative">
                       <Link
                         href="/projects"
-                        className="group px-3 md:px-4 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 border border-orange-400/30 backdrop-blur h-8 md:h-9 w-auto shadow-lg"
+                        onClick={handleLinkClick}
+                        className="group px-3 md:px-4 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 border border-orange-400/30 h-8 md:h-9 w-auto shadow-lg"
                       >
                         Progetti
                         <svg 
@@ -254,7 +264,8 @@ const Header = ({ siteSettings }: HeaderProps) => {
                     <li className="group relative">
                       <Link
                         href="/blog"
-                        className="group px-3 md:px-4 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 border border-orange-400/30 backdrop-blur h-8 md:h-9 w-auto shadow-lg"
+                        onClick={handleLinkClick}
+                        className="group px-3 md:px-4 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 border border-orange-400/30 h-8 md:h-9 w-auto shadow-lg"
                       >
                         Blog
                         <svg 
@@ -280,6 +291,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                     <li className="group relative">
                       <Link
                         href="/novita"
+                        onClick={handleLinkClick}
                         className="novita-pulse group px-3 md:px-4 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 border border-orange-400/30 backdrop-blur h-8 md:h-9 w-auto shadow-lg"
                       >
                         Novità
@@ -306,7 +318,8 @@ const Header = ({ siteSettings }: HeaderProps) => {
                     <li className="group relative">
                       <Link
                         href="/contact"
-                        className="group px-3 md:px-4 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 border border-orange-400/30 backdrop-blur h-8 md:h-9 w-auto shadow-lg"
+                        onClick={handleLinkClick}
+                        className="group px-3 md:px-4 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 border border-orange-400/30 h-8 md:h-9 w-auto shadow-lg"
                       >
                         Support
                         <svg 
@@ -332,6 +345,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                   <div className="mt-6 lg:hidden space-y-3">
                     <Link
                       href="/dashboard"
+                      onClick={handleLinkClick}
                       className="group px-3 md:px-4 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-gray-900 to-black hover:from-black hover:to-gray-900 h-8 md:h-9 w-full shadow-lg"
                     >
                       Dashboard
@@ -355,6 +369,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                     </Link>
                     <Link
                       href="/client-area"
+                      onClick={handleLinkClick}
                       className="group px-3 md:px-4 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 h-8 md:h-9 w-full shadow-lg"
                     >
                       Area Clienti
@@ -381,6 +396,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                 <MiniCart />
                 <Link
                   href="/client-area"
+                  onClick={handleLinkClick}
                   className="group px-3 md:px-4 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 h-8 md:h-9 w-auto shadow-lg"
                 >
                   Area Clienti

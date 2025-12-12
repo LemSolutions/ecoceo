@@ -129,27 +129,6 @@ const Projects = ({
             ),
           )}
         </div>
-
-        <div className="mt-16 flex flex-col items-stretch gap-4 sm:flex-row sm:flex-wrap sm:justify-center">
-          <a
-            href="mailto:commerciale@lemsolutions.it?subject=QUOTE LEM SOLUTIONS CERAMIC SYSTEMS"
-            className="hero-button-flash inline-flex items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 px-8 py-3 text-base font-semibold text-white shadow-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
-          >
-            Richiedi Preventivo Gratuito
-          </a>
-          <Link
-            href="/contact?subject=CONSULTING"
-            className="group inline-flex items-center justify-center rounded-full px-8 py-3 text-base font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur shadow-lg transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300/60"
-          >
-            Prenota una Consulenza
-          </Link>
-          <Link
-            href="/contact?subject=INFO"
-            className="inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-base font-semibold text-primary shadow-lg shadow-white/30 transition-all duration-200 hover:translate-y-[-2px] hover:bg-white/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-          >
-            Parlaci del Tuo Progetto
-          </Link>
-        </div>
       </div>
     </SanityStyledComponent>
   );

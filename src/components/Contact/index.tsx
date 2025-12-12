@@ -157,13 +157,13 @@ const Contact = () => {
           component={contactFormComponent}
           componentName="ContactForm"
           as="div"
-          className="wow fadeInUp mb-12 rounded-sm bg-white/30 backdrop-blur/30 backdrop-blurp-8 shadow-three dark:bg-dark dark:shadow-gray-dark sm:p-10 lg:px-12 xl:p-14"
+          className="wow fadeInUp mb-12 rounded-sm bg-white/30 backdrop-blur/30 backdrop-blurp-8 shadow-three dark:bg-dark dark:shadow-gray-dark p-5 sm:p-10 lg:px-12 xl:p-14"
         >
-          <h2 className="mb-8 text-3xl font-bold text-dark dark:text-white">
+          <h2 className="mb-5 text-2xl sm:mb-8 sm:text-3xl font-bold text-dark dark:text-white">
             Invia un Messaggio
           </h2>
           <form onSubmit={handleSubmit}>
-            <div className="mb-6">
+            <div className="mb-4 sm:mb-6">
               <SanityStyledComponent
                 component={contactInputComponent}
                 componentName="ContactInput"
@@ -174,10 +174,10 @@ const Contact = () => {
                 onChange={handleInputChange}
                 placeholder="Il tuo nome"
                 required
-                className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:focus:border-primary dark:focus:bg-[#242A38]"
+                className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-4 py-2.5 text-sm sm:px-6 sm:py-3 sm:text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:focus:border-primary dark:focus:bg-[#242A38]"
               />
             </div>
-            <div className="mb-6">
+            <div className="mb-4 sm:mb-6">
               <SanityStyledComponent
                 component={contactInputComponent}
                 componentName="ContactInput"
@@ -188,10 +188,10 @@ const Contact = () => {
                 onChange={handleInputChange}
                 placeholder="La tua email"
                 required
-                className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:focus:border-primary dark:focus:bg-[#242A38]"
+                className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-4 py-2.5 text-sm sm:px-6 sm:py-3 sm:text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:focus:border-primary dark:focus:bg-[#242A38]"
               />
             </div>
-            <div className="mb-6">
+            <div className="mb-4 sm:mb-6">
               <SanityStyledComponent
                 component={contactInputComponent}
                 componentName="ContactInput"
@@ -202,21 +202,21 @@ const Contact = () => {
                 onChange={handleInputChange}
                 placeholder="Oggetto"
                 required
-                className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:focus:border-primary dark:focus:bg-[#242A38]"
+                className="w-full rounded-sm border border-stroke bg-[#f8f8f8] px-4 py-2.5 text-sm sm:px-6 sm:py-3 sm:text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:focus:border-primary dark:focus:bg-[#242A38]"
               />
             </div>
-            <div className="mb-6">
+            <div className="mb-4 sm:mb-6">
               <SanityStyledComponent
                 component={contactTextareaComponent}
                 componentName="ContactTextarea"
                 as="textarea"
-                rows={6}
+                rows={4}
                 name="message"
                 value={formData.message}
                 onChange={handleInputChange}
                 placeholder="Il tuo messaggio"
                 required
-                className="w-full resize-none rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:focus:border-primary dark:focus:bg-[#242A38]"
+                className="w-full resize-none rounded-sm border border-stroke bg-[#f8f8f8] px-4 py-2.5 text-sm sm:px-6 sm:py-3 sm:text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:text-body-color-dark dark:focus:border-primary dark:focus:bg-[#242A38]"
               />
             </div>
             <div>
@@ -226,7 +226,7 @@ const Contact = () => {
                 as="button"
                 type="submit"
                 disabled={hasSubmitted}
-                className={`rounded-sm px-9 py-4 text-base font-medium text-white shadow-submit duration-300 dark:shadow-submit-dark ${hasSubmitted ? 'bg-gray-400 cursor-not-allowed' : 'bg-primary hover:bg-primary/90'}`}
+                className={`rounded-sm px-6 py-3 text-sm sm:px-9 sm:py-4 sm:text-base font-medium text-white shadow-submit duration-300 dark:shadow-submit-dark ${hasSubmitted ? 'bg-gray-400 cursor-not-allowed' : 'bg-primary hover:bg-primary/90'}`}
               >
                 {hasSubmitted ? 'Richiesta Inviata' : 'Invia Messaggio'}
               </SanityStyledComponent>
@@ -247,18 +247,18 @@ const Contact = () => {
 
       {/* Contact Information */}
       <div className="w-full px-4 lg:w-1/2 xl:w-5/12">
-        <div className="wow fadeInUp rounded-sm bg-white/30 backdrop-blur/30 backdrop-blurp-8 shadow-three dark:bg-dark dark:shadow-gray-dark sm:p-10 lg:px-12 xl:p-14">
-          <h3 className="mb-8 text-2xl font-bold text-dark dark:text-white">
+        <div className="wow fadeInUp rounded-sm bg-white/30 backdrop-blur/30 backdrop-blurp-8 shadow-three dark:bg-dark dark:shadow-gray-dark p-5 sm:p-10 lg:px-12 xl:p-14">
+          <h3 className="mb-5 text-xl sm:mb-8 sm:text-2xl font-bold text-dark dark:text-white">
             Hai Bisogno di Aiuto?
           </h3>
-          <p className="mb-8 text-base text-body-color dark:text-body-color-dark">
+          <p className="mb-5 text-sm sm:mb-8 sm:text-base text-body-color dark:text-body-color-dark">
             Il nostro team di supporto ti risponderà il prima possibile via email.
           </p>
           
           {/* Email */}
           {siteSettings?.contactInfo?.email && (
-            <div className="mb-8 flex w-full max-w-[370px]">
-              <div className="mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded bg-primary bg-opacity-5 text-primary dark:bg-opacity-10">
+            <div className="mb-5 sm:mb-8 flex w-full max-w-[370px]">
+              <div className="mr-4 flex h-[50px] w-[50px] sm:mr-6 sm:h-[60px] sm:w-[60px] items-center justify-center overflow-hidden rounded bg-primary bg-opacity-5 text-primary dark:bg-opacity-10">
                 <svg
                   width="28"
                   height="26"
@@ -270,10 +270,10 @@ const Contact = () => {
                 </svg>
               </div>
               <div className="w-full">
-                <h4 className="mb-1 text-xl font-bold text-dark dark:text-white">
+                <h4 className="mb-1 text-lg sm:text-xl font-bold text-dark dark:text-white">
                   Email
                 </h4>
-                <p className="text-base text-body-color dark:text-body-color-dark">
+                <p className="text-sm sm:text-base text-body-color dark:text-body-color-dark">
                   {siteSettings.contactInfo.email}
                 </p>
               </div>
@@ -282,8 +282,8 @@ const Contact = () => {
 
           {/* Location */}
           {siteSettings?.contactInfo?.address && (
-            <div className="mb-8 flex w-full max-w-[370px]">
-              <div className="mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded bg-primary bg-opacity-5 text-primary dark:bg-opacity-10">
+            <div className="mb-5 sm:mb-8 flex w-full max-w-[370px]">
+              <div className="mr-4 flex h-[50px] w-[50px] sm:mr-6 sm:h-[60px] sm:w-[60px] items-center justify-center overflow-hidden rounded bg-primary bg-opacity-5 text-primary dark:bg-opacity-10">
                 <svg
                   width="24"
                   height="29"
@@ -295,10 +295,10 @@ const Contact = () => {
                 </svg>
               </div>
               <div className="w-full">
-                <h4 className="mb-1 text-xl font-bold text-dark dark:text-white">
+                <h4 className="mb-1 text-lg sm:text-xl font-bold text-dark dark:text-white">
                   Sede
                 </h4>
-                <p className="text-base text-body-color dark:text-body-color-dark">
+                <p className="text-sm sm:text-base text-body-color dark:text-body-color-dark">
                   {siteSettings.contactInfo.address}
                 </p>
               </div>
@@ -308,7 +308,7 @@ const Contact = () => {
           {/* Phone */}
           {siteSettings?.contactInfo?.phone && (
             <div className="flex w-full max-w-[370px]">
-              <div className="mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded bg-primary bg-opacity-5 text-primary dark:bg-opacity-10">
+              <div className="mr-4 flex h-[50px] w-[50px] sm:mr-6 sm:h-[60px] sm:w-[60px] items-center justify-center overflow-hidden rounded bg-primary bg-opacity-5 text-primary dark:bg-opacity-10">
                 <svg
                   width="20"
                   height="29"
@@ -320,10 +320,10 @@ const Contact = () => {
                 </svg>
               </div>
               <div className="w-full">
-                <h4 className="mb-1 text-xl font-bold text-dark dark:text-white">
+                <h4 className="mb-1 text-lg sm:text-xl font-bold text-dark dark:text-white">
                   Telefono
                 </h4>
-                <p className="text-base text-body-color dark:text-body-color-dark">
+                <p className="text-sm sm:text-base text-body-color dark:text-body-color-dark">
                   {siteSettings.contactInfo.phone}
                 </p>
               </div>

@@ -11,7 +11,7 @@ const AUTO_SCROLL_INTERVAL = 5000; // 5 secondi
 const TRANSITION_DURATION = 600; // Durata transizione fluida (600ms)
 const TRANSITION_TIMING = 'ease-in-out'; // Funzione di temporizzazione rilassante
 
-const SingleTestimonial = ({ testimonial, index, isActive = false, isSide = false, isLeft = false }) => {
+const SingleTestimonial = ({ testimonial, index, isActive = false, isSide = false, isLeft = false, isMobile = false }) => {
   const { getComponent } = useSanityUIComponents();
   const testimonialCardComponent = getComponent('TestimonialCard');
   const testimonialContentComponent = getComponent('TestimonialContent');
@@ -27,7 +27,9 @@ const SingleTestimonial = ({ testimonial, index, isActive = false, isSide = fals
         <div className={`group/tes relative rounded-sm bg-white/30 backdrop-blur/30 backdrop-blurp-8 shadow-testimonial dark:bg-dark p-4 md:lg:px-12 md:xl:p-14 transition-all duration-300 ${
           isActive 
             ? 'opacity-100 scale-100' 
-            : isLeft 
+            : isLeft && !isMobile
+            ? 'opacity-60 scale-90 blur-sm' 
+            : isLeft && isMobile
             ? 'opacity-90 scale-95' 
             : isSide 
             ? 'opacity-60 scale-90 blur-sm' 
@@ -53,7 +55,7 @@ const SingleTestimonial = ({ testimonial, index, isActive = false, isSide = fals
                   component={testimonialAuthorComponent}
                   componentName="TestimonialAuthor"
                   as="h3"
-                  className="text-base md:text-xl font-semibold text-dark dark:text-white truncate"
+                  className="text-base md:text-xl font-semibold text-dark dark:text-white break-words"
                 >
                   {getTextValue(testimonial.name)}
                 </SanityStyledComponent>
@@ -244,37 +246,44 @@ const Testimonials = () => {
       // Calcola quale recensione stiamo vedendo ora (prima del movimento)
       const currentRealIndex = ((currentPosition - 1) % testimonials.length + testimonials.length) % testimonials.length;
       // Reset alla posizione equivalente nella seconda copia (zona sicura centrale)
-      const resetPosition = testimonials.length * 2 + currentRealIndex;
+      // L'array esteso ha struttura: [ultima, ...copie..., prima]
+      // La seconda copia inizia a: 1 (prima copia) + testimonials.length (seconda copia)
+      const resetPosition = testimonials.length + 1 + currentRealIndex;
       
-      // Reset invisibile PRIMA dell'animazione - triplo requestAnimationFrame per sincronizzazione perfetta
+      // Reset invisibile PRIMA dell'animazione - approccio semplificato e più affidabile
       if (carouselTrackRef.current) {
+        // Disabilita la transizione per il reset
         carouselTrackRef.current.style.transition = 'none';
+        
+        // Calcola la posizione di reset e quella finale
         const resetTranslateX = isMobile 
           ? -(resetPosition - 1) * 100 
           : -(resetPosition - 1) * (100 / 3);
+        const finalPosition = resetPosition - 1;
+        
+        // Applica il reset immediatamente
         carouselTrackRef.current.style.transform = `translateX(${resetTranslateX}%)`;
+        
+        // Forza il reflow per applicare il reset
         void carouselTrackRef.current.offsetHeight;
         
-        // Triplo requestAnimationFrame per garantire che il reset sia completamente applicato
-        // prima di riabilitare la transizione e animare
+        // Aggiorna lo stato alla posizione di reset per sincronizzare React
+        setCurrentPosition(resetPosition);
+        
+        // Riabilita la transizione e anima alla nuova posizione dopo che il reset è stato applicato
+        // Usa doppio requestAnimationFrame per garantire che il reset sia completamente applicato
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              setCurrentPosition(resetPosition);
-              newPosition = resetPosition - 1; // Nuova posizione dopo il reset
-              
-              // Riabilita la transizione nel prossimo frame
-              requestAnimationFrame(() => {
-                if (carouselTrackRef.current) {
+            if (carouselTrackRef.current) {
                   carouselTrackRef.current.style.transition = `transform ${TRANSITION_DURATION}ms ${TRANSITION_TIMING}`;
-                }
-                // Ora anima alla nuova posizione
-                setCurrentPosition(newPosition);
+              
+              // Aggiorna lo stato alla posizione finale per avviare la transizione
+              setCurrentPosition(finalPosition);
+              
                 setTimeout(() => {
                   setIsTransitioning(false);
                 }, TRANSITION_DURATION);
-              });
-            });
+            }
           });
         });
       } else {
@@ -452,6 +461,7 @@ const Testimonials = () => {
                       isActive={isActive}
                       isSide={isSide}
                       isLeft={isLeft}
+                      isMobile={isMobile}
                     />
                   </div>
                 );

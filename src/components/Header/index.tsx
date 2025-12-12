@@ -77,7 +77,11 @@ const Header = ({ siteSettings }: HeaderProps) => {
     fetchServices();
   }, []);
 
-
+  // Funzione per chiudere il menu mobile quando si clicca su un link
+  const handleLinkClick = () => {
+    setIsMobileMenuOpen(false);
+    setIsServicesDropdownOpen(false);
+  };
 
   return (
     <>
@@ -133,9 +137,9 @@ const Header = ({ siteSettings }: HeaderProps) => {
                   aria-expanded={isMobileMenuOpen}
                   aria-controls="navbarCollapse"
                 >
-                  <span className="relative my-1.5 block h-0.5 w-[30px] bg-black transition-all duration-300 dark:bg-white/30 backdrop-blur/30 backdrop-blur"></span>
-                  <span className="relative my-1.5 block h-0.5 w-[30px] bg-black transition-all duration-300 dark:bg-white/30 backdrop-blur/30 backdrop-blur"></span>
-                  <span className="relative my-1.5 block h-0.5 w-[30px] bg-black transition-all duration-300 dark:bg-white/30 backdrop-blur/30 backdrop-blur"></span>
+                  <span className={`relative my-1.5 block h-0.5 w-[30px] transition-all duration-300 ${isSticky ? 'bg-black' : 'bg-black dark:bg-white'}`}></span>
+                  <span className={`relative my-1.5 block h-0.5 w-[30px] transition-all duration-300 ${isSticky ? 'bg-black' : 'bg-black dark:bg-white'}`}></span>
+                  <span className={`relative my-1.5 block h-0.5 w-[30px] transition-all duration-300 ${isSticky ? 'bg-black' : 'bg-black dark:bg-white'}`}></span>
                 </button>
                 <nav
                   id="navbarCollapse"
@@ -147,7 +151,8 @@ const Header = ({ siteSettings }: HeaderProps) => {
                     <li className="group relative flex justify-end lg:justify-start">
                       <Link
                         href="/"
-                        className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg"
+                        onClick={handleLinkClick}
+                        className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 h-7 md:h-8 w-auto shadow-lg"
                       >
                         Home
                         <FontAwesomeIcon icon={faHome} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
@@ -156,7 +161,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                     <li className="group relative z-50 flex justify-end lg:justify-start">
                       <div className="relative">
                         <button
-                          className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg min-w-[110px]"
+                          className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 h-7 md:h-8 w-auto shadow-lg min-w-[110px]"
                           onClick={() => setIsServicesDropdownOpen(!isServicesDropdownOpen)}
                           onMouseEnter={() => setIsServicesDropdownOpen(true)}
                           onMouseLeave={() => setIsServicesDropdownOpen(false)}
@@ -178,6 +183,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                           <div className="py-1">
                             <Link
                               href="/services"
+                              onClick={handleLinkClick}
                               className="block px-4 py-3 text-sm hover:bg-blue-50 transition-colors duration-150 border-b border-gray-200 text-right lg:text-left"
                               style={{ color: '#1f2937' }}
                             >
@@ -188,6 +194,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                                 <Link
                                   key={service._id || index}
                                   href={service.url || `/services/${service.slug?.current}`}
+                                  onClick={handleLinkClick}
                                   className="block px-4 py-3 text-sm hover:bg-blue-50 transition-colors duration-150 text-right lg:text-left"
                                   style={{ color: '#1f2937' }}
                                 >
@@ -206,7 +213,8 @@ const Header = ({ siteSettings }: HeaderProps) => {
                     <li className="group relative flex justify-end lg:justify-start">
                       <Link
                         href="/about"
-                        className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg"
+                        onClick={handleLinkClick}
+                        className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 h-7 md:h-8 w-auto shadow-lg"
                       >
                         About
                         <FontAwesomeIcon icon={faUser} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
@@ -215,7 +223,8 @@ const Header = ({ siteSettings }: HeaderProps) => {
                     <li className="group relative flex justify-end lg:justify-start">
                       <Link
                         href="/shop"
-                        className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg"
+                        onClick={handleLinkClick}
+                        className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 h-7 md:h-8 w-auto shadow-lg"
                       >
                         Shop
                         <FontAwesomeIcon icon={faShoppingBag} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
@@ -224,7 +233,8 @@ const Header = ({ siteSettings }: HeaderProps) => {
                     <li className="group relative flex justify-end lg:justify-start">
                       <Link
                         href="/projects"
-                        className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg"
+                        onClick={handleLinkClick}
+                        className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 h-7 md:h-8 w-auto shadow-lg"
                       >
                         Progetti
                         <FontAwesomeIcon icon={faBriefcase} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
@@ -233,7 +243,8 @@ const Header = ({ siteSettings }: HeaderProps) => {
                     <li className="group relative flex justify-end lg:justify-start">
                       <Link
                         href="/blog"
-                        className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg"
+                        onClick={handleLinkClick}
+                        className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 h-7 md:h-8 w-auto shadow-lg"
                       >
                         Blog
                         <FontAwesomeIcon icon={faFileLines} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
@@ -242,6 +253,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                     <li className="group relative flex justify-end lg:justify-start">
                       <Link
                         href="/novita"
+                        onClick={handleLinkClick}
                         className="novita-pulse group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg"
                       >
                         Novità
@@ -251,7 +263,8 @@ const Header = ({ siteSettings }: HeaderProps) => {
                     <li className="group relative flex justify-end lg:justify-start">
                       <Link
                         href="/contact"
-                        className="group px-2 md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur h-7 md:h-8 w-auto shadow-lg"
+                        onClick={handleLinkClick}
+                        className="group px-4 py-3 lg:px-2 lg:md:px-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-sm font-semibold lg:text-xs lg:md:text-sm lg:font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 lg:h-7 lg:md:h-8 w-64 lg:w-auto shadow-lg"
                       >
                         Support
                         <FontAwesomeIcon icon={faComments} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
@@ -259,17 +272,6 @@ const Header = ({ siteSettings }: HeaderProps) => {
                     </li>
                     {/* Dashboard button removed */}
                   </ul>
-                  
-                  {/* Mobile CTA Buttons */}
-                  <div className="mt-6 lg:hidden space-y-3 flex justify-end">
-                    <Link
-                      href="/area-clienti"
-                      className="group px-4 py-3 inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full text-sm font-semibold transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 shadow-lg w-64"
-                    >
-                      Area Clienti
-                        <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 transition duration-300 group-hover:translate-x-0.5" />
-                    </Link>
-                  </div>
                 </nav>
               </div>
               <div className="flex items-center justify-end pr-16 lg:pr-0 gap-4">
