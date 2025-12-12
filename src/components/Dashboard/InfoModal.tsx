@@ -1,9 +1,33 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useInfoModal } from '@/contexts/InfoModalContext';
 
 export default function InfoModal() {
   const { isOpen, modalContent, closeInfo } = useInfoModal();
+
+  // Blocca lo scroll del body quando il modal è aperto
+  useEffect(() => {
+    if (isOpen) {
+      // Salva la posizione corrente dello scroll
+      const scrollY = window.scrollY;
+      
+      // Blocca lo scroll del body
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+      
+      return () => {
+        // Ripristina lo scroll quando il modal si chiude
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        document.body.style.overflow = '';
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 

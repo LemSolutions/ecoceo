@@ -57,6 +57,29 @@ const OffersSpotlightPopup = () => {
     fetchOffer();
   }, []);
 
+  // Blocca lo scroll del body quando il popup è aperto
+  useEffect(() => {
+    if (isOpen) {
+      // Salva la posizione corrente dello scroll
+      const scrollY = window.scrollY;
+      
+      // Blocca lo scroll del body
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+      
+      return () => {
+        // Ripristina lo scroll quando il popup si chiude
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        document.body.style.overflow = '';
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [isOpen]);
+
   if (!offer || !isOpen) return null;
 
   const close = () => {
