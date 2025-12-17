@@ -15,15 +15,24 @@ const HeroVideoBackground = () => {
   const videoContainerRef = useRef<HTMLDivElement | null>(null);
   const [isVisible, setIsVisible] = useState(true);
   const [fadeOpacity, setFadeOpacity] = useState(1);
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
   
   const VIDEO_ID = 'eeMQwUy38Ow'; // Video di sfondo: https://youtu.be/eeMQwUy38Ow
   // URL YouTube embed con autoplay, mute, loop e parametri ottimizzati per nascondere tutti i controlli
   const youtubeEmbedUrl = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${VIDEO_ID}&controls=0&modestbranding=1&rel=0&playsinline=1&enablejsapi=1&start=0&disablekb=1&fs=0&iv_load_policy=3&showinfo=0&cc_load_policy=0&origin=${typeof window !== 'undefined' ? window.location.origin : ''}`;
 
   useEffect(() => {
+    // Carica il video dopo un breve delay per dare priorità al contenuto iniziale
+    const loadTimer = setTimeout(() => {
+      setShouldLoadVideo(true);
+    }, 800); // Delay di 800ms per migliorare LCP
+
     // Trova la sezione Hero usando l'ID
     const heroSection = document.getElementById('home');
-    if (!heroSection) return;
+    if (!heroSection) {
+      clearTimeout(loadTimer);
+      return;
+    }
 
     heroSectionRef.current = heroSection;
 
@@ -31,6 +40,11 @@ const HeroVideoBackground = () => {
       (entries) => {
         const entry = entries[0];
         const ratio = entry.intersectionRatio;
+
+        // Carica il video quando la sezione diventa visibile
+        if (ratio > 0 && !shouldLoadVideo) {
+          setShouldLoadVideo(true);
+        }
 
         // Fade progress: scompare subito appena si esce dalla Hero
         const fadeStart = 0.98; // inizio dissolvenza con minimo movimento
@@ -48,7 +62,7 @@ const HeroVideoBackground = () => {
         setIsVisible(ratio > 0.05);
       },
       { 
-        threshold: Array.from({ length: 21 }, (_, i) => i * 0.05),
+        threshold: [0, 0.1, 0.3, 0.5, 0.7, 0.9, 1.0], // Threshold ottimizzato (meno calcoli)
         rootMargin: '0px'
       }
     );
@@ -56,9 +70,10 @@ const HeroVideoBackground = () => {
     observer.observe(heroSection);
 
     return () => {
+      clearTimeout(loadTimer);
       observer.disconnect();
     };
-  }, []);
+  }, [shouldLoadVideo]);
 
   return (
     <div
@@ -75,18 +90,22 @@ const HeroVideoBackground = () => {
       <div 
         className="absolute inset-0 w-full h-full"
       >
-        <iframe
-          src={youtubeEmbedUrl}
-          title="Hero Background Video"
-          className="absolute inset-0 w-full h-full"
-          allow="autoplay; encrypted-media; picture-in-picture"
-          allowFullScreen={false}
-          style={{
-            border: 'none',
-            pointerEvents: 'none',
-          }}
-          loading="eager"
-        />
+        {shouldLoadVideo ? (
+          <iframe
+            src={youtubeEmbedUrl}
+            title="Hero Background Video"
+            className="absolute inset-0 w-full h-full"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowFullScreen={false}
+            style={{
+              border: 'none',
+              pointerEvents: 'none',
+            }}
+            loading="lazy"
+          />
+        ) : (
+          <div className="absolute inset-0 w-full h-full bg-black/30" />
+        )}
         {/* CSS per nascondere completamente i controlli YouTube */}
         <style jsx>{`
           .player-controls-background iframe {
@@ -131,25 +150,41 @@ const HeroVideoBackground = () => {
 
 // Componente per il video mobile con animazione su e giù
 const HeroVideoMobile = () => {
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
   const VIDEO_ID = 'eeMQwUy38Ow';
   const youtubeEmbedUrl = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${VIDEO_ID}&controls=0&modestbranding=1&rel=0&playsinline=1&enablejsapi=1&start=0&disablekb=1&fs=0&iv_load_policy=3&showinfo=0&cc_load_policy=0&origin=${typeof window !== 'undefined' ? window.location.origin : ''}`;
+
+  useEffect(() => {
+    // Carica il video mobile dopo un breve delay o quando entra in viewport
+    const loadTimer = setTimeout(() => {
+      setShouldLoadVideo(true);
+    }, 1000);
+
+    return () => clearTimeout(loadTimer);
+  }, []);
 
   return (
     <div className="lg:hidden w-full max-w-2xl mx-auto mt-16 rounded-lg overflow-hidden shadow-lg video-float-mobile">
       <div 
-        className="relative w-full aspect-video"
+        className="relative w-full aspect-video bg-black/20"
       >
-        <iframe
-          src={youtubeEmbedUrl}
-          title="Hero Video Mobile"
-          className="absolute inset-0 w-full h-full rounded-lg"
-          allow="autoplay; encrypted-media; picture-in-picture"
-          allowFullScreen={false}
-          style={{
-            border: 'none',
-          }}
-          loading="lazy"
-        />
+        {shouldLoadVideo ? (
+          <iframe
+            src={youtubeEmbedUrl}
+            title="Hero Video Mobile"
+            className="absolute inset-0 w-full h-full rounded-lg"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowFullScreen={false}
+            style={{
+              border: 'none',
+            }}
+            loading="lazy"
+          />
+        ) : (
+          <div className="absolute inset-0 w-full h-full rounded-lg bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+            <div className="text-white text-sm">Caricamento video...</div>
+          </div>
+        )}
         <style jsx>{`
           .video-float-mobile {
             animation: videoFloatMobile 6s ease-in-out infinite;

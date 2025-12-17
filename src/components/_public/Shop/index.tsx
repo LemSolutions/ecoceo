@@ -99,7 +99,7 @@ const Shop = ({ products: initialProducts, title, subtitle }: ProductGridProps) 
           </div>
         )}
         
-        <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3 items-stretch">
           {products.map((product, index) => (
             <SingleProduct key={product._id} product={product} index={index} />
           ))}

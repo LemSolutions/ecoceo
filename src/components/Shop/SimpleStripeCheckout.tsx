@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useCart } from '@/contexts/CartContext';
 import { calculateOrderWeight, getShippingInfo } from '@/lib/dynamicShipping';
+import { searchCities, ItalianCity } from '@/lib/italianCities';
 
 interface SimpleStripeCheckoutProps {
   customerEmail?: string;
@@ -14,6 +15,70 @@ const SimpleStripeCheckout = ({ customerEmail, onSuccess, onError }: SimpleStrip
   const { state } = useCart();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [selectedCountry, setSelectedCountry] = useState<string>('IT');
+  const [email, setEmail] = useState<string>(customerEmail || '');
+  const [address, setAddress] = useState<string>('');
+  const [city, setCity] = useState<string>('');
+  const [province, setProvince] = useState<string>('');
+  const [postalCode, setPostalCode] = useState<string>('');
+  const [citySuggestions, setCitySuggestions] = useState<ItalianCity[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const cityInputRef = useRef<HTMLInputElement>(null);
+  const suggestionsRef = useRef<HTMLDivElement>(null);
+
+  // Carica i dati salvati dal localStorage quando il componente si monta
+  useEffect(() => {
+    const savedCheckoutData = localStorage.getItem('checkoutData');
+    if (savedCheckoutData) {
+      try {
+        const data = JSON.parse(savedCheckoutData);
+        if (data.email) setEmail(data.email);
+        if (data.address) setAddress(data.address);
+        if (data.city) setCity(data.city);
+        if (data.province) setProvince(data.province);
+        if (data.postalCode) setPostalCode(data.postalCode);
+        if (data.country) setSelectedCountry(data.country);
+      } catch (error) {
+        console.error('Error loading saved checkout data:', error);
+      }
+    }
+  }, []);
+
+  // Gestione suggerimenti città
+  useEffect(() => {
+    if (city.length >= 2) {
+      const suggestions = searchCities(city);
+      setCitySuggestions(suggestions);
+      setShowSuggestions(suggestions.length > 0);
+    } else {
+      setCitySuggestions([]);
+      setShowSuggestions(false);
+    }
+  }, [city]);
+
+  // Chiudi suggerimenti quando clicchi fuori
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        suggestionsRef.current &&
+        !suggestionsRef.current.contains(event.target as Node) &&
+        cityInputRef.current &&
+        !cityInputRef.current.contains(event.target as Node)
+      ) {
+        setShowSuggestions(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleCitySelect = (selectedCity: ItalianCity) => {
+    setCity(selectedCity.name);
+    setProvince(selectedCity.province);
+    setPostalCode(selectedCity.postalCode);
+    setShowSuggestions(false);
+  };
 
   const handleCheckout = async () => {
     if (state.items.length === 0) {
@@ -21,10 +86,50 @@ const SimpleStripeCheckout = ({ customerEmail, onSuccess, onError }: SimpleStrip
       return;
     }
 
+    // Validazione campi obbligatori
+    if (!email || !email.includes('@')) {
+      setError('Inserisci un indirizzo email valido');
+      return;
+    }
+
+    if (!address.trim()) {
+      setError('Inserisci l\'indirizzo di spedizione');
+      return;
+    }
+
+    if (!city.trim()) {
+      setError('Inserisci la città');
+      return;
+    }
+
+    if (!province.trim()) {
+      setError('Inserisci la provincia');
+      return;
+    }
+
+    if (!postalCode.trim()) {
+      setError('Inserisci il codice postale');
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
 
     try {
+      // Salva i dati del checkout nel localStorage prima di procedere
+      const checkoutData = {
+        email,
+        address,
+        city,
+        province,
+        postalCode,
+        country: selectedCountry,
+        items: state.items,
+        total: state.total,
+        timestamp: Date.now()
+      };
+      localStorage.setItem('checkoutData', JSON.stringify(checkoutData));
+
       console.log('Creating checkout session with items:', state.items);
       
       const response = await fetch('/api/create-checkout-session', {
@@ -34,9 +139,16 @@ const SimpleStripeCheckout = ({ customerEmail, onSuccess, onError }: SimpleStrip
         },
         body: JSON.stringify({
           items: state.items,
-          customerEmail: customerEmail || '',
+          customerEmail: email,
           orderNumber: `ORD-${Date.now()}`,
-          country: 'IT'
+          country: selectedCountry,
+          shippingAddress: {
+            address: address.trim(),
+            city: city.trim(),
+            province: province.trim(),
+            postalCode: postalCode.trim(),
+            country: selectedCountry
+          }
         }),
       });
 
@@ -96,9 +208,36 @@ const SimpleStripeCheckout = ({ customerEmail, onSuccess, onError }: SimpleStrip
   const packagingFee = Math.max(state.total * 0.005, 2); // 0.5% with minimum €2
   const total = state.total + packagingFee; // Add packaging fee
   
-  // Calculate shipping info for display (default to Italy)
+  // Calculate shipping info for display based on selected country
   const orderWeight = calculateOrderWeight(state.items);
-  const shippingInfo = getShippingInfo('IT', orderWeight, state.total * 100, state.items); // Convert to cents
+  const shippingInfo = getShippingInfo(selectedCountry, orderWeight, state.total * 100, state.items); // Convert to cents
+  
+  // Lista dei paesi disponibili
+  const countries = [
+    { code: 'IT', name: 'Italia' },
+    { code: 'FR', name: 'Francia' },
+    { code: 'DE', name: 'Germania' },
+    { code: 'ES', name: 'Spagna' },
+    { code: 'AT', name: 'Austria' },
+    { code: 'CH', name: 'Svizzera' },
+    { code: 'BE', name: 'Belgio' },
+    { code: 'NL', name: 'Paesi Bassi' },
+    { code: 'LU', name: 'Lussemburgo' },
+    { code: 'GB', name: 'Regno Unito' },
+    { code: 'IE', name: 'Irlanda' },
+    { code: 'US', name: 'Stati Uniti' },
+    { code: 'CA', name: 'Canada' },
+    { code: 'AU', name: 'Australia' },
+    { code: 'NZ', name: 'Nuova Zelanda' },
+    { code: 'JP', name: 'Giappone' },
+    { code: 'KR', name: 'Corea del Sud' },
+    { code: 'SG', name: 'Singapore' },
+    { code: 'HK', name: 'Hong Kong' },
+    { code: 'BR', name: 'Brasile' },
+    { code: 'AR', name: 'Argentina' },
+    { code: 'CL', name: 'Cile' },
+    { code: 'MX', name: 'Messico' },
+  ];
 
   return (
     <>
@@ -186,10 +325,145 @@ const SimpleStripeCheckout = ({ customerEmail, onSuccess, onError }: SimpleStrip
           </div>
         </div>
 
+        {/* Customer Information Form */}
+        <div className="bg-white/50 border border-gray-200 rounded-lg p-6 mb-8">
+          <h4 className="font-semibold text-gray-900 mb-4">Informazioni di Spedizione</h4>
+          <div className="space-y-4">
+            {/* Email */}
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                Email <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white text-gray-900"
+                placeholder="tua.email@esempio.com"
+              />
+            </div>
+
+            {/* Indirizzo */}
+            <div>
+              <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-2">
+                Indirizzo <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white text-gray-900"
+                placeholder="Via, numero civico"
+              />
+            </div>
+
+            {/* Città con autocomplete */}
+            <div className="relative">
+              <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-2">
+                Città <span className="text-red-500">*</span>
+              </label>
+              <input
+                ref={cityInputRef}
+                type="text"
+                id="city"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                onFocus={() => {
+                  if (city.length >= 2 && citySuggestions.length > 0) {
+                    setShowSuggestions(true);
+                  }
+                }}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white text-gray-900"
+                placeholder="Inizia a digitare la città (es: Monza, Brugherio...)"
+                autoComplete="off"
+              />
+              {/* Suggerimenti città */}
+              {showSuggestions && citySuggestions.length > 0 && (
+                <div
+                  ref={suggestionsRef}
+                  className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-auto"
+                >
+                  {citySuggestions.map((suggestion, index) => (
+                    <div
+                      key={index}
+                      onClick={() => handleCitySelect(suggestion)}
+                      className="px-4 py-3 hover:bg-blue-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-colors"
+                    >
+                      <div className="font-medium text-gray-900">{suggestion.name}</div>
+                      <div className="text-sm text-gray-600">
+                        {suggestion.province} ({suggestion.provinceCode}) - {suggestion.postalCode}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Provincia e CAP */}
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="province" className="block text-sm font-medium text-gray-700 mb-2">
+                  Provincia <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="province"
+                  value={province}
+                  onChange={(e) => setProvince(e.target.value)}
+                  required
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white text-gray-900"
+                  placeholder="Provincia (es: Monza e Brianza)"
+                  readOnly={!!citySuggestions.find(c => c.name === city)}
+                />
+              </div>
+              <div>
+                <label htmlFor="postal-code" className="block text-sm font-medium text-gray-700 mb-2">
+                  CAP <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="postal-code"
+                  value={postalCode}
+                  onChange={(e) => setPostalCode(e.target.value)}
+                  required
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white text-gray-900"
+                  placeholder="CAP"
+                  readOnly={!!citySuggestions.find(c => c.name === city)}
+                />
+              </div>
+            </div>
+
+            {/* Paese */}
+            <div>
+              <label htmlFor="country-select" className="block text-sm font-medium text-gray-700 mb-2">
+                Paese <span className="text-red-500">*</span>
+              </label>
+              <select
+                id="country-select"
+                value={selectedCountry}
+                onChange={(e) => setSelectedCountry(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white text-gray-900"
+              >
+                {countries.map((country) => (
+                  <option key={country.code} value={country.code}>
+                    {country.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
+
         {/* Shipping Info */}
         <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-8">
-          <h4 className="font-semibold text-gray-900 mb-3">Informazioni Spedizione</h4>
+          <h4 className="font-semibold text-gray-900 mb-3">Dettagli Spedizione</h4>
           <div className="space-y-2 text-sm">
+            
             <div className="flex justify-between">
               <span className="text-gray-600">Peso totale:</span>
               <span className="font-medium">{shippingInfo.weight}</span>

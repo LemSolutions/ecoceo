@@ -6,30 +6,98 @@ import QuickActions from './QuickActions';
 import { useClientDate } from '../../hooks/useClientDate';
 import ProtectedRoute from '../Auth/ProtectedRoute';
 import HomeButton from '../Navigation/HomeButton';
+import dynamic from 'next/dynamic';
 import DashboardTotale from './DashboardTotale';
 import UnifiedTaskCalendarNew from './UnifiedTaskCalendarNew';
-import MarketingView from './MarketingView';
-import BusinessPlanManagement from './BusinessPlanManagement';
-import AIManagement from './AIManagement';
-import ProjectsView from './ProjectsView';
-import FinancialManagement from './FinancialManagement';
-import RDManagement from './RDManagement';
-import UnifiedSectionTests from './UnifiedSectionTests';
-import IntelligentTestSuite from './IntelligentTestSuite';
-import OrganizationalAnalysis from './OrganizationalAnalysis';
-import WarehouseManagement from './WarehouseManagement';
-import WarehouseTest from './WarehouseTest';
-import QuotesTest from './QuotesTest';
 import QuickQuoteModal from './QuickQuoteModal';
 import QuickCreateModal from './QuickCreateModal';
-import DatabaseConnectionTest from './DatabaseConnectionTest';
-import EnvironmentSetup from './EnvironmentSetup';
-import DashboardDataTest from './DashboardDataTest';
-import DashboardDataFixer from './DashboardDataFixer';
-import MathRoboticsDemo from '../ThreeJS/MathRoboticsDemo';
-import StripeTest from '../Test/StripeTest';
-import DynamicShippingTest from '../Test/DynamicShippingTest';
-import StripeProductTest from '../Test/StripeProductTest';
+
+// Lazy load componenti Dashboard pesanti - carica solo quando necessario
+const MarketingView = dynamic(() => import('./MarketingView'), {
+  ssr: false,
+});
+
+const BusinessPlanManagement = dynamic(() => import('./BusinessPlanManagement'), {
+  ssr: false,
+});
+
+const AIManagement = dynamic(() => import('./AIManagement'), {
+  ssr: false,
+});
+
+const ProjectsView = dynamic(() => import('./ProjectsView'), {
+  ssr: false,
+});
+
+const FinancialManagement = dynamic(() => import('./FinancialManagement'), {
+  ssr: false,
+});
+
+const RDManagement = dynamic(() => import('./RDManagement'), {
+  ssr: false,
+});
+
+const UnifiedSectionTests = dynamic(() => import('./UnifiedSectionTests'), {
+  ssr: false,
+});
+
+const IntelligentTestSuite = dynamic(() => import('./IntelligentTestSuite'), {
+  ssr: false,
+});
+
+const OrganizationalAnalysis = dynamic(() => import('./OrganizationalAnalysis'), {
+  ssr: false,
+});
+
+const WarehouseManagement = dynamic(() => import('./WarehouseManagement'), {
+  ssr: false,
+});
+
+const WarehouseTest = dynamic(() => import('./WarehouseTest'), {
+  ssr: false,
+});
+
+const QuotesTest = dynamic(() => import('./QuotesTest'), {
+  ssr: false,
+});
+
+const DatabaseConnectionTest = dynamic(() => import('./DatabaseConnectionTest'), {
+  ssr: false,
+});
+
+const EnvironmentSetup = dynamic(() => import('./EnvironmentSetup'), {
+  ssr: false,
+});
+
+const DashboardDataTest = dynamic(() => import('./DashboardDataTest'), {
+  ssr: false,
+});
+
+const DashboardDataFixer = dynamic(() => import('./DashboardDataFixer'), {
+  ssr: false,
+});
+
+// Lazy load componenti pesanti - carica solo quando necessario
+const MathRoboticsDemo = dynamic(() => import('../ThreeJS/MathRoboticsDemo'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex items-center justify-center">
+      <div className="text-lg animate-pulse">Caricamento demo matematica e robotica...</div>
+    </div>
+  ),
+});
+
+const StripeTest = dynamic(() => import('../Test/StripeTest'), {
+  ssr: false,
+});
+
+const DynamicShippingTest = dynamic(() => import('../Test/DynamicShippingTest'), {
+  ssr: false,
+});
+
+const StripeProductTest = dynamic(() => import('../Test/StripeProductTest'), {
+  ssr: false,
+});
 
 export default function MainDashboard() {
   const [activeSection, setActiveSection] = useState('dashboard');

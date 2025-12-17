@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import { getImageUrl, getTextValue } from '@/sanity/lib/image';
 import { useSanityUIComponents } from '@/hooks/_ui/useSanityUIComponents';
 import SanityStyledComponent from '@/components/_public/Common/SanityStyledComponent';
@@ -7,11 +8,13 @@ import Link from 'next/link';
 import { ProductCardProps } from '@/types/_data/product';
 import { useCart } from '@/contexts/CartContext';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const SingleProduct = ({ product, index }: ProductCardProps) => {
   const { getComponent } = useSanityUIComponents();
   const { addItem, getItemQuantity } = useCart();
   const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const router = useRouter();
 
   // Get UI components for Product section
   const productCardComponent = getComponent('ProductCard');
@@ -22,7 +25,9 @@ const SingleProduct = ({ product, index }: ProductCardProps) => {
   const currentQuantity = getItemQuantity(product._id);
   const isInStock = product.stock > 0;
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (!isInStock) return;
     
     setIsAddingToCart(true);
@@ -50,17 +55,21 @@ const SingleProduct = ({ product, index }: ProductCardProps) => {
     <SanityStyledComponent
       component={productCardComponent}
       componentName="ProductCard"
-      className="w-full"
+      className="w-full h-full flex"
     >
-      <div className="wow fadeInUp" data-wow-delay={`${index * 100}ms`}>
-        <div className="group relative overflow-hidden rounded-sm bg-white/30 backdrop-blur/30 backdrop-blurshadow-one duration-300 hover:shadow-two dark:bg-dark dark:hover:shadow-gray-dark">
+      <div className="wow fadeInUp w-full flex flex-col" data-wow-delay={`${index * 100}ms`}>
+        <div className="group relative overflow-hidden rounded-sm bg-white/30 backdrop-blur/30 backdrop-blurshadow-one duration-300 hover:shadow-two dark:bg-dark dark:hover:shadow-gray-dark h-full flex flex-col">
           <Link href={`/shop/${product.slug?.current || product._id}`}>
             <div className="relative block aspect-[37/22] overflow-hidden">
               {product.mainImage ? (
-                <img
+                <Image
                   src={getImageUrl(product.mainImage)}
                   alt={getTextValue(product.title)}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-300 group-hover:scale-110"
+                  quality={85}
+                  loading="lazy"
                 />
               ) : (
                 <div className="w-full h-full bg-gray-200 flex items-center justify-center">
@@ -69,7 +78,7 @@ const SingleProduct = ({ product, index }: ProductCardProps) => {
               )}
               
               {/* Badges */}
-              <div className="absolute top-4 left-4 flex flex-col gap-2">
+              <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
                 {product.featured && (
                   <span className="bg-orange-500 text-white px-2 py-1 rounded-full text-xs font-medium">
                     In Evidenza
@@ -89,7 +98,7 @@ const SingleProduct = ({ product, index }: ProductCardProps) => {
             </div>
           </Link>
           
-          <div className="p-6 sm:p-8 md:px-6 md:py-8 lg:p-8 xl:px-5 xl:py-8 2xl:p-8">
+          <div className="p-6 sm:p-8 md:px-6 md:py-8 lg:p-8 xl:px-5 xl:py-8 2xl:p-8 flex-1 flex flex-col">
             <div className="mb-4">
               <span className="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">
                 {product.category}
@@ -111,7 +120,7 @@ const SingleProduct = ({ product, index }: ProductCardProps) => {
               component={productDescriptionComponent}
               componentName="ProductDescription"
               as="p"
-              className="mb-6 border-b border-body-color border-opacity-10 pb-6 text-base font-medium leading-relaxed text-body-color dark:border-white dark:border-opacity-10 dark:text-body-color-dark"
+              className="mb-6 border-b border-body-color border-opacity-10 pb-6 text-base font-medium leading-relaxed text-body-color dark:border-white dark:border-opacity-10 dark:text-body-color-dark flex-1"
             >
               {getTextValue(product.shortDescription)}
             </SanityStyledComponent>
@@ -139,7 +148,7 @@ const SingleProduct = ({ product, index }: ProductCardProps) => {
               )}
             </div>
             
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mt-auto">
               <button
                 onClick={handleAddToCart}
                 disabled={!isInStock || isAddingToCart}

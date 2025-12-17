@@ -1,9 +1,11 @@
 "use client";
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useCart } from '@/contexts/CartContext';
 import { useState } from 'react';
 import { StripeProductWithPrice } from '@/types/stripeProduct';
+import { useRouter } from 'next/navigation';
 
 interface SingleProductProps {
   product: StripeProductWithPrice;
@@ -13,11 +15,14 @@ interface SingleProductProps {
 const SingleProduct = ({ product, index }: SingleProductProps) => {
   const { addItem, getItemQuantity } = useCart();
   const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const router = useRouter();
 
   const currentQuantity = getItemQuantity(product.id);
   const isInStock = product.stock ? product.stock > 0 : true; // Default to true if stock not specified
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (!isInStock) return;
     
     setIsAddingToCart(true);
@@ -28,6 +33,17 @@ const SingleProduct = ({ product, index }: SingleProductProps) => {
     } finally {
       setIsAddingToCart(false);
     }
+  };
+
+  const handleCardClick = (e: React.MouseEvent) => {
+    // Non fare nulla se si clicca sul bottone "Aggiungi al Carrello"
+    const target = e.target as HTMLElement;
+    if (target.closest('button')) {
+      return;
+    }
+    
+    // Reindirizza al carrello senza aggiungere il prodotto
+    router.push('/shop/cart');
   };
 
   const formatPrice = (priceInCents: number) => {
@@ -43,16 +59,22 @@ const SingleProduct = ({ product, index }: SingleProductProps) => {
     : 0;
 
   return (
-    <div className="w-full">
-      <div className="wow fadeInUp" data-wow-delay={`${index * 100}ms`}>
-        <div className="group relative overflow-hidden rounded-lg bg-white/30 backdrop-blur/30 backdrop-blur shadow-lg duration-300 hover:shadow-xl dark:bg-dark dark:hover:shadow-gray-dark">
-          <Link href={`/shop/${product.id}`}>
-            <div className="relative block aspect-[4/3] overflow-hidden">
+    <div className="w-full h-full flex">
+      <div className="wow fadeInUp w-full flex flex-col" data-wow-delay={`${index * 100}ms`}>
+        <div 
+          onClick={handleCardClick}
+          className="group relative overflow-hidden rounded-lg bg-white/30 backdrop-blur/30 backdrop-blur shadow-lg duration-300 hover:shadow-xl dark:bg-dark dark:hover:shadow-gray-dark cursor-pointer h-full flex flex-col"
+        >
+          <div className="relative block aspect-[4/3] overflow-hidden">
               {product.images && product.images.length > 0 ? (
-                <img
+                <Image
                   src={product.images[0]}
                   alt={product.name}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-300 group-hover:scale-110"
+                  quality={85}
+                  loading="lazy"
                 />
               ) : (
                 <div className="w-full h-full bg-gray-200 flex items-center justify-center">
@@ -61,7 +83,7 @@ const SingleProduct = ({ product, index }: SingleProductProps) => {
               )}
               
               {/* Badges */}
-              <div className="absolute top-4 left-4 flex flex-col gap-2">
+              <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
                 {product.featured && (
                   <span className="bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-medium">
                     In Evidenza
@@ -79,22 +101,22 @@ const SingleProduct = ({ product, index }: SingleProductProps) => {
                 )}
               </div>
             </div>
-          </Link>
           
-          <div className="p-8 sm:p-10 md:p-8 lg:p-10 xl:p-8 2xl:p-10">
+          <div className="p-8 sm:p-10 md:p-8 lg:p-10 xl:p-8 2xl:p-10 flex-1 flex flex-col">
             <div className="mb-4">
               <span className="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">
                 {product.category || 'Generale'}
               </span>
             </div>
             
-            <h3 className="mb-4 block text-xl font-bold text-black hover:text-primary dark:text-white dark:hover:text-primary sm:text-2xl">
-              <Link href={`/shop/${product.id}`}>
-                {product.name}
-              </Link>
+            <h3 className="mb-2 block text-xl font-bold text-black hover:text-primary dark:text-white dark:hover:text-primary sm:text-2xl">
+              {product.name}
             </h3>
+            <p className="text-base text-gray-600 mb-4 mt-1">
+              {product.name.toLowerCase().includes('2kg') || product.name.toLowerCase().includes('ceramic toner') ? '2Kg' : '100 SHEETS'}
+            </p>
             
-            <p className="mb-6 border-b border-body-color border-opacity-10 pb-6 text-base font-medium leading-relaxed text-body-color dark:border-white dark:border-opacity-10 dark:text-body-color-dark">
+            <p className="mb-6 border-b border-body-color border-opacity-10 pb-6 text-base font-medium leading-relaxed text-body-color dark:border-white dark:border-opacity-10 dark:text-body-color-dark flex-1">
               {product.metadata.shortDescription || product.description || 'Descrizione non disponibile'}
             </p>
             
@@ -117,7 +139,7 @@ const SingleProduct = ({ product, index }: SingleProductProps) => {
               )}
             </div>
             
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mt-auto">
               <button
                 onClick={handleAddToCart}
                 disabled={!isInStock || isAddingToCart}

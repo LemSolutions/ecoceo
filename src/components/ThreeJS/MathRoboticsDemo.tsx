@@ -1,10 +1,52 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import ThreeJSAnimation from './ThreeJSAnimation';
-import AdvancedMathVisualization from './AdvancedMathVisualization';
-import RoboticsApplications from './RoboticsApplications';
-import ProductionLineSimulation from './ProductionLineSimulation';
+import dynamic from 'next/dynamic';
+
+// Lazy load dei componenti Three.js (pesanti) - carica solo quando necessario
+const ThreeJSAnimation = dynamic(() => import('./ThreeJSAnimation'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex items-center justify-center">
+      <div className="text-white text-xl font-bold animate-pulse">
+        Caricamento animazione...
+      </div>
+    </div>
+  ),
+});
+
+const AdvancedMathVisualization = dynamic(() => import('./AdvancedMathVisualization'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex items-center justify-center">
+      <div className="text-white text-xl font-bold animate-pulse">
+        Caricamento visualizzazione...
+      </div>
+    </div>
+  ),
+});
+
+const RoboticsApplications = dynamic(() => import('./RoboticsApplications'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex items-center justify-center">
+      <div className="text-white text-xl font-bold animate-pulse">
+        Caricamento robotica...
+      </div>
+    </div>
+  ),
+});
+
+const ProductionLineSimulation = dynamic(() => import('./ProductionLineSimulation'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex items-center justify-center">
+      <div className="text-white text-xl font-bold animate-pulse">
+        Caricamento simulazione...
+      </div>
+    </div>
+  ),
+});
 
 export default function MathRoboticsDemo() {
   const [currentView, setCurrentView] = useState<'basic' | 'advanced' | 'robotics' | 'production'>('advanced');

@@ -90,25 +90,9 @@ const NovitaCarousel = () => {
 
   if (loading) {
     return (
-      <article className="relative grid gap-0 rounded-[32px] overflow-hidden bg-white/5 border border-white/10 shadow-[0_35px_100px_-40px_rgba(0,0,0,0.9)] lg:grid-cols-[60%_40%] animate-pulse">
-        <div className="relative h-[280px] sm:h-[360px] lg:h-full lg:min-h-[480px] bg-white/10" />
-        <div className="p-8 lg:p-10 space-y-6">
-          <div className="h-4 w-24 bg-white/20 rounded-full" />
-          <div className="space-y-3">
-            <div className="h-10 bg-white/20 rounded-lg" />
-            <div className="h-10 bg-white/10 rounded-lg w-3/4" />
-          </div>
-          <div className="space-y-3">
-            {[...Array(4)].map((_, idx) => (
-              <div key={idx} className="h-4 bg-white/10 rounded-full" />
-            ))}
-          </div>
-          <div className="flex flex-wrap gap-4">
-            <div className="h-12 w-40 bg-white/20 rounded-full" />
-            <div className="h-12 w-32 bg-white/10 rounded-full" />
-          </div>
-        </div>
-      </article>
+      <div className="text-center py-12 text-white/70">
+        Caricamento novità...
+      </div>
     );
   }
 
@@ -147,55 +131,51 @@ const NovitaCarousel = () => {
         </div>
       </div>
 
-      <div className="p-8 lg:p-10 flex flex-col h-full">
-        <div className="space-y-6 flex-1">
-          <div className="flex items-center text-xs uppercase tracking-[0.3em] text-white/60 gap-2">
-            <span className="h-px flex-1 bg-white/20" />
-            News
-            <span className="h-px flex-1 bg-white/20" />
-          </div>
-          <Link href={`/novita/${visibleItems[current]?.slug?.current || visibleItems[current]?._id}`}>
-            <h3 className="text-3xl font-bold text-white leading-tight">
-              {getTextValue(visibleItems[current]?.title)}
-            </h3>
-          </Link>
-          {visibleItems[current]?.miniIntro && (
-            <p className="text-white/80 text-base leading-relaxed line-clamp-5 lg:line-clamp-6">
-              {getTextValue(visibleItems[current].miniIntro)}
-            </p>
-          )}
+      <div className="p-8 lg:p-10 space-y-6">
+        <div className="flex items-center text-xs uppercase tracking-[0.3em] text-white/60 gap-2">
+          <span className="h-px flex-1 bg-white/20" />
+          News
+          <span className="h-px flex-1 bg-white/20" />
         </div>
+        <Link href={`/novita/${visibleItems[current]?.slug?.current || visibleItems[current]?._id}`}>
+          <h3 className="text-3xl font-bold text-white leading-tight">
+            {getTextValue(visibleItems[current]?.title)}
+          </h3>
+        </Link>
+        {visibleItems[current]?.miniIntro && (
+          <p className="text-white/80 text-base leading-relaxed line-clamp-5 lg:line-clamp-6">
+            {getTextValue(visibleItems[current].miniIntro)}
+          </p>
+        )}
 
-        <div className="flex flex-row flex-nowrap items-center gap-4 mt-6">
+        <div className="flex flex-wrap gap-4">
           <Link
             href={`/novita/${visibleItems[current]?.slug?.current || visibleItems[current]?._id}`}
-            className="inline-flex items-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-500/40 transition hover:brightness-110 whitespace-nowrap"
+            className="inline-flex items-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-500/40 transition hover:brightness-110"
           >
             Leggi la novità
             <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </Link>
-          <div className="flex gap-3 flex-shrink-0">
-            <button
-              onClick={() => {
-                goToPrev();
-                setAutoPlay(false);
-              }}
-              className="inline-flex items-center rounded-full px-5 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur shadow-lg transition-all whitespace-nowrap"
-            >
-              Precedente
-            </button>
-            <button
-              onClick={() => {
-                goToNext();
-                setAutoPlay(false);
-              }}
-              className="inline-flex items-center rounded-full px-5 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur shadow-lg transition-all whitespace-nowrap"
-            >
-              Successiva
-            </button>
-          </div>
+          <button
+            onClick={() => {
+              goToPrev();
+              setAutoPlay(false);
+            }}
+            className="inline-flex items-center rounded-full px-5 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur shadow-lg transition-all"
+          >
+            Precedente
+          </button>
+          <button
+            onClick={() => {
+              goToNext();
+              setAutoPlay(false);
+            }}
+            className="inline-flex items-center rounded-full px-5 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur shadow-lg transition-all"
+          >
+            Successiva
+          </button>
         </div>
       </div>
     </article>

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import { getImageUrl, getTextValue } from '@/sanity/lib/image';
 import { useSanityUIComponents } from '@/hooks/_ui/useSanityUIComponents';
 import SanityStyledComponent from '@/components/_public/Common/SanityStyledComponent';
@@ -25,10 +26,14 @@ const SingleProject = ({ project, index }: ProjectCardProps) => {
           <Link href={`/projects/${project.slug?.current || project._id}`}>
             <div className="relative block aspect-[37/22] overflow-hidden">
               {project.mainImage ? (
-                <img
+                <Image
                   src={getImageUrl(project.mainImage)}
                   alt={getTextValue(project.title)}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-300 group-hover:scale-110"
+                  quality={85}
+                  loading="lazy"
                 />
               ) : (
                 <div className="w-full h-full bg-gray-200 flex items-center justify-center">
@@ -36,7 +41,7 @@ const SingleProject = ({ project, index }: ProjectCardProps) => {
                 </div>
               )}
               {project.featured && (
-                <div className="absolute top-4 right-4 bg-orange-500 text-white px-2 py-1 rounded-full text-xs font-medium">
+                <div className="absolute top-4 right-4 bg-orange-500 text-white px-2 py-1 rounded-full text-xs font-medium z-10">
                   In Evidenza
                 </div>
               )}

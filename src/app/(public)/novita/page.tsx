@@ -11,8 +11,11 @@ const NovitaArchivePage = () => {
   const [novita, setNovita] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
+  
+  const filterOptions = ['Ceramic Toner', 'Pronto Decal', 'Paper Film'];
 
   useEffect(() => {
     const fetchNovita = async () => {
@@ -29,12 +32,18 @@ const NovitaArchivePage = () => {
     fetchNovita();
   }, []);
 
-  // Filter novità based on search
+  // Filter novità based on search and selected filter
   const filteredNovita = novita.filter(item => {
     const matchesSearch = getTextValue(item.title).toLowerCase().includes(searchTerm.toLowerCase()) ||
                          getTextValue(item.subtitle).toLowerCase().includes(searchTerm.toLowerCase()) ||
                          getTextValue(item.miniIntro).toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesSearch;
+    
+    const matchesFilter = !selectedFilter || 
+                         getTextValue(item.title).toLowerCase().includes(selectedFilter.toLowerCase()) ||
+                         getTextValue(item.subtitle).toLowerCase().includes(selectedFilter.toLowerCase()) ||
+                         getTextValue(item.miniIntro).toLowerCase().includes(selectedFilter.toLowerCase());
+    
+    return matchesSearch && matchesFilter;
   });
 
   // Pagination
@@ -71,20 +80,35 @@ const NovitaArchivePage = () => {
             {/* Search Section */}
             <div className="bg-white/30 backdrop-blur/30 backdrop-blur rounded-2xl shadow-lg p-6 lg:p-8">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Search */}
-                <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
+                {/* Search and Reset Button */}
+                <div className="flex gap-4">
+                  <div className="relative flex-1">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Cerca novità..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                    />
                   </div>
-                  <input
-                    type="text"
-                    placeholder="Cerca novità..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                  />
+                  <button
+                    onClick={() => {
+                      setSelectedFilter('');
+                      setSearchTerm('');
+                    }}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap ${
+                      selectedFilter === ''
+                        ? 'bg-primary text-white shadow-md'
+                        : 'bg-white/80 backdrop-blur-sm text-primary hover:bg-white/90 hover:shadow-sm border border-white/50'
+                    }`}
+                  >
+                    Tutti
+                  </button>
                 </div>
 
                 {/* Results Count */}
@@ -95,6 +119,25 @@ const NovitaArchivePage = () => {
                       : `${filteredNovita.length} novità trovate`
                     }
                   </p>
+                </div>
+              </div>
+
+              {/* Filter Buttons */}
+              <div className="mt-6 pt-6 border-t border-gray-200">
+                <div className="flex flex-wrap gap-2">
+                  {filterOptions.map((filter) => (
+                    <button
+                      key={filter}
+                      onClick={() => setSelectedFilter(selectedFilter === filter ? '' : filter)}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                        selectedFilter === filter
+                          ? 'bg-primary text-white shadow-md'
+                          : 'bg-white/80 backdrop-blur-sm text-primary hover:bg-white/90 hover:shadow-sm border border-white/50'
+                      }`}
+                    >
+                      {filter}
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
@@ -141,12 +184,12 @@ const NovitaArchivePage = () => {
                     >
                       {/* Image */}
                       <Link href={`/novita/${item.slug?.current || item._id}`}>
-                        <div className="relative aspect-[16/10] overflow-hidden">
+                        <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200">
                           {item.mainImage ? (
                             <img
                               src={getImageUrl(item.mainImage)}
                               alt={getTextValue(item.title)}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              className="w-full h-full object-contain pt-6 pb-2 px-3 group-hover:scale-105 transition-transform duration-300"
                             />
                           ) : (
                             <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">

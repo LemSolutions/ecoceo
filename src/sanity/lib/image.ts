@@ -47,6 +47,95 @@ export function getImageUrl(image: any): string {
   return '/images/blog/blog-01.jpg'
 }
 
+/**
+ * Ottimizza un'immagine Sanity con parametri di ridimensionamento e formato moderno
+ * @param image - L'immagine Sanity da ottimizzare
+ * @param options - Opzioni per l'ottimizzazione
+ * @returns URL dell'immagine ottimizzata
+ */
+export function getOptimizedImageUrl(
+  image: any,
+  options: {
+    width?: number;
+    height?: number;
+    quality?: number; // 1-100, default 75
+    format?: 'webp' | 'avif' | 'auto';
+    fit?: 'clip' | 'crop' | 'fill' | 'fillmax' | 'max' | 'scale' | 'min';
+  } = {}
+): string {
+  if (!image) return '/images/blog/blog-01.jpg'
+  
+  const {
+    width,
+    height,
+    quality = 75,
+    format = 'auto',
+    fit = 'max'
+  } = options
+
+  // If image is already a string, return it (non possiamo ottimizzarla)
+  if (typeof image === 'string') {
+    return image
+  }
+
+  try {
+    let imageBuilder = urlFor(image)
+
+    // Applica ridimensionamento se specificato
+    if (width || height) {
+      if (width && height) {
+        imageBuilder = imageBuilder.width(width).height(height).fit(fit)
+      } else if (width) {
+        imageBuilder = imageBuilder.width(width).fit(fit)
+      } else if (height) {
+        imageBuilder = imageBuilder.height(height).fit(fit)
+      }
+    }
+
+    // Applica qualità
+    imageBuilder = imageBuilder.quality(quality)
+
+    // Applica formato moderno
+    if (format === 'webp') {
+      imageBuilder = imageBuilder.format('webp')
+    } else if (format === 'avif') {
+      imageBuilder = imageBuilder.format('avif')
+    } else if (format === 'auto') {
+      // Sanity non supporta 'auto', ma possiamo forzare webp che ha buon supporto
+      imageBuilder = imageBuilder.format('webp')
+    }
+
+    return imageBuilder.url() || '/images/blog/blog-01.jpg'
+  } catch (error) {
+    console.error('Error generating optimized image URL:', error)
+    // Fallback alla versione non ottimizzata
+    return getImageUrl(image)
+  }
+}
+
+/**
+ * Ottiene un'immagine ottimizzata per uso in Next.js Image component
+ * Crea automaticamente dimensioni appropriate basate sulla dimensione display
+ */
+export function getOptimizedImageForDisplay(
+  image: any,
+  displayWidth: number,
+  displayHeight?: number,
+  quality: number = 80
+): string {
+  // Aumenta leggermente le dimensioni per supportare display retina (2x)
+  const targetWidth = displayWidth * 2
+  const targetHeight = displayHeight ? displayHeight * 2 : undefined
+
+  return getOptimizedImageUrl(image, {
+    width: targetWidth,
+    height: targetHeight,
+    quality,
+    format: 'webp',
+    fit: 'max'
+  })
+}
+
 // Helper function to safely extract text from Sanity objects
 export function getTextValue(value: any): string {
   if (!value) return ''

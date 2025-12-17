@@ -1,10 +1,10 @@
 "use client";
 
 import { useCart } from '@/contexts/CartContext';
-import { getImageUrl, getTextValue } from '@/sanity/lib/image';
 import Breadcrumb from "@/components/Common/Breadcrumb";
 import Link from 'next/link';
 import { useState } from 'react';
+import Image from 'next/image';
 
 const CartPage = () => {
   const { state, updateQuantity, removeItem, clearCart } = useCart();
@@ -36,6 +36,7 @@ const CartPage = () => {
           <Breadcrumb
             pageName="Carrello"
             description="Il tuo carrello è vuoto"
+            parentPages={[{ name: 'Shop', href: '/shop' }]}
           />
         </div>
 
@@ -79,6 +80,7 @@ const CartPage = () => {
         <Breadcrumb
           pageName="Carrello"
           description={`${state.itemCount} articoli nel carrello`}
+          parentPages={[{ name: 'Shop', href: '/shop' }]}
         />
       </div>
 
@@ -113,83 +115,94 @@ const CartPage = () => {
                     </div>
 
                     <div className="space-y-6">
-                      {state.items.map((item) => (
-                        <div key={item.product._id} className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg">
-                          {/* Product Image */}
-                          <div className="flex-shrink-0">
-                            <img
-                              src={getImageUrl(item.product.mainImage)}
-                              alt={getTextValue(item.product.title)}
-                              className="w-20 h-20 object-cover rounded-lg"
-                            />
-                          </div>
-
-                          {/* Product Details */}
-                          <div className="flex-1 min-w-0">
-                            <h3 className="text-lg font-semibold text-black truncate">
-                              {getTextValue(item.product.title)}
-                            </h3>
-                            <p className="text-gray-600 text-sm truncate">
-                              {getTextValue(item.product.shortDescription)}
-                            </p>
-                            <div className="flex items-center gap-2 mt-2">
-                              <span className="text-lg font-bold text-primary">
-                                {formatPrice(item.product.price)}
-                              </span>
-                              {item.product.comparePrice && item.product.comparePrice > item.product.price && (
-                                <span className="text-sm text-gray-500 line-through">
-                                  {formatPrice(item.product.comparePrice)}
-                                </span>
-                              )}
+                      {state.items.map((item) => {
+                        const productPrice = item.product.price.unit_amount / 100;
+                        const productImage = item.product.images && item.product.images.length > 0 
+                          ? item.product.images[0] 
+                          : '/images/blog/blog-01.jpg';
+                        const productName = item.product.name || 'Prodotto senza nome';
+                        
+                        return (
+                          <div key={item.product.id} className="flex items-center gap-4 p-4 border border-gray-200 rounded-lg">
+                            {/* Product Image */}
+                            <div className="flex-shrink-0 relative w-20 h-20">
+                              <Image
+                                src={productImage}
+                                alt={productName}
+                                fill
+                                className="object-cover rounded-lg"
+                                sizes="80px"
+                              />
                             </div>
-                          </div>
 
-                          {/* Quantity Controls */}
-                          <div className="flex items-center gap-2">
-                            <button
-                              onClick={() => handleQuantityChange(item.product._id, item.quantity - 1)}
-                              disabled={isUpdating === item.product._id}
-                              className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors disabled:opacity-50"
-                            >
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
-                              </svg>
-                            </button>
-                            
-                            <span className="w-12 text-center font-medium">
-                              {isUpdating === item.product._id ? (
-                                <svg className="animate-spin h-4 w-4 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            {/* Product Details */}
+                            <div className="flex-1 min-w-0">
+                              <h3 className="text-lg font-semibold text-black truncate">
+                                {productName}
+                              </h3>
+                              <p className="text-base text-gray-600 mt-1.5">
+                                {productName.toLowerCase().includes('2kg') || productName.toLowerCase().includes('ceramic toner') ? '2Kg' : '100 SHEETS'}
+                              </p>
+                              <div className="flex items-center gap-2 mt-2">
+                                <span className="text-lg font-bold text-primary">
+                                  {formatPrice(productPrice)}
+                                </span>
+                                {item.product.metadata?.comparePrice && 
+                                 parseFloat(item.product.metadata.comparePrice) > productPrice && (
+                                  <span className="text-sm text-gray-500 line-through">
+                                    {formatPrice(parseFloat(item.product.metadata.comparePrice))}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Quantity Controls */}
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={() => handleQuantityChange(item.product.id, item.quantity - 1)}
+                                disabled={isUpdating === item.product.id || item.quantity <= 1}
+                                className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors disabled:opacity-50"
+                              >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
                                 </svg>
-                              ) : (
-                                item.quantity
-                              )}
-                            </span>
-                            
+                              </button>
+                              
+                              <span className="w-12 text-center font-medium">
+                                {isUpdating === item.product.id ? (
+                                  <svg className="animate-spin h-4 w-4 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                  </svg>
+                                ) : (
+                                  item.quantity
+                                )}
+                              </span>
+                              
+                              <button
+                                onClick={() => handleQuantityChange(item.product.id, item.quantity + 1)}
+                                disabled={isUpdating === item.product.id || (item.product.stock && item.quantity >= item.product.stock)}
+                                className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors disabled:opacity-50"
+                              >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                </svg>
+                              </button>
+                            </div>
+
+                            {/* Remove Button */}
                             <button
-                              onClick={() => handleQuantityChange(item.product._id, item.quantity + 1)}
-                              disabled={isUpdating === item.product._id || item.quantity >= item.product.stock}
-                              className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded-lg hover:bg-gray-100 transition-colors disabled:opacity-50"
+                              onClick={() => removeItem(item.product.id)}
+                              className="text-red-600 hover:text-red-800 p-2 transition-colors"
+                              title="Rimuovi dal carrello"
                             >
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                               </svg>
                             </button>
                           </div>
-
-                          {/* Remove Button */}
-                          <button
-                            onClick={() => removeItem(item.product._id)}
-                            className="text-red-600 hover:text-red-800 p-2 transition-colors"
-                            title="Rimuovi dal carrello"
-                          >
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                            </svg>
-                          </button>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                 </div>

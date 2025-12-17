@@ -95,13 +95,14 @@ const ServicesPage = () => {
                     <div className="wow fadeInUp" data-wow-delay={`${index * 100}ms`}>
                       <div className="group relative overflow-hidden rounded-sm bg-white/30 backdrop-blur/30 backdrop-blurshadow-one duration-300 hover:shadow-two dark:bg-dark dark:hover:shadow-gray-dark">
                         {/* Service Image */}
-                        <div className="relative h-48 overflow-hidden">
+                        <div className="relative h-64 overflow-hidden bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 dark:from-gray-800 dark:via-gray-900 dark:to-gray-950">
                           {service.image ? (
                             <Image
                               src={getImageUrl(service.image)}
                               alt={getTextValue(service.name)}
                               fill
-                              className="object-cover transition-transform duration-300 group-hover:scale-110"
+                              className="object-contain p-2 transition-transform duration-300 group-hover:scale-105"
+                              sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                             />
                           ) : (
                             <div className="w-full h-full bg-gray-200 flex items-center justify-center">
@@ -110,17 +111,12 @@ const ServicesPage = () => {
                           )}
                         </div>
 
-                        <div className="p-8">
-                          {/* Service Icon */}
-                          <div className="mb-6 flex h-[70px] w-[70px] items-center justify-center rounded-md bg-primary bg-opacity-10 text-4xl">
-                            {service.icon || "💼"}
-                          </div>
-                          
+                        <div className="p-5">
                           <SanityStyledComponent
                             component={serviceTitleComponent}
                             componentName="ServiceTitle"
                             as="h3"
-                            className="mb-4 text-xl font-bold text-dark dark:text-white"
+                            className="mb-2 text-xl font-bold text-dark dark:text-white"
                           >
                             {getTextValue(service.name)}
                           </SanityStyledComponent>
@@ -129,15 +125,17 @@ const ServicesPage = () => {
                             component={serviceDescriptionComponent}
                             componentName="ServiceDescription"
                             as="p"
-                            className="mb-6 text-base text-body-color dark:text-body-color-dark"
+                            className="mb-3 text-base text-body-color dark:text-body-color-dark"
                           >
                             {getTextValue(service.shortDescription)}
                           </SanityStyledComponent>
 
-                          {service.features && service.features.length > 0 && (
-                            <div className="mb-6">
-                              <ul className="space-y-2">
-                                {service.features.slice(0, 3).map((feature, featureIndex) => (
+                          <div className="mb-3">
+                            <ul className="space-y-1.5">
+                              {service.features && service.features.length > 0 ? (
+                                // Mostra un numero diverso di features per card per bilanciare gli spazi
+                                // Prima card: 3 features (più lunga), seconda: 2 features (media), terza: 1 feature (più corta)
+                                service.features.slice(0, index === 0 ? 3 : index === 1 ? 2 : 1).map((feature, featureIndex) => (
                                   <li key={featureIndex} className="flex items-center text-sm text-body-color dark:text-body-color-dark">
                                     <svg
                                       className="mr-2 h-4 w-4 text-primary"
@@ -152,14 +150,75 @@ const ServicesPage = () => {
                                     </svg>
                                     {getTextValue(feature)}
                                   </li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
+                                ))
+                              ) : (
+                                // Placeholder per mantenere lo spazio anche se non ci sono features
+                                // Prima card: 3 placeholder, seconda: 2 placeholder, terza: 1 placeholder
+                                <>
+                                  {index === 0 && (
+                                    <>
+                                      {[...Array(3)].map((_, i) => (
+                                        <li key={i} className="flex items-center text-sm text-body-color dark:text-body-color-dark opacity-0 pointer-events-none h-5">
+                                          <svg
+                                            className="mr-2 h-4 w-4 text-primary"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                          >
+                                            <path
+                                              fillRule="evenodd"
+                                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                              clipRule="evenodd"
+                                            />
+                                          </svg>
+                                          &nbsp;
+                                        </li>
+                                      ))}
+                                    </>
+                                  )}
+                                  {index === 1 && (
+                                    <>
+                                      {[...Array(2)].map((_, i) => (
+                                        <li key={i} className="flex items-center text-sm text-body-color dark:text-body-color-dark opacity-0 pointer-events-none h-5">
+                                          <svg
+                                            className="mr-2 h-4 w-4 text-primary"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                          >
+                                            <path
+                                              fillRule="evenodd"
+                                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                              clipRule="evenodd"
+                                            />
+                                          </svg>
+                                          &nbsp;
+                                        </li>
+                                      ))}
+                                    </>
+                                  )}
+                                  {index >= 2 && (
+                                    <li className="flex items-center text-sm text-body-color dark:text-body-color-dark opacity-0 pointer-events-none h-5">
+                                      <svg
+                                        className="mr-2 h-4 w-4 text-primary"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                      >
+                                        <path
+                                          fillRule="evenodd"
+                                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                          clipRule="evenodd"
+                                        />
+                                      </svg>
+                                      &nbsp;
+                                    </li>
+                                  )}
+                                </>
+                              )}
+                            </ul>
+                          </div>
 
                           <Link
                             href={service.url || `/services/${service.slug?.current}`}
-                            className="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors duration-200"
+                            className="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 transition-colors duration-200 mb-3"
                           >
                             Scopri di più
                             <svg
@@ -176,6 +235,13 @@ const ServicesPage = () => {
                               />
                             </svg>
                           </Link>
+
+                          <a
+                            href="mailto:commerciale@lemsolutions.it?subject=QUOTE LEM SOLUTIONS CERAMIC SYSTEMS"
+                            className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 px-6 py-2.5 text-sm font-semibold text-white shadow-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80 w-full"
+                          >
+                            Richiedi Preventivo Gratuito
+                          </a>
                         </div>
                       </div>
                     </div>
@@ -213,7 +279,7 @@ const ServicesPage = () => {
                   </a>
                   <a
                     href="/about"
-                    className="inline-flex items-center justify-center rounded-sm bg-white px-8 py-4 text-base font-semibold text-cyan-500 duration-300 ease-in-out hover:bg-white/90"
+                    className="inline-flex items-center justify-center rounded-sm bg-white px-8 py-4 text-base font-semibold text-primary duration-300 ease-in-out hover:bg-white/90"
                   >
                     Chi Siamo
                   </a>

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { safeFetch } from '@/sanity/lib/client';
@@ -155,10 +156,14 @@ const ProjectDetailsPage = () => {
                     {project.mainImage && (
                       <div className="mb-10 w-full overflow-hidden rounded-sm">
                         <div className="relative aspect-97/60 w-full sm:aspect-97/44">
-                          <img
+                          <Image
                             src={getImageUrl(project.mainImage)}
                             alt={getTextValue(project.title)}
-                            className="w-full h-full object-cover object-center"
+                            fill
+                            sizes="(min-width: 1024px) 66vw, 100vw"
+                            className="object-cover object-center"
+                            quality={85}
+                            priority
                           />
                         </div>
                       </div>
@@ -189,11 +194,15 @@ const ProjectDetailsPage = () => {
                         <h3 className="text-xl font-bold mb-6">Galleria Immagini</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                           {project.gallery.map((image, index) => (
-                            <div key={index} className="aspect-square overflow-hidden rounded-lg">
-                              <img
+                            <div key={index} className="relative aspect-square overflow-hidden rounded-lg">
+                              <Image
                                 src={getImageUrl(image)}
                                 alt={`${getTextValue(project.title)} - Immagine ${index + 1}`}
-                                className="w-full h-full object-cover"
+                                fill
+                                sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                                className="object-cover"
+                                quality={80}
+                                loading="lazy"
                               />
                             </div>
                           ))}

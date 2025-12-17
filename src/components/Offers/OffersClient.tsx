@@ -1,16 +1,10 @@
 "use client";
 
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { safeFetch } from '@/sanity/lib/client';
-import {
-  homepageOffersQuery,
-  offersArchiveQuery,
-} from '@/sanity/lib/queries';
 import { getImageUrl, getTextValue } from '@/sanity/lib/image';
 
-type Offer = {
+export type Offer = {
   _id: string;
   title: string;
   subtitle?: string;
@@ -25,7 +19,8 @@ type Offer = {
   ctaUrl?: string;
 };
 
-interface OffersProps {
+export interface OffersClientProps {
+  offers: Offer[];
   variant?: 'homepage' | 'archive';
   heading?: string;
   subheading?: string;
@@ -40,41 +35,12 @@ const formatCurrency = (value?: number) => {
   }).format(value);
 };
 
-const Offers: React.FC<OffersProps> = ({
+const OffersClient: React.FC<OffersClientProps> = ({
+  offers,
   variant = 'homepage',
   heading,
   subheading,
 }) => {
-  const [offers, setOffers] = useState<Offer[]>([]);
-  const [loading, setLoading] = useState(true);
-  const isHomepage = variant === 'homepage';
-
-  useEffect(() => {
-    const fetchOffers = async () => {
-      try {
-        const query =
-          variant === 'homepage' ? homepageOffersQuery : offersArchiveQuery;
-        const offersData = await safeFetch(query);
-        setOffers(offersData || []);
-      } catch (error) {
-        console.error('Error fetching offers:', error);
-        setOffers([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchOffers();
-  }, [variant]);
-
-  if (loading) {
-    return (
-      <div className="text-center py-12">
-        <p className="text-white/80 text-lg">Caricamento offerte...</p>
-      </div>
-    );
-  }
-
   if (!offers || offers.length === 0) {
     return (
       <div className="text-center py-12">
@@ -89,8 +55,8 @@ const Offers: React.FC<OffersProps> = ({
     );
   }
 
+  const isHomepage = variant === 'homepage';
   const spotlightEnabled = isHomepage && offers.length > 2;
-
   const sectionHeading =
     heading || (isHomepage ? 'Offerte Attive' : 'Le Nostre Offerte');
   const sectionSubheading =
@@ -152,23 +118,24 @@ const Offers: React.FC<OffersProps> = ({
                     <div
                       className={`relative w-full ${
                         isSpotlight
-                          ? 'h-[320px] sm:h-[380px] lg:h-[480px]'
-                          : 'h-[280px]'
+                          ? 'h-[360px] sm:h-[420px] lg:h-[520px]'
+                          : 'h-[320px]'
                       }`}
                     >
                       <Image
-                        src={getImageUrl(offer.mainImage)}
+                        src={getImageUrl(offer.mainImage, {
+                          width: isSpotlight ? 1600 : 900,
+                          quality: 70,
+                        })}
                         alt={getTextValue(offer.title)}
                         fill
-                        className="transition-all duration-500 ease-out object-contain w-full h-full p-1 sm:p-2 lg:p-3 drop-shadow-2xl group-hover:scale-[1.03]"
+                        className="transition-all duration-500 ease-out object-contain w-full h-full p-2 sm:p-4 lg:p-6 drop-shadow-2xl group-hover:scale-[1.03]"
                         sizes={
                           isSpotlight
                             ? '(min-width: 1280px) 45vw, (min-width: 1024px) 55vw, 100vw'
                             : '(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw'
                         }
-                        quality={isSpotlight ? 90 : 85}
                         priority={isSpotlight}
-                        loading={isSpotlight ? 'eager' : 'lazy'}
                       />
                     </div>
                   </div>
@@ -200,14 +167,14 @@ const Offers: React.FC<OffersProps> = ({
               </div>
 
               <div
-                className={`px-5 pt-4 pb-0 flex flex-col justify-between h-full ${
-                  isSpotlight ? 'lg:w-1/2 lg:px-6 lg:pt-6 lg:pb-0' : ''
+                className={`px-6 pt-6 pb-4 flex flex-col h-full ${
+                  isSpotlight ? 'lg:w-1/2 lg:px-8 lg:pt-8 lg:pb-6' : ''
                 }`}
               >
-                <div className={`space-y-2 ${isSpotlight ? 'lg:flex-1' : ''}`}>
+                <div className={`space-y-3 ${isSpotlight ? 'lg:flex-1' : ''}`}>
                   <div>
                     <h3
-                      className={`font-bold mb-1 ${
+                      className={`font-bold mb-2 ${
                         isSpotlight ? '!text-black text-3xl lg:text-4xl' : 'text-2xl text-white'
                       }`}
                     >
@@ -248,7 +215,6 @@ const Offers: React.FC<OffersProps> = ({
                       )}
                     </div>
                   )}
-
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-3 items-center mt-3 pb-0">
@@ -314,5 +280,5 @@ const Offers: React.FC<OffersProps> = ({
   );
 };
 
-export default Offers;
+export default OffersClient;
 

@@ -37,6 +37,18 @@ const MiniCart = () => {
     };
   }, []);
 
+  // Block body scroll when cart is open on mobile
+  useEffect(() => {
+    if (isOpen) {
+      // Block scroll on mobile
+      const originalStyle = window.getComputedStyle(document.body).overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalStyle;
+      };
+    }
+  }, [isOpen]);
+
   const handleQuantityChange = (productId: string, newQuantity: number) => {
     if (newQuantity <= 0) {
       removeItem(productId);
@@ -64,10 +76,18 @@ const MiniCart = () => {
         )}
       </button>
 
-      {/* Mini Cart Dropdown */}
+      {/* Overlay for mobile */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
-          <div className="p-4">
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
+      {/* Mini Cart Dropdown - Desktop & Mobile */}
+      {isOpen && (
+        <div className="fixed right-0 top-0 h-full w-full max-w-sm bg-white shadow-xl z-50 flex flex-col lg:absolute lg:top-auto lg:h-auto lg:mt-2 lg:w-80 lg:rounded-lg lg:flex-none border border-gray-200 overflow-hidden">
+          <div className="p-4 flex-1 flex flex-col overflow-y-auto lg:overflow-visible lg:flex-none min-h-0">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-gray-900">
                 Carrello ({state.itemCount})
@@ -94,7 +114,7 @@ const MiniCart = () => {
             ) : (
               <>
                 {/* Cart Items */}
-                <div className="max-h-64 overflow-y-auto space-y-3 mb-4">
+                <div className="flex-1 overflow-y-auto space-y-3 mb-4 min-h-0 lg:max-h-64">
                   {state.items.map((item) => (
                     <div key={item.product.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
                       <img
@@ -138,7 +158,7 @@ const MiniCart = () => {
                 </div>
 
                 {/* Cart Total */}
-                <div className="border-t border-gray-200 pt-4 mb-4">
+                <div className="border-t border-gray-200 pt-4 mb-4 flex-shrink-0">
                   <div className="flex justify-between items-center">
                     <span className="font-semibold text-gray-900">Totale:</span>
                     <span className="font-bold text-blue-600">{formatPrice(state.total)}</span>
@@ -146,7 +166,7 @@ const MiniCart = () => {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="space-y-2">
+                <div className="space-y-2 flex-shrink-0">
                   <Link
                     href="/shop/cart"
                     onClick={() => setIsOpen(false)}

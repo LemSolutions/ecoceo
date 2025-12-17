@@ -1,9 +1,29 @@
 'use client';
 
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import MarketingStatsOverview from './MarketingStatsOverview';
-import MarketingTablesViewer from './MarketingTablesViewer';
-import MarketingChartsViewer from './MarketingChartsViewer';
+
+// Lazy load componenti con Chart.js (libreria pesante)
+const MarketingTablesViewer = dynamic(() => import('./MarketingTablesViewer'), {
+  ssr: false,
+  loading: () => (
+    <div className="text-center py-8">
+      <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      <p className="mt-2 text-gray-600">Caricamento tabelle...</p>
+    </div>
+  ),
+});
+
+const MarketingChartsViewer = dynamic(() => import('./MarketingChartsViewer'), {
+  ssr: false,
+  loading: () => (
+    <div className="text-center py-8">
+      <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      <p className="mt-2 text-gray-600">Caricamento grafici...</p>
+    </div>
+  ),
+});
 
 export default function MarketingVisualizations() {
   const [activeView, setActiveView] = useState('stats');

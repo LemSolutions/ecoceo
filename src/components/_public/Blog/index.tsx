@@ -123,6 +123,9 @@ const Blog = () => {
 
   const postKeywords = extractPostKeywords();
 
+  // Helper per verificare se tutti i filtri sono vuoti (stato "Tutti")
+  const isAllFiltersEmpty = selectedCategory === 'all' && !selectedPostId && !searchTerm;
+
   // Filter posts based on search, category, and selected post
   const filteredPosts = posts.filter(post => {
     const matchesSearch = getTextValue(post.title).toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -180,20 +183,37 @@ const Blog = () => {
       {/* Search and Filter Section */}
       <div className="bg-white/30 backdrop-blur/30 backdrop-blurrounded-2xl shadow-lg p-6 lg:p-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Search */}
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
+          {/* Search and Reset Button */}
+          <div className="flex gap-4">
+            <div className="relative flex-1">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <input
+                type="text"
+                placeholder="Cerca articoli..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              />
             </div>
-            <input
-              type="text"
-              placeholder="Cerca articoli..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-            />
+            <button
+              onClick={() => {
+                setSelectedCategory('all');
+                setSelectedPostId('');
+                setSearchTerm('');
+                setCurrentPage(1);
+              }}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap ${
+                isAllFiltersEmpty
+                  ? 'bg-primary text-white shadow-md'
+                  : 'bg-white/80 backdrop-blur-sm text-primary hover:bg-white/90 hover:shadow-sm border border-white/50'
+              }`}
+            >
+              Tutti
+            </button>
           </div>
 
           {/* Category Filter */}
@@ -201,11 +221,27 @@ const Blog = () => {
             {categories.map((category) => (
               <button
                 key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  selectedCategory === category
-                    ? 'bg-primary text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                onClick={() => {
+                  if (category === 'all') {
+                    // Se clicchi "Tutte le categorie", resetta tutti i filtri (stessa logica del bottone "Tutti")
+                    setSelectedCategory('all');
+                    setSelectedPostId('');
+                    setSearchTerm('');
+                    setCurrentPage(1);
+                  } else {
+                    // Se selezioni una categoria specifica, disattiva il filtro post ma mantieni la ricerca
+                    setSelectedCategory(category);
+                    setSelectedPostId('');
+                  }
+                }}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                  category === 'all' 
+                    ? isAllFiltersEmpty
+                      ? 'bg-primary text-white shadow-md'
+                      : 'bg-white/80 backdrop-blur-sm text-primary hover:bg-white/90 hover:shadow-sm border border-white/50'
+                    : selectedCategory === category
+                      ? 'bg-primary text-white'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
                 {category === 'all' ? 'Tutti' : category}
@@ -221,7 +257,14 @@ const Blog = () => {
               {postKeywords.map(({ postId, keyword }) => (
                 <button
                   key={postId}
-                  onClick={() => setSelectedPostId(selectedPostId === postId ? '' : postId)}
+                  onClick={() => {
+                    const newPostId = selectedPostId === postId ? '' : postId;
+                    setSelectedPostId(newPostId);
+                    // Se selezioni un post, reset della categoria a 'all' per mostrare tutti i post della categoria
+                    if (newPostId) {
+                      setSelectedCategory('all');
+                    }
+                  }}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                     selectedPostId === postId
                       ? 'bg-primary text-white shadow-md'

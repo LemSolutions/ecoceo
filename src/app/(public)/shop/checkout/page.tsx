@@ -1,9 +1,21 @@
 "use client";
 
+import dynamic from 'next/dynamic';
 import { useCart } from '@/contexts/CartContext';
 import Breadcrumb from "@/components/Common/Breadcrumb";
 import Link from 'next/link';
-import SimpleStripeCheckout from '@/components/Shop/SimpleStripeCheckout';
+import Image from 'next/image';
+
+// Lazy load del componente Stripe checkout (libreria pesante)
+const SimpleStripeCheckout = dynamic(() => import('@/components/Shop/SimpleStripeCheckout'), {
+  ssr: false,
+  loading: () => (
+    <div className="text-center py-8">
+      <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary mb-4"></div>
+      <p className="text-gray-600">Caricamento checkout...</p>
+    </div>
+  ),
+});
 
 const CheckoutPage = () => {
   const { state } = useCart();
@@ -99,24 +111,44 @@ const CheckoutPage = () => {
                     </h3>
 
                     <div className="space-y-4 mb-6">
-                      {state.items.map((item, index) => (
-                        <div key={index} className="flex items-center space-x-3 p-3 bg-white/50 rounded-lg">
-                          <div className="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center">
-                            <span className="text-xs text-gray-600">IMG</span>
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-gray-900 truncate">
-                              {item.product.title}
+                      {state.items.map((item, index) => {
+                        const productName = item.product.name || item.product.title || 'Prodotto senza nome';
+                        const productImage = item.product.images && item.product.images.length > 0
+                          ? item.product.images[0]
+                          : (item.product.mainImage ? item.product.mainImage : '/images/blog/blog-01.jpg');
+                        const productPrice = item.product.price?.unit_amount 
+                          ? (item.product.price.unit_amount / 100) 
+                          : (typeof item.product.price === 'number' ? item.product.price : 0);
+
+                        return (
+                          <div key={item.product.id || index} className="flex items-center space-x-3 p-3 bg-white/50 rounded-lg">
+                            <div className="relative w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
+                              {productImage && productImage.startsWith('http') ? (
+                                <Image
+                                  src={productImage}
+                                  alt={productName}
+                                  fill
+                                  className="object-cover rounded-lg"
+                                  sizes="48px"
+                                />
+                              ) : (
+                                <span className="text-xs text-gray-600">IMG</span>
+                              )}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-medium text-gray-900 truncate">
+                                {productName}
+                              </p>
+                              <p className="text-sm text-gray-600">
+                                Qty: {item.quantity}
+                              </p>
+                            </div>
+                            <p className="text-sm font-medium text-gray-900 whitespace-nowrap">
+                              €{(productPrice * item.quantity).toFixed(2)}
                             </p>
-                            <p className="text-sm text-gray-600">
-                              Qty: {item.quantity}
-                            </p>
                           </div>
-                          <p className="text-sm font-medium text-gray-900">
-                            €{(item.product.price * item.quantity).toFixed(2)}
-                          </p>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
 
                     <div className="border-t pt-4 space-y-3">
