@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Hero from "@/components/Hero";
 import { safeFetch } from "@/sanity/lib/client";
 import { siteSettingsQuery } from "@/sanity/lib/queries";
+import FullPageRecomposition from "@/components/Common/FullPageRecomposition";
 
 const SectionLoading = ({ message }: { message: string }) => (
   <div className="text-center py-16 text-white/60 text-sm tracking-wide animate-pulse">
@@ -64,6 +65,7 @@ const NovitaPopup = dynamic(() => import("@/components/_public/NovitaPopup"), {
 
 const HomePage = () => {
   const [siteSettings, setSiteSettings] = useState(null);
+  const [shouldRecompose, setShouldRecompose] = useState(false);
 
   useEffect(() => {
     const fetchSiteSettings = async () => {
@@ -78,8 +80,28 @@ const HomePage = () => {
     fetchSiteSettings();
   }, []);
 
+  // Ascolta gli eventi del tunnel
+  useEffect(() => {
+    const handleRecompose = () => {
+      setShouldRecompose(true);
+      // Reset dopo che l'animazione è completata per permettere nuovo click
+      setTimeout(() => {
+        setShouldRecompose(false);
+      }, 3000); // Tempo sufficiente per completare l'animazione
+    };
+
+    window.addEventListener('tunnel-recompose', handleRecompose);
+    
+    return () => {
+      window.removeEventListener('tunnel-recompose', handleRecompose);
+    };
+  }, []);
+
   return (
     <>
+      {/* Componente per ricomposizione completa della pagina */}
+      <FullPageRecomposition isActive={shouldRecompose} />
+      
       {/* Hero Section */}
       <div className="text-white">
         <Hero />
@@ -87,7 +109,7 @@ const HomePage = () => {
 
       {/* Offers Section */}
       <div className="text-white">
-        <section className="py-12 lg:py-16 bg-gradient-to-b from-white/5 via-white/0 to-white/0">
+        <section id="offers-section" className="py-12 lg:py-16 bg-gradient-to-b from-white/5 via-white/0 to-white/0">
           <div className="container">
             <OffersSection
               variant="homepage"
@@ -100,16 +122,16 @@ const HomePage = () => {
 
       {/* Novità Carousel */}
       <div className="text-white">
-        <section className="py-10 lg:py-14">
+        <section id="novita-section" className="py-10 lg:py-14">
           <div className="container">
-            <div className="text-center mb-16">
-              <p className="uppercase tracking-[0.3em] text-orange-300 text-sm font-semibold mb-2">
+            <div className="text-center mb-12 md:mb-16">
+              <p className="uppercase tracking-[0.3em] text-orange-300 text-xs md:text-sm font-semibold mb-2">
                 Novità
               </p>
-              <h2 className="text-white mb-4 text-3xl font-bold sm:text-4xl lg:text-5xl">
+              <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl">
                 Ultimi Aggiornamenti
               </h2>
-              <p className="text-white/80 text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
+              <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
                 Notizie, lanci e promozioni dal mondo della fotoceramica professionale.
               </p>
             </div>
@@ -154,7 +176,7 @@ const HomePage = () => {
 
       {/* Projects Section */}
       <div className="text-white">
-        <section className="py-16 lg:py-20">
+        <section className="py-12 md:py-16 lg:py-20">
           <ProjectsSection
             title="I Nostri Progetti"
             subtitle="Scopri alcune delle realizzazioni che abbiamo seguito dall’idea alla messa in produzione."
@@ -172,13 +194,13 @@ const HomePage = () => {
       {/* Services Section */}
       <div className="text-white">
         <div id="services-section-anchor" className="relative -top-24 h-0" aria-hidden="true" />
-        <section className="py-16 lg:py-20">
+        <section className="py-12 md:py-16 lg:py-20">
           <div className="container">
-            <div className="text-center mb-16">
-              <h2 className="text-white mb-4 text-3xl font-bold sm:text-4xl lg:text-5xl">
+            <div className="text-center mb-12 md:mb-16">
+              <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl">
                 I Nostri Servizi
               </h2>
-              <p className="text-white/80 text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
+              <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
                 Servizi per ottenere un prodotto perfetto.
               </p>
             </div>
@@ -189,51 +211,30 @@ const HomePage = () => {
 
       {/* Products Section */}
       <div className="text-white">
-        <section className="py-16 lg:py-20">
+        <section className="py-12 md:py-16 lg:py-20">
           <div className="container">
-            <div className="text-center mb-16">
-              <h2 className="text-white mb-4 text-3xl font-bold sm:text-4xl lg:text-5xl">
+            <div className="text-center mb-12 md:mb-16">
+              <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl">
                 I Nostri Prodotti
               </h2>
-              <p className="text-white/80 text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
+              <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
                 Scopri la nostra collezione di prodotti personalizzati in ceramica.
               </p>
             </div>
             <ProductsSection />
-            <div className="text-center mt-12">
-              <Link
-                href="/shop"
-                className="inline-flex items-center px-8 py-4 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors duration-200 text-lg font-semibold group"
-              >
-                Vedi Tutti i Prodotti
-                <svg
-                  className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-200"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </Link>
-            </div>
           </div>
         </section>
       </div>
 
       {/* Social Media Section */}
       <div className="text-white">
-        <section className="py-16 lg:py-20">
+        <section className="py-12 md:py-16 lg:py-20">
           <div className="container">
-            <div className="text-center mb-16">
-              <h2 className="text-white mb-4 text-3xl font-bold sm:text-4xl lg:text-5xl">
+            <div className="text-center mb-12 md:mb-16">
+              <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl">
                 Seguici sui Social
               </h2>
-              <p className="text-white/80 text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
+              <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
                 Resta sempre aggiornato sui nostri progetti, novità e contenuti esclusivi.
               </p>
             </div>
@@ -332,13 +333,13 @@ const HomePage = () => {
 
       {/* Testimonials Section */}
       <div className="text-white">
-        <section className="py-16 lg:py-20">
+        <section className="py-12 md:py-16 lg:py-20">
           <div className="container">
-            <div className="text-center mb-16">
-              <h2 className="text-white mb-4 text-3xl font-bold sm:text-4xl lg:text-5xl">
+            <div className="text-center mb-12 md:mb-16">
+              <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl">
                 Cosa Dicono i Nostri Clienti
               </h2>
-              <p className="text-white/80 text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
+              <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
                 Le testimonianze dei nostri clienti soddisfatti che hanno scelto di lavorare con noi.
               </p>
             </div>
@@ -349,13 +350,13 @@ const HomePage = () => {
 
       {/* Blog Section */}
       <div className="text-white">
-        <section className="py-16 lg:py-20">
+        <section className="py-12 md:py-16 lg:py-20">
           <div className="container">
-            <div className="text-center mb-16">
-              <h2 className="text-white mb-4 text-3xl font-bold sm:text-4xl lg:text-5xl">
+            <div className="text-center mb-12 md:mb-16">
+              <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl">
                 Il Nostro Blog
               </h2>
-              <p className="text-white/80 text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
+              <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
               Scopri il mondo della stampa digitale su ceramica
               </p>
             </div>
@@ -368,13 +369,13 @@ const HomePage = () => {
       <div className="text-white">
         <div id="preventivo" className="relative -top-24 h-0" aria-hidden="true" />
         <div id="consulenza" className="relative -top-24 h-0" aria-hidden="true" />
-        <section id="contatti" className="py-16 lg:py-20">
+        <section id="contatti" className="py-12 md:py-16 lg:py-20">
           <div className="container">
-            <div className="text-center mb-16">
-              <h2 className="text-white mb-4 text-3xl font-bold sm:text-4xl lg:text-5xl">
+            <div className="text-center mb-12 md:mb-16">
+              <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl">
                 Contattaci
               </h2>
-              <p className="text-white/80 text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
+              <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
                 Dal 1998 sviluppiamo soluzioni di fotoceramica professionale: consulenza dedicata, produzione certificata e assistenza rapida per portare sul mercato collezioni ceramiche personalizzate, targhe memoriali e superfici decorative ad alto impatto.
               </p>
             </div>

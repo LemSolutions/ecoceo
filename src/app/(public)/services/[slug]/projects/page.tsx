@@ -75,6 +75,7 @@ const ServiceProjectsPage = () => {
         <Breadcrumb
           pageName={`Progetti - ${getTextValue(service.name)}`}
           description={`Scopri i progetti realizzati per il servizio ${getTextValue(service.name)}`}
+          showIntro={false}
         />
       </div>
 

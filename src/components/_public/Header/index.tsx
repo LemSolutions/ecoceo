@@ -7,7 +7,7 @@ import { getImageUrl } from '@/sanity/lib/image';
 
 import { safeFetch } from '@/sanity/lib/client';
 import { navbarServicesQuery } from '@/sanity/lib/queries';
-import MiniCart from '@/components/_public/Shop/MiniCart';
+import { useCart } from '@/contexts/CartContext';
 
 interface HeaderProps {
   siteSettings?: any;
@@ -16,8 +16,11 @@ interface HeaderProps {
 const Header = ({ siteSettings }: HeaderProps) => {
   const [isSticky, setIsSticky] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileCartOpen, setIsMobileCartOpen] = useState(false);
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
+  const [isCheckoutMaintenanceOpen, setIsCheckoutMaintenanceOpen] = useState(false);
   const [services, setServices] = useState([]);
+  const { state: cartState, updateQuantity, removeItem } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,10 +45,37 @@ const Header = ({ siteSettings }: HeaderProps) => {
     fetchServices();
   }, []);
 
+  // Blocca lo scroll quando il drawer del carrello è aperto
+  useEffect(() => {
+    if (isMobileCartOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileCartOpen]);
+
   // Funzione per chiudere il menu mobile quando si clicca su un link
   const handleLinkClick = () => {
     setIsMobileMenuOpen(false);
     setIsServicesDropdownOpen(false);
+    setIsMobileCartOpen(false);
+  };
+
+  const handleCartClick = (e: React.MouseEvent) => {
+    if (window.innerWidth < 1024) {
+      e.preventDefault();
+      setIsMobileCartOpen(!isMobileCartOpen);
+    }
+  };
+
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('it-IT', {
+      style: 'currency',
+      currency: 'EUR',
+    }).format(price);
   };
 
   return (
@@ -212,31 +242,7 @@ const Header = ({ siteSettings }: HeaderProps) => {
                         </svg>
                       </Link>
                     </li>
-                    <li className="group relative">
-                      <Link
-                        href="/shop"
-                        onClick={handleLinkClick}
-                        className="group px-3 md:px-4 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 text-white bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 border border-orange-400/30 h-8 md:h-9 w-auto shadow-lg"
-                      >
-                        Shop
-                        <svg 
-                          xmlns="http://www.w3.org/2000/svg" 
-                          width="16" 
-                          height="16" 
-                          viewBox="0 0 24 24" 
-                          fill="none" 
-                          stroke="currentColor" 
-                          strokeWidth="2" 
-                          strokeLinecap="round" 
-                          strokeLinejoin="round" 
-                          className="lucide lucide-shopping-bag transition duration-300 group-hover:translate-x-0.5"
-                        >
-                          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                          <line x1="3" x2="21" y1="6" y2="6"></line>
-                          <path d="M16 10a4 4 0 0 1-8 0"></path>
-                        </svg>
-                      </Link>
-                    </li>
+                    {/* Shop link rimosso: il cliente può solo aggiungere prodotti al carrello */}
                     <li className="group relative">
                       <Link
                         href="/projects"
@@ -393,7 +399,21 @@ const Header = ({ siteSettings }: HeaderProps) => {
                 </nav>
               </div>
               <div className="flex items-center justify-end pr-16 lg:pr-0 gap-4">
-                <MiniCart />
+                <Link
+                  href="/shop/cart"
+                  onClick={handleCartClick}
+                  className="relative inline-flex items-center justify-center p-2 text-white hover:text-orange-300 transition-colors"
+                  aria-label="Carrello"
+                >
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 640 512" aria-hidden="true">
+                    <path d="M24-16C10.7-16 0-5.3 0 8S10.7 32 24 32l45.3 0c3.9 0 7.2 2.8 7.9 6.6l52.1 286.3c6.2 34.2 36 59.1 70.8 59.1L456 384c13.3 0 24-10.7 24-24s-10.7-24-24-24l-255.9 0c-11.6 0-21.5-8.3-23.6-19.7l-5.1-28.3 303.6 0c30.8 0 57.2-21.9 62.9-52.2L568.9 69.9C572.6 50.2 557.5 32 537.4 32l-412.7 0-.4-2c-4.8-26.6-28-46-55.1-46L24-16zM208 512a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm224 0a48 48 0 1 0 0-96 48 48 0 1 0 0 96z"></path>
+                  </svg>
+                  {cartState.itemCount > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-blue-500 !text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
+                      {cartState.itemCount > 99 ? '99+' : cartState.itemCount}
+                    </span>
+                  )}
+                </Link>
                 <Link
                   href="/client-area"
                   onClick={handleLinkClick}
@@ -421,6 +441,160 @@ const Header = ({ siteSettings }: HeaderProps) => {
           </div>
         </div>
       </header>
+
+      {/* Mobile Cart Drawer */}
+      <div
+        className={`lg:hidden fixed inset-0 z-[9998] transition-opacity duration-300 ${
+          isMobileCartOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+        }`}
+        onClick={() => setIsMobileCartOpen(false)}
+      >
+        <div className="absolute inset-0 bg-black/50" />
+        <div
+          className={`absolute right-0 top-28 max-h-[calc(100vh-6rem)] w-[85vw] max-w-sm bg-white shadow-xl transform transition-transform duration-300 ease-in-out overflow-y-auto ${
+            isMobileCartOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="p-6 pb-6">
+            {/* Header */}
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-black">Carrello</h2>
+              <button
+                onClick={() => setIsMobileCartOpen(false)}
+                className="p-2 text-gray-600 hover:text-black transition-colors"
+                aria-label="Chiudi carrello"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Cart Items */}
+            {cartState.items.length === 0 ? (
+              <div className="text-center py-12">
+                <svg className="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
+                </svg>
+                <p className="text-gray-600 text-lg">Il tuo carrello è vuoto</p>
+              </div>
+            ) : (
+              <>
+                <div className="space-y-4 mb-6">
+                  {cartState.items.map((item) => {
+                    const productPrice = item.product.price.unit_amount / 100;
+                    const productImage = item.product.images && item.product.images.length > 0 
+                      ? item.product.images[0] 
+                      : '/images/blog/blog-01.jpg';
+                    const productName = item.product.name || 'Prodotto senza nome';
+                    
+                    return (
+                      <div key={item.product.id} className="flex gap-4 p-4 border border-gray-200 rounded-lg">
+                        <div className="flex-shrink-0 relative w-20 h-20">
+                          <Image
+                            src={productImage}
+                            alt={productName}
+                            fill
+                            className="object-cover rounded-lg"
+                            sizes="80px"
+                          />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-base font-semibold text-black truncate">{productName}</h3>
+                          <p className="text-sm text-gray-600 mt-1">
+                            {formatPrice(productPrice)} cad.
+                          </p>
+                          <div className="flex items-center gap-2 mt-2">
+                            <button
+                              onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
+                              className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded hover:bg-gray-100"
+                            >
+                              -
+                            </button>
+                            <span className="w-8 text-center font-medium">{item.quantity}</span>
+                            <button
+                              onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                              className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded hover:bg-gray-100"
+                            >
+                              +
+                            </button>
+                            <button
+                              onClick={() => removeItem(item.product.id)}
+                              className="ml-auto text-red-600 hover:text-red-800 text-sm"
+                            >
+                              Rimuovi
+                            </button>
+                          </div>
+                          <p className="text-lg font-bold text-primary mt-2">
+                            {formatPrice(productPrice * item.quantity)}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Total */}
+                <div className="border-t border-gray-200 pt-4">
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="text-lg font-semibold text-black">Totale:</span>
+                    <span className="text-2xl font-bold text-primary">
+                      {formatPrice(cartState.total)}
+                    </span>
+                  </div>
+                  <Link
+                    href="/shop/cart"
+                    onClick={handleLinkClick}
+                    className="block w-full text-center bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 text-white font-semibold py-3 px-6 rounded-full transition-all mb-3"
+                  >
+                    Vai al Carrello
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => setIsCheckoutMaintenanceOpen(true)}
+                    className="block w-full text-center bg-white text-primary font-semibold py-3 px-6 rounded-full border border-primary hover:bg-gray-100 transition-all"
+                  >
+                    Vai al Checkout
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Checkout Maintenance Modal */}
+      {isCheckoutMaintenanceOpen && (
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Checkout in manutenzione"
+          onClick={() => setIsCheckoutMaintenanceOpen(false)}
+        >
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+          <div
+            className="relative w-full max-w-md rounded-2xl bg-white shadow-2xl border border-gray-200 p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-lg font-bold text-gray-900">Checkout momentaneamente non disponibile</h3>
+            <p className="mt-2 text-sm text-gray-600 leading-relaxed">
+              Al momento il checkout è in fase di manutenzione per migliorare la sicurezza e l’esperienza di acquisto.
+              Puoi comunque aggiungere prodotti al carrello e tornare più tardi a completare l’ordine.
+            </p>
+            <div className="mt-6">
+              <button
+                type="button"
+                className="w-full rounded-xl bg-gray-900 text-white py-2.5 font-semibold hover:bg-gray-800 transition"
+                onClick={() => setIsCheckoutMaintenanceOpen(false)}
+              >
+                Ok, ho capito
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

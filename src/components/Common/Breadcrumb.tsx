@@ -32,9 +32,9 @@ const Breadcrumb = ({ pageName, description, showIntro = true, parentPages = [] 
                 </div>
               </div>
             )}
-            <div className="w-full px-4 md:w-4/12 lg:w-5/12">
-              <div className="text-center md:text-right">
-                <ul className="flex items-center md:justify-end">
+            <div className={`w-full px-4 ${showIntro ? 'md:w-4/12 lg:w-5/12' : 'md:ml-auto md:w-auto'}`}>
+              <div className={`text-center ${showIntro ? 'md:text-right' : 'md:text-left'} ${!showIntro ? 'md:mt-8 lg:mt-12' : ''}`}>
+                <ul className={`flex items-center ${showIntro ? 'md:justify-end' : 'md:justify-start'}`}>
                   <li className="flex items-center">
                     <Link
                       href="/"

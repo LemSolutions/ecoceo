@@ -8,6 +8,7 @@ import { useSanityUIComponents } from '@/hooks/useSanityUIComponents';
 import SanityStyledComponent from '@/components/Common/SanityStyledComponent';
 import SanityLink from '@/components/Common/SanityLink';
 import { useState, useEffect, useRef, type CSSProperties } from 'react';
+import CeramicTunnelTransition from '@/components/Common/CeramicTunnelTransition';
 
 // Componente per il video di sfondo YouTube con blur e controllo Intersection Observer
 const HeroVideoBackground = () => {
@@ -279,6 +280,7 @@ const heroDescriptionGlowStyle: CSSProperties = {
 const Hero = () => {
   const [hero, setHero] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [tunnelActive, setTunnelActive] = useState(false);
   const { getComponent } = useSanityUIComponents();
 
   useEffect(() => {
@@ -306,7 +308,7 @@ const Hero = () => {
 
   if (loading) {
     return (
-      <section className="relative z-10 overflow-hidden pb-16 pt-[120px] md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px]">
+      <section className="relative z-10 overflow-hidden pb-12 pt-[100px] md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px]">
         <div className="container">
           <div className="text-center">
             <p>Caricamento Hero...</p>
@@ -323,7 +325,7 @@ const Hero = () => {
         componentName="HeroSection"
         as="section"
         id="home"
-        className="relative z-10 overflow-hidden pb-16 pt-[120px] md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px] min-h-screen flex items-center"
+        className="relative z-10 overflow-hidden pb-12 pt-[100px] md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px] min-h-screen flex items-center"
         style={hero?.backgroundImage ? {
           backgroundImage: `url(${getImageUrl(hero.backgroundImage)})`,
           backgroundSize: 'cover',
@@ -334,113 +336,134 @@ const Hero = () => {
         <HeroVideoBackground />
         
         {/* Contenuto principale della Hero con z-index più alto per essere sopra il video */}
-        <div className="container relative z-[2]">
-          <div className="-mx-4 flex flex-wrap items-center">
-            {/* Left Column - Text Content */}
-            <div className="w-full px-4 lg:w-1/2">
-              <div className="wow fadeInUp" data-wow-delay=".2s">
-                {!hero ? (
-                  <>
-                    <SanityStyledComponent
-                      component={heroTitleComponent}
-                      componentName="HeroTitle"
-                      as="h1"
-                      className="relative inline-block mb-6 text-3xl font-bold leading-tight sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight lg:text-6xl lg:leading-tight xl:text-7xl xl:leading-tight transition-transform duration-500 hover:-translate-y-1 hover:scale-[1.01]"
-                      style={heroTitleGlowStyle}
-                    >
-                      Welcome to Our Platform
-                    </SanityStyledComponent>
-                    
-                    <SanityStyledComponent
-                      component={heroDescriptionComponent}
-                      componentName="HeroDescription"
-                      as="p"
-                      className="relative inline-block mb-12 text-base leading-relaxed text-black/80 sm:text-lg md:text-xl lg:text-2xl"
-                      style={heroDescriptionGlowStyle}
-                    >
-                      Create your hero section content in Sanity Studio to get started. Add compelling text and images to engage your visitors.
-                    </SanityStyledComponent>
-                    
-                    <div className="flex flex-col items-start justify-start space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-                      <SanityStyledComponent
-                        component={primaryButtonComponent}
-                        componentName="PrimaryButton"
-                        as="div"
-                        className="rounded-xs bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:opacity-80 cursor-pointer"
-                        onClick={() => window.location.href = '/studio'}
-                      >
-                        Go to Sanity Studio
-                      </SanityStyledComponent>
-                    </div>
-                    {/* Video mobile sotto il bottone */}
-                    <HeroVideoMobile />
-                  </>
-                ) : (
-                  <>
-                    <SanityStyledComponent
-                      component={heroTitleComponent}
-                      componentName="HeroTitle"
-                      as="h1"
-                      className="mb-5 text-3xl font-bold leading-tight text-gray-900 sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight md:text-white lg:text-6xl lg:leading-tight xl:text-7xl xl:leading-tight relative px-4 py-3 rounded-lg md:backdrop-blur md:bg-white/15"
-                    >
-                      {getTextValue(hero.title)}
-                    </SanityStyledComponent>
-                    
-                    <SanityStyledComponent
-                      component={heroDescriptionComponent}
-                      componentName="HeroDescription"
-                      as="p"
-                      className="mb-12 text-base leading-relaxed text-gray-800 sm:text-lg md:text-xl md:text-white lg:text-2xl relative px-4 py-3 rounded-lg md:backdrop-blur md:bg-white/15"
-                    >
-                      {getTextValue(hero.paragraph)}
-                    </SanityStyledComponent>
-                    
-                    <div className="flex flex-col items-start justify-start space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-                      {hero.primaryButton && (
-                        <SanityStyledComponent
-                          component={primaryButtonComponent}
-                          componentName="PrimaryButton"
-                          as="div"
-                          className="hero-button-flash rounded-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out cursor-pointer shadow-lg"
-                          onClick={() => {
-                            const url = getTextValue(hero.primaryButton.url);
-                            const buttonText = getTextValue(hero.primaryButton.text).toLowerCase();
-                            if (url.includes('preventivo') || buttonText.includes('preventivo')) {
-                              window.location.href = 'mailto:commerciale@lemsolutions.it?subject=QUOTE LEM SOLUTIONS CERAMIC SYSTEMS';
-                            } else {
-                              window.location.href = url;
-                            }
-                          }}
-                        >
-                          {getTextValue(hero.primaryButton.text)}
-                        </SanityStyledComponent>
-                      )}
-                      {hero.secondaryButton && (
-                        <SanityStyledComponent
-                          component={secondaryButtonComponent}
-                          componentName="SecondaryButton"
-                          as="div"
-                          className="inline-block rounded-xs border border-primary px-8 py-4 text-base font-semibold text-primary duration-300 ease-in-out hover:bg-primary hover:text-white cursor-pointer"
-                          onClick={() => window.location.href = getTextValue(hero.secondaryButton.url)}
-                        >
-                          {getTextValue(hero.secondaryButton.text)}
-                        </SanityStyledComponent>
-                      )}
-                    </div>
-                    {/* Video mobile sotto i bottoni */}
-                    <HeroVideoMobile />
-                  </>
-                )}
-              </div>
-            </div>
-
-            {/* Right Column - Vuota per mantenere il layout compatto */}
-            <div className="w-full px-4 lg:w-1/2">
-            </div>
+        <div className="container relative z-[2] flex flex-col items-center justify-center min-h-[60vh]">
+          <div className="w-full text-center flex-1 flex flex-col justify-center">
+            {!hero ? (
+              <>
+                <SanityStyledComponent
+                  component={heroTitleComponent}
+                  componentName="HeroTitle"
+                  as="h1"
+                  className="mb-8 text-3xl font-bold leading-tight text-gray-900 sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight md:text-white lg:text-6xl lg:leading-tight xl:text-7xl xl:leading-tight relative px-4 py-3 rounded-lg md:backdrop-blur md:bg-white/15 inline-block"
+                  style={heroTitleGlowStyle}
+                >
+                  Welcome to Our Platform
+                </SanityStyledComponent>
+                
+                {/* Pulsante freccia rosso pulsante - al limite della hero */}
+                <div className="mt-auto pt-48 md:pt-56 lg:pt-64 pb-4 md:pb-6 lg:pb-8 flex justify-center">
+                  <button
+                    onClick={() => setTunnelActive(true)}
+                    className="arrow-button-pulse-strong inline-flex items-center justify-center w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white shadow-2xl shadow-red-500/60 transition-all duration-300 cursor-pointer"
+                    aria-label="Vai alle novità"
+                  >
+                    <svg className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ transform: 'rotate(90deg)' }}>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3.5} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <SanityStyledComponent
+                  component={heroTitleComponent}
+                  componentName="HeroTitle"
+                  as="h1"
+                  className="mb-5 text-3xl font-bold leading-tight text-gray-900 sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight md:text-white lg:text-6xl lg:leading-tight xl:text-7xl xl:leading-tight relative px-4 py-3 rounded-lg md:backdrop-blur md:bg-white/15 inline-block"
+                >
+                  {getTextValue(hero.title)}
+                </SanityStyledComponent>
+                
+                {/* Pulsante freccia rosso pulsante - più basso, largo e grande */}
+                <div className="mt-44 md:mt-56 lg:mt-72 flex justify-center">
+                  <button
+                    onClick={() => setTunnelActive(true)}
+                    className="arrow-button-pulse-strong inline-flex items-center justify-center w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white shadow-2xl shadow-red-500/60 transition-all duration-300 cursor-pointer"
+                    aria-label="Vai alle novità"
+                  >
+                    <svg className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ transform: 'rotate(90deg)' }}>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3.5} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
+        
+        {/* Video mobile - solo se non c'è hero */}
+        {!hero && <HeroVideoMobile />}
       </SanityStyledComponent>
-      <style jsx>{HERO_FLOAT_ANIMATION}</style>
+      
+      {/* Transizione tunnel ceramica */}
+      <CeramicTunnelTransition
+        isActive={tunnelActive}
+        onComplete={() => setTunnelActive(false)}
+        targetSelector="#novita-section"
+        onEmptySite={() => {
+          // Emetti evento per svuotare il sito
+          window.dispatchEvent(new CustomEvent('tunnel-empty-site'));
+        }}
+        onRecompose={() => {
+          // Emetti evento per ricomporre
+          window.dispatchEvent(new CustomEvent('tunnel-recompose'));
+        }}
+      />
+      
+      <style jsx>{`
+        ${HERO_FLOAT_ANIMATION}
+        
+        @keyframes arrowPulseStrong {
+          0%, 100% {
+            transform: scale(1) translateY(0);
+            box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.8), 0 10px 30px rgba(239, 68, 68, 0.4);
+          }
+          25% {
+            transform: scale(1.08) translateY(-3px);
+            box-shadow: 0 0 0 8px rgba(239, 68, 68, 0.6), 0 15px 40px rgba(239, 68, 68, 0.5);
+          }
+          50% {
+            transform: scale(1.15) translateY(-5px);
+            box-shadow: 0 0 0 15px rgba(239, 68, 68, 0.4), 0 20px 50px rgba(239, 68, 68, 0.6);
+          }
+          75% {
+            transform: scale(1.08) translateY(-3px);
+            box-shadow: 0 0 0 8px rgba(239, 68, 68, 0.6), 0 15px 40px rgba(239, 68, 68, 0.5);
+          }
+        }
+        
+        .arrow-button-pulse-strong {
+          animation: arrowPulseStrong 1.5s ease-in-out infinite;
+          position: relative;
+        }
+        
+        .arrow-button-pulse-strong::before {
+          content: '';
+          position: absolute;
+          inset: -5px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(239, 68, 68, 0.3) 0%, transparent 70%);
+          animation: pulseRing 1.5s ease-in-out infinite;
+          z-index: -1;
+        }
+        
+        @keyframes pulseRing {
+          0%, 100% {
+            opacity: 0.6;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 0.3;
+            transform: scale(1.3);
+          }
+        }
+        
+        .arrow-button-pulse-strong:hover {
+          animation: none;
+          transform: scale(1.2) translateY(-2px);
+          box-shadow: 0 0 0 20px rgba(239, 68, 68, 0.3), 0 25px 60px rgba(239, 68, 68, 0.7);
+        }
+      `}</style>
     </>
   );
 };

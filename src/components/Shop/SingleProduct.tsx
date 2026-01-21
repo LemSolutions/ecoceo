@@ -83,57 +83,57 @@ const SingleProduct = ({ product, index }: SingleProductProps) => {
               )}
               
               {/* Badges */}
-              <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
+              <div className="absolute top-3 left-3 md:top-4 md:left-4 flex flex-col gap-1.5 md:gap-2 z-10">
                 {product.featured && (
-                  <span className="bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-medium">
+                  <span className="bg-blue-500 text-white px-2 py-0.5 md:py-1 rounded-full text-[10px] md:text-xs font-medium">
                     In Evidenza
                   </span>
                 )}
                 {discountPercentage > 0 && (
-                  <span className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-medium">
+                  <span className="bg-red-500 text-white px-2 py-0.5 md:py-1 rounded-full text-[10px] md:text-xs font-medium">
                     -{discountPercentage}%
                   </span>
                 )}
                 {!isInStock && (
-                  <span className="bg-blue-500/200 text-white px-2 py-1 rounded-full text-xs font-medium">
+                  <span className="bg-blue-500/200 text-white px-2 py-0.5 md:py-1 rounded-full text-[10px] md:text-xs font-medium">
                     Esaurito
                   </span>
                 )}
               </div>
             </div>
           
-          <div className="p-8 sm:p-10 md:p-8 lg:p-10 xl:p-8 2xl:p-10 flex-1 flex flex-col">
-            <div className="mb-4">
-              <span className="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">
+          <div className="p-4 md:p-8 lg:p-10 xl:p-8 2xl:p-10 flex-1 flex flex-col">
+            <div className="mb-3 md:mb-4">
+              <span className="inline-block bg-gray-100 text-gray-700 px-2 py-0.5 md:px-3 md:py-1 rounded-full text-[10px] md:text-xs font-medium">
                 {product.category || 'Generale'}
               </span>
             </div>
             
-            <h3 className="mb-2 block text-xl font-bold text-black hover:text-primary dark:text-white dark:hover:text-primary sm:text-2xl">
+            <h3 className="mb-2 block text-lg md:text-xl font-bold text-black hover:text-primary dark:text-white dark:hover:text-primary sm:text-2xl">
               {product.name}
             </h3>
-            <p className="text-base text-gray-600 mb-4 mt-1">
+            <p className="text-sm md:text-base text-gray-600 mb-3 md:mb-4 mt-1">
               {product.name.toLowerCase().includes('2kg') || product.name.toLowerCase().includes('ceramic toner') ? '2Kg' : '100 SHEETS'}
             </p>
             
-            <p className="mb-6 border-b border-body-color border-opacity-10 pb-6 text-base font-medium leading-relaxed text-body-color dark:border-white dark:border-opacity-10 dark:text-body-color-dark flex-1">
+            <p className="mb-4 md:mb-6 border-b border-body-color border-opacity-10 pb-4 md:pb-6 text-sm md:text-base font-medium leading-relaxed text-body-color dark:border-white dark:border-opacity-10 dark:text-body-color-dark flex-1">
               {product.metadata.shortDescription || product.description || 'Descrizione non disponibile'}
             </p>
             
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between mb-4 md:mb-6">
               <div className="flex items-center gap-2">
-                <span className="text-2xl font-bold text-primary">
+                <span className="text-xl md:text-2xl font-bold text-primary">
                   {formatPrice(product.price.unit_amount)}
                 </span>
                 {product.comparePrice && product.comparePrice > (product.price.unit_amount / 100) && (
-                  <span className="text-lg text-gray-500 line-through">
+                  <span className="text-base md:text-lg text-gray-500 line-through">
                     {formatPrice(product.comparePrice * 100)}
                   </span>
                 )}
               </div>
               
               {isInStock && product.stock && (
-                <span className="text-sm text-green-600 font-medium">
+                <span className="text-xs md:text-sm text-green-600 font-medium">
                   {product.stock} disponibili
                 </span>
               )}
@@ -143,7 +143,7 @@ const SingleProduct = ({ product, index }: SingleProductProps) => {
               <button
                 onClick={handleAddToCart}
                 disabled={!isInStock || isAddingToCart}
-                className={`flex-1 mr-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                className={`flex-1 mr-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium transition-all duration-300 ${
                   isInStock && !isAddingToCart
                     ? 'bg-primary text-white hover:bg-primary/90'
                     : 'bg-gray-300 text-gray-500 cursor-not-allowed'
@@ -151,15 +151,15 @@ const SingleProduct = ({ product, index }: SingleProductProps) => {
               >
                 {isAddingToCart ? (
                   <span className="flex items-center justify-center">
-                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <svg className="animate-spin -ml-1 mr-1.5 md:mr-2 h-3 w-3 md:h-4 md:w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    Aggiungendo...
+                    <span className="text-xs md:text-sm">Aggiungendo...</span>
                   </span>
                 ) : (
                   <span className="flex items-center justify-center">
-                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-3 h-3 md:w-4 md:h-4 mr-1.5 md:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
                     </svg>
                     {isInStock ? 'Aggiungi al Carrello' : 'Non Disponibile'}
@@ -168,8 +168,8 @@ const SingleProduct = ({ product, index }: SingleProductProps) => {
               </button>
               
               {currentQuantity > 0 && (
-                <div className="flex items-center bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
-                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex items-center bg-green-100 text-green-800 px-2 py-1 md:px-3 md:py-1 rounded-full text-xs md:text-sm font-medium">
+                  <svg className="w-3 h-3 md:w-4 md:h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                   {currentQuantity} nel carrello

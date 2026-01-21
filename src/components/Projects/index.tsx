@@ -83,14 +83,14 @@ const Projects = ({
     >
       <div className={classNames('container', containerClassName)}>
         {(title || subtitle) && (
-          <div className={classNames('text-center mb-16', headingWrapperClassName)}>
+          <div className={classNames('text-center mb-12 md:mb-16', headingWrapperClassName)}>
             {title && (
               <SanityStyledComponent
                 component={projectsTitleComponent}
                 componentName="ProjectsTitle"
                 as="h2"
                 className={classNames(
-                  'text-3xl font-bold text-black sm:text-4xl lg:text-5xl mb-4',
+                  'text-2xl font-bold text-black sm:text-3xl md:text-4xl lg:text-5xl mb-3 md:mb-4',
                   titleClassName,
                 )}
               >
@@ -103,7 +103,7 @@ const Projects = ({
                 componentName="ProjectsSubtitle"
                 as="p"
                 className={classNames(
-                  'text-black/80 text-lg max-w-2xl mx-auto',
+                  'text-black/80 text-sm md:text-lg max-w-2xl mx-auto',
                   subtitleClassName,
                 )}
               >
@@ -116,8 +116,8 @@ const Projects = ({
         <div
           className={classNames(
             variant === 'homepage'
-              ? 'grid grid-cols-1 gap-8 lg:grid-cols-2 xl:grid-cols-3 auto-rows-fr'
-              : 'grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3',
+              ? 'grid grid-cols-1 gap-6 md:gap-8 lg:grid-cols-2 xl:grid-cols-3 auto-rows-fr'
+              : 'grid grid-cols-1 gap-x-8 gap-y-8 md:gap-y-10 md:grid-cols-2 lg:grid-cols-3',
             gridClassName,
           )}
         >
@@ -151,7 +151,7 @@ const HomepageProjectCard = ({ project, index }: ProjectCardProps) => {
     >
       <div
         className={`relative overflow-hidden ${
-          isSpotlight ? 'h-64 lg:h-auto lg:min-h-[360px] lg:w-1/2' : 'h-56'
+          isSpotlight ? 'h-48 md:h-64 lg:h-auto lg:min-h-[360px] lg:w-1/2' : 'h-44 md:h-56'
         }`}
       >
         {project.mainImage ? (
@@ -182,17 +182,17 @@ const HomepageProjectCard = ({ project, index }: ProjectCardProps) => {
           }`}
         />
 
-        <div className="absolute top-4 left-4 flex flex-col gap-2">
+        <div className="absolute top-3 left-3 md:top-4 md:left-4 flex flex-col gap-1.5 md:gap-2">
           {project.service?.name && (
             <Link
               href={serviceUrl || '#'}
-              className="inline-flex items-center gap-1 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-orange-600"
+              className="inline-flex items-center gap-1 rounded-full bg-white/90 px-2 py-0.5 md:px-3 md:py-1 text-[10px] md:text-xs font-semibold uppercase tracking-wide text-orange-600"
             >
               {project.service.name}
             </Link>
           )}
           {project.featured && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-orange-500/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white shadow-lg shadow-orange-500/60">
+            <span className="inline-flex items-center gap-1 rounded-full bg-orange-500/90 px-2 py-0.5 md:px-3 md:py-1 text-[10px] md:text-xs font-semibold uppercase tracking-wide text-white shadow-lg shadow-orange-500/60">
               In evidenza
             </span>
           )}
@@ -200,14 +200,14 @@ const HomepageProjectCard = ({ project, index }: ProjectCardProps) => {
       </div>
 
       <div
-        className={`p-6 space-y-4 ${
+        className={`p-4 md:p-6 space-y-3 md:space-y-4 ${
           isSpotlight ? 'lg:w-1/2 lg:p-8 lg:space-y-6' : ''
         }`}
       >
         <div>
           <h3
             className={`font-bold mb-2 ${
-              isSpotlight ? '!text-black text-3xl lg:text-4xl' : 'text-white text-2xl'
+              isSpotlight ? '!text-black text-xl md:text-3xl lg:text-4xl' : 'text-white text-lg md:text-2xl'
             }`}
           >
             {getTextValue(project.title)}
@@ -215,7 +215,7 @@ const HomepageProjectCard = ({ project, index }: ProjectCardProps) => {
           {project.client && (
             <p
               className={`text-white/70 uppercase tracking-widest ${
-                isSpotlight ? 'text-base' : 'text-sm'
+                isSpotlight ? 'text-sm md:text-base' : 'text-xs md:text-sm'
               }`}
             >
               Cliente: {project.client}
@@ -226,14 +226,14 @@ const HomepageProjectCard = ({ project, index }: ProjectCardProps) => {
         {project.shortDescription && (
           <p
             className={`text-white/80 leading-relaxed ${
-              isSpotlight ? 'text-lg line-clamp-4' : 'text-base line-clamp-3'
+              isSpotlight ? 'text-sm md:text-lg line-clamp-4' : 'text-xs md:text-base line-clamp-3'
             }`}
           >
             {getTextValue(project.shortDescription)}
           </p>
         )}
 
-        <div className="flex flex-wrap gap-4 text-sm text-white/70">
+        <div className="flex flex-wrap gap-2 md:gap-4 text-xs md:text-sm text-white/70">
           {project.completionDate && (
             <div>
               <span className="text-white/50">Completato:</span>{' '}
@@ -245,13 +245,13 @@ const HomepageProjectCard = ({ project, index }: ProjectCardProps) => {
               {project.technologies.slice(0, 3).map((tech) => (
                 <span
                   key={tech}
-                  className="inline-flex rounded-full bg-white/10 px-3 py-1 text-xs font-semibold"
+                  className="inline-flex rounded-full bg-white/10 px-2 py-0.5 md:px-3 md:py-1 text-[10px] md:text-xs font-semibold"
                 >
                   {tech}
                 </span>
               ))}
               {project.technologies.length > 3 && (
-                <span className="inline-flex rounded-full bg-white/10 px-3 py-1 text-xs font-semibold">
+                <span className="inline-flex rounded-full bg-white/10 px-2 py-0.5 md:px-3 md:py-1 text-[10px] md:text-xs font-semibold">
                   +{project.technologies.length - 3}
                 </span>
               )}
@@ -259,17 +259,17 @@ const HomepageProjectCard = ({ project, index }: ProjectCardProps) => {
           )}
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3">
+        <div className="flex flex-col sm:flex-row gap-2 md:gap-3">
           <Link
             href={detailUrl}
-            className="flex-1 inline-flex justify-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-500/40 transition hover:brightness-110"
+            className="flex-1 inline-flex justify-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-4 py-2 md:px-5 md:py-3 text-xs md:text-sm font-semibold text-white shadow-lg shadow-orange-500/40 transition hover:brightness-110"
           >
             Scopri il progetto
           </Link>
 
           <Link
             href={`/contact?subject=${encodeURIComponent(`PROGETTO ${getTextValue(project.title)}`)}`}
-            className="group inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur shadow-lg transition-all"
+            className="group inline-flex items-center justify-center rounded-full px-4 py-2 md:px-5 md:py-3 text-xs md:text-sm font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur shadow-lg transition-all"
           >
             Richiedi una demo
           </Link>

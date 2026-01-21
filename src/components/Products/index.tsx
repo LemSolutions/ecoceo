@@ -1,20 +1,17 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { useStripeProducts } from '@/hooks/useStripeProducts';
 import { useSanityUIComponents } from '@/hooks/useSanityUIComponents';
 import { useCart } from '@/contexts/CartContext';
 import SanityStyledComponent from '@/components/Common/SanityStyledComponent';
-import { useRouter } from 'next/navigation';
 
 const Products = () => {
   // Carica tutti i prodotti dallo shop (non solo featured)
   const { products, loading, error } = useStripeProducts();
   const { getComponent } = useSanityUIComponents();
   const { addItem } = useCart();
-  const router = useRouter();
   const [addingProducts, setAddingProducts] = useState<Set<string>>(new Set());
 
   // Get UI components for Products section
@@ -41,10 +38,7 @@ const Products = () => {
     }
   };
 
-  // Debug: log dei prodotti caricati
-  console.log('Products loaded:', products);
-  console.log('Loading:', loading);
-  console.log('Error:', error);
+  // Nota: rimosso debug console.log per produzione
 
   if (loading) {
     return (
@@ -74,12 +68,6 @@ const Products = () => {
       <div className="text-center py-12">
         <h3 className="text-xl font-semibold text-white mb-4">Nessun prodotto disponibile</h3>
         <p className="text-white/80 mb-6">Al momento non ci sono prodotti disponibili nello shop.</p>
-        <Link
-          href="/shop"
-          className="inline-block bg-white text-blue-600 px-6 py-3 rounded font-semibold hover:bg-white/90 transition"
-        >
-          Vai allo Shop
-        </Link>
       </div>
     );
   }
@@ -234,26 +222,6 @@ const Products = () => {
                         </>
                       )}
                     </button>
-                    
-                <Link
-                  href="/shop"
-                  className="w-full inline-flex items-center justify-center px-6 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-white/90 transition-colors duration-200 group"
-                >
-                      Vai allo Shop
-                      <svg
-                        className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-200"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 5l7 7-7 7"
-                        />
-                      </svg>
-                    </Link>
                   </div>
                 </div>
               </div>

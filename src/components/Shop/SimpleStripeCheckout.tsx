@@ -266,29 +266,29 @@ const SimpleStripeCheckout = ({ customerEmail, onSuccess, onError }: SimpleStrip
         </div>
       )}
 
-      <div className="bg-white/30 backdrop-blur/30 backdrop-blurrounded-2xl shadow-lg p-8">
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="bg-white/30 backdrop-blur/30 backdrop-blurrounded-2xl shadow-lg p-4 md:p-8">
+        <div className="text-center mb-6 md:mb-8">
+          <div className="w-14 h-14 md:w-16 md:h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-7 h-7 md:w-8 md:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
             </svg>
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">
+          <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">
             Checkout Sicuro con Stripe
           </h3>
-          <p className="text-gray-600">
+          <p className="text-sm md:text-base text-gray-600">
             Verrai reindirizzato alla pagina di pagamento sicura di Stripe
           </p>
         </div>
 
         {/* Order Summary */}
-        <div className="bg-blue-500/20 rounded-lg p-6 mb-8">
-          <h4 className="font-semibold text-gray-900 mb-4">Riepilogo Ordine</h4>
-          <div className="space-y-3">
+        <div className="bg-blue-500/20 rounded-lg p-4 md:p-6 mb-6 md:mb-8">
+          <h4 className="font-semibold text-base md:text-lg text-gray-900 mb-4">Riepilogo Ordine</h4>
+          <div className="space-y-3 md:space-y-4">
             {state.items.map((item) => (
               <div key={item.product.id} className="flex justify-between items-center">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-gray-200 rounded-lg flex items-center justify-center">
+                <div className="flex items-center space-x-3 md:space-x-3 flex-1 min-w-0">
+                  <div className="w-16 h-16 md:w-10 md:h-10 bg-gray-200 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden">
                     {item.product.images && item.product.images.length > 0 ? (
                       <img 
                         src={item.product.images[0]} 
@@ -299,25 +299,25 @@ const SimpleStripeCheckout = ({ customerEmail, onSuccess, onError }: SimpleStrip
                       <span className="text-xs text-gray-500">IMG</span>
                     )}
                   </div>
-                  <div>
-                    <p className="font-medium text-gray-900">{item.product.name}</p>
-                    <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-base md:text-sm text-gray-900 truncate">{item.product.name}</p>
+                    <p className="text-sm md:text-sm text-gray-500 mt-0.5">Qty: {item.quantity}</p>
                   </div>
                 </div>
-                <span className="font-medium">€{((item.product.price.unit_amount / 100) * item.quantity).toFixed(2)}</span>
+                <span className="font-medium text-base md:text-sm whitespace-nowrap ml-2">€{((item.product.price.unit_amount / 100) * item.quantity).toFixed(2)}</span>
               </div>
             ))}
             
-            <div className="border-t pt-3">
-              <div className="flex justify-between text-sm">
+            <div className="border-t pt-3 mt-3">
+              <div className="flex justify-between text-sm md:text-sm">
                 <span className="text-gray-600">Subtotale:</span>
-                <span>€{state.total.toFixed(2)}</span>
+                <span className="font-medium">€{state.total.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between text-sm">
+              <div className="flex justify-between text-sm md:text-sm mt-2">
                 <span className="text-gray-600">Spese di imballo:</span>
-                <span>€{Math.max(state.total * 0.005, 2).toFixed(2)}</span>
+                <span className="font-medium">€{Math.max(state.total * 0.005, 2).toFixed(2)}</span>
               </div>
-              <div className="flex justify-between font-semibold text-lg mt-2 pt-2 border-t">
+              <div className="flex justify-between font-semibold text-lg md:text-lg mt-3 pt-3 border-t">
                 <span>Totale:</span>
                 <span className="text-primary">€{(state.total + Math.max(state.total * 0.005, 2)).toFixed(2)}</span>
               </div>
@@ -326,12 +326,12 @@ const SimpleStripeCheckout = ({ customerEmail, onSuccess, onError }: SimpleStrip
         </div>
 
         {/* Customer Information Form */}
-        <div className="bg-white/50 border border-gray-200 rounded-lg p-6 mb-8">
-          <h4 className="font-semibold text-gray-900 mb-4">Informazioni di Spedizione</h4>
+        <div className="bg-white/50 border border-gray-200 rounded-lg p-4 md:p-6 mb-6 md:mb-8">
+          <h4 className="font-semibold text-base md:text-lg text-gray-900 mb-4">Informazioni di Spedizione</h4>
           <div className="space-y-4">
             {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-sm md:text-sm font-medium text-gray-700 mb-2">
                 Email <span className="text-red-500">*</span>
               </label>
               <input
@@ -340,14 +340,14 @@ const SimpleStripeCheckout = ({ customerEmail, onSuccess, onError }: SimpleStrip
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white text-gray-900"
+                className="w-full px-3 py-2.5 md:py-2 text-base md:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white text-gray-900"
                 placeholder="tua.email@esempio.com"
               />
             </div>
 
             {/* Indirizzo */}
             <div>
-              <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="address" className="block text-sm md:text-sm font-medium text-gray-700 mb-2">
                 Indirizzo <span className="text-red-500">*</span>
               </label>
               <input
@@ -356,14 +356,14 @@ const SimpleStripeCheckout = ({ customerEmail, onSuccess, onError }: SimpleStrip
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white text-gray-900"
+                className="w-full px-3 py-2.5 md:py-2 text-base md:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white text-gray-900"
                 placeholder="Via, numero civico"
               />
             </div>
 
             {/* Città con autocomplete */}
             <div className="relative">
-              <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="city" className="block text-sm md:text-sm font-medium text-gray-700 mb-2">
                 Città <span className="text-red-500">*</span>
               </label>
               <input
@@ -378,7 +378,7 @@ const SimpleStripeCheckout = ({ customerEmail, onSuccess, onError }: SimpleStrip
                   }
                 }}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white text-gray-900"
+                className="w-full px-3 py-2.5 md:py-2 text-base md:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white text-gray-900"
                 placeholder="Inizia a digitare la città (es: Monza, Brugherio...)"
                 autoComplete="off"
               />
@@ -405,9 +405,9 @@ const SimpleStripeCheckout = ({ customerEmail, onSuccess, onError }: SimpleStrip
             </div>
 
             {/* Provincia e CAP */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3 md:gap-4">
               <div>
-                <label htmlFor="province" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="province" className="block text-sm md:text-sm font-medium text-gray-700 mb-2">
                   Provincia <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -416,13 +416,13 @@ const SimpleStripeCheckout = ({ customerEmail, onSuccess, onError }: SimpleStrip
                   value={province}
                   onChange={(e) => setProvince(e.target.value)}
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white text-gray-900"
-                  placeholder="Provincia (es: Monza e Brianza)"
+                  className="w-full px-3 py-2.5 md:py-2 text-base md:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white text-gray-900"
+                  placeholder="Provincia"
                   readOnly={!!citySuggestions.find(c => c.name === city)}
                 />
               </div>
               <div>
-                <label htmlFor="postal-code" className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="postal-code" className="block text-sm md:text-sm font-medium text-gray-700 mb-2">
                   CAP <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -431,7 +431,7 @@ const SimpleStripeCheckout = ({ customerEmail, onSuccess, onError }: SimpleStrip
                   value={postalCode}
                   onChange={(e) => setPostalCode(e.target.value)}
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white text-gray-900"
+                  className="w-full px-3 py-2.5 md:py-2 text-base md:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white text-gray-900"
                   placeholder="CAP"
                   readOnly={!!citySuggestions.find(c => c.name === city)}
                 />
@@ -440,14 +440,14 @@ const SimpleStripeCheckout = ({ customerEmail, onSuccess, onError }: SimpleStrip
 
             {/* Paese */}
             <div>
-              <label htmlFor="country-select" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="country-select" className="block text-sm md:text-sm font-medium text-gray-700 mb-2">
                 Paese <span className="text-red-500">*</span>
               </label>
               <select
                 id="country-select"
                 value={selectedCountry}
                 onChange={(e) => setSelectedCountry(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white text-gray-900"
+                className="w-full px-3 py-2.5 md:py-2 text-base md:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white text-gray-900"
               >
                 {countries.map((country) => (
                   <option key={country.code} value={country.code}>
@@ -460,9 +460,9 @@ const SimpleStripeCheckout = ({ customerEmail, onSuccess, onError }: SimpleStrip
         </div>
 
         {/* Shipping Info */}
-        <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-8">
-          <h4 className="font-semibold text-gray-900 mb-3">Dettagli Spedizione</h4>
-          <div className="space-y-2 text-sm">
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4 md:p-4 mb-6 md:mb-8">
+          <h4 className="font-semibold text-base md:text-lg text-gray-900 mb-3">Dettagli Spedizione</h4>
+          <div className="space-y-2 text-sm md:text-sm">
             
             <div className="flex justify-between">
               <span className="text-gray-600">Peso totale:</span>
@@ -498,14 +498,14 @@ const SimpleStripeCheckout = ({ customerEmail, onSuccess, onError }: SimpleStrip
         </div>
 
         {/* Security Info */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8">
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 md:p-4 mb-6 md:mb-8">
           <div className="flex items-start space-x-3">
-            <svg className="w-5 h-5 text-blue-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
             </svg>
             <div>
-              <h5 className="text-sm font-medium text-blue-900">Pagamento Sicuro</h5>
-              <p className="text-sm text-blue-700 mt-1">
+              <h5 className="text-sm md:text-sm font-medium text-blue-900">Pagamento Sicuro</h5>
+              <p className="text-sm md:text-sm text-blue-700 mt-1">
                 I tuoi dati di pagamento sono protetti da crittografia SSL e conformi agli standard PCI DSS.
               </p>
             </div>
@@ -517,7 +517,7 @@ const SimpleStripeCheckout = ({ customerEmail, onSuccess, onError }: SimpleStrip
         <button
           onClick={handleCheckout}
           disabled={isLoading || state.items.length === 0}
-          className={`w-full py-4 px-6 rounded-lg font-semibold text-white transition-colors ${
+          className={`w-full py-3.5 md:py-4 px-6 rounded-lg font-semibold text-base md:text-base text-white transition-colors ${
             isLoading || state.items.length === 0
               ? 'bg-gray-400 cursor-not-allowed'
               : 'bg-primary hover:bg-primary/90'
@@ -537,26 +537,26 @@ const SimpleStripeCheckout = ({ customerEmail, onSuccess, onError }: SimpleStrip
         </button>
 
         {/* Payment Methods */}
-        <div className="mt-6 text-center">
-          <p className="text-sm text-gray-500 mb-3">Metodi di pagamento accettati:</p>
-          <div className="flex justify-center space-x-4">
-            <div key="visa" className="flex items-center space-x-2">
-              <svg className="w-8 h-8 text-gray-400" viewBox="0 0 24 24" fill="currentColor">
+        <div className="mt-4 md:mt-6 text-center">
+          <p className="text-xs md:text-sm text-gray-500 mb-3">Metodi di pagamento accettati:</p>
+          <div className="flex justify-center space-x-3 md:space-x-4 flex-wrap gap-2">
+            <div key="visa" className="flex items-center space-x-1.5 md:space-x-2">
+              <svg className="w-6 h-6 md:w-8 md:h-8 text-gray-400" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
               </svg>
               <span className="text-xs text-gray-500">Visa</span>
             </div>
-            <div key="mastercard" className="flex items-center space-x-2">
-              <svg className="w-8 h-8 text-gray-400" viewBox="0 0 24 24" fill="currentColor">
+            <div key="mastercard" className="flex items-center space-x-1.5 md:space-x-2">
+              <svg className="w-6 h-6 md:w-8 md:h-8 text-gray-400" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
               </svg>
               <span className="text-xs text-gray-500">Mastercard</span>
             </div>
-            <div key="amex" className="flex items-center space-x-2">
-              <svg className="w-8 h-8 text-gray-400" viewBox="0 0 24 24" fill="currentColor">
+            <div key="amex" className="flex items-center space-x-1.5 md:space-x-2">
+              <svg className="w-6 h-6 md:w-8 md:h-8 text-gray-400" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
               </svg>
-              <span className="text-xs text-gray-500">American Express</span>
+              <span className="text-xs text-gray-500">Amex</span>
             </div>
           </div>
         </div>

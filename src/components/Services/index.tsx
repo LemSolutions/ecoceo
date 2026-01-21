@@ -94,7 +94,7 @@ const Services = () => {
 
   return (
     <div>
-      <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:gap-y-12 md:grid-cols-2 lg:grid-cols-3">
         {services.map((service, index) => (
           <SanityStyledComponent
             key={service._id || index}
@@ -102,15 +102,15 @@ const Services = () => {
             componentName="ServiceCard"
             className="w-full"
           >
-            <div className="wow fadeInUp" data-wow-delay={`${index * 100}ms`}>
+            <div className={`wow fadeInUp ${index === 1 ? 'lg:mt-8' : index === 2 ? 'lg:mt-16' : ''}`} data-wow-delay={`${index * 100}ms`}>
               <div
                 className="group relative overflow-hidden rounded-lg bg-white/30 backdrop-blur/30 backdrop-blurshadow-one duration-300 hover:shadow-two dark:bg-dark dark:hover:shadow-gray-dark h-full"
                 style={cardTransforms[index] || BASE_CARD_STYLE}
                 onMouseMove={handleMouseMove(index)}
                 onMouseLeave={handleMouseLeave(index)}
               >
-                <div className="p-10">
-                  <div className="mb-8 flex h-[100px] w-[100px] items-center justify-center rounded-lg overflow-hidden">
+                <div className="p-6 md:p-10">
+                  <div className="mb-6 md:mb-8 flex h-[80px] w-[80px] md:h-[100px] md:w-[100px] items-center justify-center rounded-lg overflow-hidden">
                     {service.image ? (
                       <Image
                         src={getImageUrl(service.image)}
@@ -130,7 +130,7 @@ const Services = () => {
                     component={serviceTitleComponent}
                     componentName="ServiceTitle"
                     as="h3"
-                    className="mb-6 text-2xl font-bold text-dark dark:text-white"
+                    className="mb-4 md:mb-6 text-xl md:text-2xl font-bold text-dark dark:text-white"
                   >
                     {getTextValue(service.name)}
                   </SanityStyledComponent>
@@ -139,18 +139,18 @@ const Services = () => {
                     component={serviceDescriptionComponent}
                     componentName="ServiceDescription"
                     as="p"
-                    className="mb-8 text-lg text-body-color dark:text-body-color-dark leading-relaxed"
+                    className="mb-6 md:mb-8 text-base md:text-lg text-body-color dark:text-body-color-dark leading-relaxed"
                   >
                     {getTextValue(service.shortDescription)}
                   </SanityStyledComponent>
 
                   {service.features && service.features.length > 0 && (
                     <div className="mb-8">
-                      <ul className="space-y-3">
+                      <ul className="space-y-2 md:space-y-3">
                         {service.features.slice(0, 4).map((feature, featureIndex) => (
-                          <li key={featureIndex} className="flex items-center text-base text-body-color dark:text-body-color-dark">
+                          <li key={featureIndex} className="flex items-center text-sm md:text-base text-body-color dark:text-body-color-dark">
                             <svg
-                              className="mr-3 h-5 w-5 text-primary"
+                              className="mr-2 md:mr-3 h-4 w-4 md:h-5 md:w-5 text-primary flex-shrink-0"
                               fill="currentColor"
                               viewBox="0 0 20 20"
                             >
@@ -170,7 +170,7 @@ const Services = () => {
                   <div className="flex flex-col gap-4">
                     <Link
                       href={service.url || `/services/${service.slug?.current}`}
-                      className="inline-flex items-center text-base font-semibold text-primary hover:text-primary/80 transition-colors duration-200 group"
+                      className="inline-flex items-center text-sm md:text-base font-semibold text-primary hover:text-primary/80 transition-colors duration-200 group"
                     >
                       Scopri di più
                       <svg
@@ -189,7 +189,7 @@ const Services = () => {
                     </Link>
                     <Link
                       href="/contact?subject=QUOTE"
-                      className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-4 py-2 text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:from-red-500 hover:to-orange-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+                      className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 px-4 py-2 text-xs md:text-sm font-semibold text-white shadow-lg transition-all duration-200 hover:from-red-500 hover:to-orange-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
                     >
                       Richiedi Preventivo Gratuito
                     </Link>
@@ -201,22 +201,22 @@ const Services = () => {
         ))}
       </div>
 
-      <div className="mt-16 flex flex-col items-stretch gap-4 sm:flex-row sm:flex-wrap sm:justify-center">
+      <div className="mt-12 md:mt-16 flex flex-col items-stretch gap-3 md:gap-4 sm:flex-row sm:flex-wrap sm:justify-center">
         <a
           href="mailto:commerciale@lemsolutions.it?subject=QUOTE LEM SOLUTIONS CERAMIC SYSTEMS"
-          className="hero-button-flash inline-flex items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 px-8 py-3 text-base font-semibold text-white shadow-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+          className="hero-button-flash inline-flex items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-red-500 hover:to-orange-500 px-6 py-2.5 text-sm md:px-8 md:py-3 md:text-base font-semibold text-white shadow-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
         >
           Chiedi un Preventivo Gratuito
         </a>
           <Link
             href="/contact?subject=CONSULTING"
-            className="group inline-flex items-center justify-center rounded-full px-8 py-3 text-base font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur shadow-lg transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300/60"
+            className="group inline-flex items-center justify-center rounded-full px-6 py-2.5 text-sm md:px-8 md:py-3 md:text-base font-semibold text-white bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 border border-blue-400/30 backdrop-blur shadow-lg transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300/60"
           >
           Prenota una Consulenza
         </Link>
         <Link
           href="/contact?subject=INFO"
-          className="inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-base font-semibold text-primary shadow-lg shadow-white/30 transition-all duration-200 hover:translate-y-[-2px] hover:bg-white/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+          className="inline-flex items-center justify-center rounded-full bg-white px-6 py-2.5 text-sm md:px-8 md:py-3 md:text-base font-semibold text-primary shadow-lg shadow-white/30 transition-all duration-200 hover:translate-y-[-2px] hover:bg-white/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
         >
           Contattaci Subito
         </Link>

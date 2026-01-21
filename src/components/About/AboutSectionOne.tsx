@@ -78,7 +78,7 @@ const AboutSectionOne = () => {
   }
 
   return (
-    <div className="border-b border-body-color/[.15] pb-16 dark:border-white/[.15] md:pb-20 lg:pb-28">
+    <div className="border-b border-body-color/[.15] pb-12 md:pb-20 lg:pb-28 dark:border-white/[.15]">
       <div className="-mx-4 flex flex-wrap items-center">
         <div className="w-full px-4 lg:w-1/2">
           <SanityStyledComponent
@@ -118,8 +118,8 @@ const AboutSectionOne = () => {
             <div className="grid grid-cols-2 gap-4 mt-8">
               {about.stats.map((stat, index) => (
                 <div key={index} className="text-center">
-                  <div className="text-2xl font-bold text-primary">{getTextValue(stat.number)}</div>
-                  <div className="text-sm text-gray-600">{getTextValue(stat.label)}</div>
+                  <div className="text-xl md:text-2xl font-bold text-primary">{getTextValue(stat.number)}</div>
+                  <div className="text-xs md:text-sm text-gray-600">{getTextValue(stat.label)}</div>
                 </div>
               ))}
             </div>

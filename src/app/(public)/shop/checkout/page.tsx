@@ -1,33 +1,11 @@
 "use client";
 
-import dynamic from 'next/dynamic';
 import { useCart } from '@/contexts/CartContext';
 import Breadcrumb from "@/components/Common/Breadcrumb";
 import Link from 'next/link';
-import Image from 'next/image';
-
-// Lazy load del componente Stripe checkout (libreria pesante)
-const SimpleStripeCheckout = dynamic(() => import('@/components/Shop/SimpleStripeCheckout'), {
-  ssr: false,
-  loading: () => (
-    <div className="text-center py-8">
-      <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary mb-4"></div>
-      <p className="text-gray-600">Caricamento checkout...</p>
-    </div>
-  ),
-});
 
 const CheckoutPage = () => {
   const { state } = useCart();
-
-  const handlePaymentSuccess = (sessionId: string) => {
-    window.location.href = `/shop/success?session_id=${sessionId}`;
-  };
-
-  const handlePaymentError = (error: string) => {
-    console.error('Payment error:', error);
-    alert('Errore durante il pagamento. Riprova.');
-  };
 
   if (state.items.length === 0) {
     return (
@@ -68,112 +46,43 @@ const CheckoutPage = () => {
       <div className=" from-gray-800 via-gray-400 to-white text-black">
         <Breadcrumb
           pageName="Checkout"
-          description="Completa il tuo ordine"
+          description="Servizio in manutenzione"
         />
       </div>
 
       <div className=" from-white via-blue-100 to-blue-400 text-black">
         <section className="py-16 lg:py-20">
           <div className="container">
-            <div className="max-w-6xl mx-auto">
-              <div className="text-center mb-12">
-                <h1 className="text-3xl font-bold text-black sm:text-4xl lg:text-5xl mb-4">
-                  Checkout
-                </h1>
-                <p className="text-black/80 text-lg">
-                  Procedi al pagamento sicuro con Stripe
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div className="lg:col-span-2 space-y-8">
-                  <div className="bg-white rounded-lg shadow-lg p-8">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                      Pagamento Sicuro
-                          </h2>
-                    <p className="text-gray-600 mb-6">
-                      Clicca il pulsante qui sotto per procedere al pagamento sicuro con Stripe. 
-                      Potrai inserire i tuoi dati di spedizione e pagamento direttamente sulla piattaforma Stripe.
-                    </p>
-                    
-                    <SimpleStripeCheckout
-                      customerEmail=""
-                      onSuccess={handlePaymentSuccess}
-                      onError={handlePaymentError}
-                    />
+            <div className="max-w-3xl mx-auto">
+              <div className="bg-white/60 backdrop-blur rounded-2xl shadow-xl p-6 md:p-10 border border-white/60">
+                <div className="flex items-start gap-4">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-100 text-orange-700 flex-shrink-0">
+                    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M10.29 3.86l-7.4 12.84A2 2 0 004.62 20h14.76a2 2 0 001.73-3.3l-7.4-12.84a2 2 0 00-3.42 0z" />
+                    </svg>
                   </div>
-                </div>
-
-                <div className="lg:col-span-1">
-                  <div className="bg-white/30 backdrop-blur/30 backdrop-blur rounded-lg shadow-lg p-6 sticky top-8">
-                    <h3 className="text-xl font-bold text-black mb-6">
-                      Riepilogo Ordine
-                    </h3>
-
-                    <div className="space-y-4 mb-6">
-                      {state.items.map((item, index) => {
-                        const productName = item.product.name || item.product.title || 'Prodotto senza nome';
-                        const productImage = item.product.images && item.product.images.length > 0
-                          ? item.product.images[0]
-                          : (item.product.mainImage ? item.product.mainImage : '/images/blog/blog-01.jpg');
-                        const productPrice = item.product.price?.unit_amount 
-                          ? (item.product.price.unit_amount / 100) 
-                          : (typeof item.product.price === 'number' ? item.product.price : 0);
-
-                        return (
-                          <div key={item.product.id || index} className="flex items-center space-x-3 p-3 bg-white/50 rounded-lg">
-                            <div className="relative w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
-                              {productImage && productImage.startsWith('http') ? (
-                                <Image
-                                  src={productImage}
-                                  alt={productName}
-                                  fill
-                                  className="object-cover rounded-lg"
-                                  sizes="48px"
-                                />
-                              ) : (
-                                <span className="text-xs text-gray-600">IMG</span>
-                              )}
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-gray-900 truncate">
-                                {productName}
-                              </p>
-                              <p className="text-sm text-gray-600">
-                                Qty: {item.quantity}
-                              </p>
-                            </div>
-                            <p className="text-sm font-medium text-gray-900 whitespace-nowrap">
-                              €{(productPrice * item.quantity).toFixed(2)}
-                            </p>
-                          </div>
-                        );
-                      })}
-                    </div>
-
-                    <div className="border-t pt-4 space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Subtotale:</span>
-                        <span className="font-medium">€{state.total.toFixed(2)}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Spese di imballo:</span>
-                        <span className="font-medium">€{Math.max(state.total * 0.005, 2).toFixed(2)}</span>
-                      </div>
-                      <div className="border-t pt-3">
-                        <div className="flex justify-between">
-                          <span className="text-lg font-bold text-black">Totale:</span>
-                          <span className="text-lg font-bold text-primary">€{(state.total + Math.max(state.total * 0.005, 2)).toFixed(2)}</span>
-                        </div>
-                      </div>
-                    </div>
-
+                  <div className="flex-1">
+                    <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+                      Checkout in manutenzione
+                    </h1>
+                    <p className="mt-3 text-gray-700 leading-relaxed">
+                      Al momento il checkout è in fase di manutenzione per migliorare la sicurezza e l’esperienza di acquisto.
+                      Il carrello resta disponibile: puoi aggiungere prodotti e tornare più tardi per completare l’ordine.
+                    </p>
+                    <div className="mt-8 flex flex-col sm:flex-row gap-3">
                       <Link
                         href="/shop/cart"
-                        className="w-full mt-6 bg-gray-100 text-gray-700 py-3 px-6 rounded-lg font-semibold hover:bg-gray-200 transition-colors text-center block"
+                        className="inline-flex items-center justify-center rounded-xl bg-gray-900 text-white px-6 py-3 font-semibold hover:bg-gray-800 transition"
                       >
                         Torna al Carrello
                       </Link>
+                      <Link
+                        href="/"
+                        className="inline-flex items-center justify-center rounded-xl bg-white text-gray-900 px-6 py-3 font-semibold border border-gray-200 hover:bg-gray-50 transition"
+                      >
+                        Torna alla Home
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>

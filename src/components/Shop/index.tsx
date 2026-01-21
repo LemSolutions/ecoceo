@@ -71,16 +71,16 @@ const Shop = ({ products, loading = false, error, title, subtitle }: ShopProps) 
 
   return (
     <div className="container">
-      <div className="text-center mb-16">
-        <h2 className="text-3xl font-bold text-white sm:text-4xl lg:text-5xl mb-4">
+      <div className="text-center mb-12 md:mb-16">
+        <h2 className="text-2xl font-bold text-white sm:text-3xl md:text-4xl lg:text-5xl mb-3 md:mb-4">
           {title || "I Nostri Prodotti"}
         </h2>
-        <p className="text-white/80 text-lg max-w-2xl mx-auto">
+        <p className="text-white/80 text-sm md:text-lg max-w-2xl mx-auto">
           {subtitle || "Scegli tra la nostra selezione di prodotti di alta qualità"}
         </p>
       </div>
       
-      <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 items-stretch">
+      <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:gap-y-10 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 items-stretch">
         {products.map((product, index) => (
           <SingleProduct key={product.id} product={product} index={index} />
         ))}

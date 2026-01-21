@@ -9,6 +9,7 @@ import Image from 'next/image';
 const CartPage = () => {
   const { state, updateQuantity, removeItem, clearCart } = useCart();
   const [isUpdating, setIsUpdating] = useState<string | null>(null);
+  const [isCheckoutMaintenanceOpen, setIsCheckoutMaintenanceOpen] = useState(false);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('it-IT', {
@@ -231,12 +232,13 @@ const CartPage = () => {
                       </div>
                     </div>
 
-                    <Link
-                      href="/shop/checkout"
+                    <button
+                      type="button"
+                      onClick={() => setIsCheckoutMaintenanceOpen(true)}
                       className="w-full bg-primary text-white py-3 px-6 rounded-lg font-semibold hover:bg-primary/90 transition-colors text-center block"
                     >
                       Procedi al Checkout
-                    </Link>
+                    </button>
 
                     <Link
                       href="/shop"
@@ -251,6 +253,48 @@ const CartPage = () => {
           </div>
         </section>
       </div>
+
+      {/* Checkout Maintenance Modal */}
+      {isCheckoutMaintenanceOpen && (
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Checkout in manutenzione"
+          onClick={() => setIsCheckoutMaintenanceOpen(false)}
+        >
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+          <div
+            className="relative w-full max-w-md rounded-2xl bg-white shadow-2xl border border-gray-200 p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-orange-100 text-orange-700">
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M10.29 3.86l-7.4 12.84A2 2 0 004.62 20h14.76a2 2 0 001.73-3.3l-7.4-12.84a2 2 0 00-3.42 0z" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-gray-900">Checkout momentaneamente non disponibile</h3>
+                <p className="mt-2 text-sm text-gray-600 leading-relaxed">
+                  Al momento il checkout è in fase di manutenzione per migliorare la sicurezza e l’esperienza di acquisto.
+                  Puoi comunque aggiungere prodotti al carrello e tornare più tardi a completare l’ordine.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-6 flex gap-3">
+              <button
+                type="button"
+                className="flex-1 rounded-xl bg-gray-900 text-white py-2.5 font-semibold hover:bg-gray-800 transition"
+                onClick={() => setIsCheckoutMaintenanceOpen(false)}
+              >
+                Ok, ho capito
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

@@ -82,10 +82,10 @@ const AboutSectionTwo = () => {
             componentName="AboutTitle"
             as="div"
           >
-            <h3 className="mb-4 text-xl font-bold text-black dark:text-white sm:text-2xl lg:text-xl xl:text-2xl">
+            <h3 className="mb-3 md:mb-4 text-lg font-bold text-black dark:text-white sm:text-xl md:text-2xl lg:text-xl xl:text-2xl">
               {getTextValue(about.title)}
             </h3>
-            <p className="text-base font-medium leading-relaxed text-body-color sm:text-lg sm:leading-relaxed">
+            <p className="text-sm md:text-base font-medium leading-relaxed text-body-color sm:text-lg sm:leading-relaxed">
               {getTextValue(about.description)}
             </p>
           </SanityStyledComponent>
@@ -94,11 +94,11 @@ const AboutSectionTwo = () => {
             <div className="mt-8">
               {about.features.map((feature, index) => (
                 <div key={index} className="mb-6">
-                  <h4 className="mb-2 text-lg font-semibold text-black dark:text-white">
+                  <h4 className="mb-2 text-base md:text-lg font-semibold text-black dark:text-white">
                     {getTextValue(feature.title)}
                   </h4>
                   {feature.description && (
-                    <p className="text-base font-medium leading-relaxed text-body-color">
+                    <p className="text-sm md:text-base font-medium leading-relaxed text-body-color">
                       {getTextValue(feature.description)}
                     </p>
                   )}
@@ -111,8 +111,8 @@ const AboutSectionTwo = () => {
             <div className="grid grid-cols-2 gap-4 mt-8">
               {about.stats.map((stat, index) => (
                 <div key={index} className="text-center">
-                  <div className="text-2xl font-bold text-primary">{getTextValue(stat.number)}</div>
-                  <div className="text-sm text-gray-600">{getTextValue(stat.label)}</div>
+                  <div className="text-xl md:text-2xl font-bold text-primary">{getTextValue(stat.number)}</div>
+                  <div className="text-xs md:text-sm text-gray-600">{getTextValue(stat.label)}</div>
                 </div>
               ))}
             </div>

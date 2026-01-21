@@ -57,7 +57,7 @@ const Features = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:gap-y-10 md:grid-cols-2 lg:grid-cols-3">
       {features.map((feature, index) => (
         <SanityStyledComponent
           key={feature._id || index}
@@ -66,9 +66,9 @@ const Features = () => {
           className="w-full"
         >
           <div className="wow fadeInUp" data-wow-delay={`${index * 100}ms`}>
-            <div className="group mb-8 flex h-[70px] w-[70px] items-center justify-center rounded-md bg-primary bg-opacity-10 text-primary">
+            <div className="group mb-6 md:mb-8 flex h-[60px] w-[60px] md:h-[70px] md:w-[70px] items-center justify-center rounded-md bg-primary bg-opacity-10 text-primary">
               {feature.icon ? (
-                <span className="text-3xl">{getTextValue(feature.icon)}</span>
+                <span className="text-2xl md:text-3xl">{getTextValue(feature.icon)}</span>
               ) : (
                 <svg
                   width="36"
@@ -98,7 +98,7 @@ const Features = () => {
               component={featureTitleComponent}
               componentName="FeatureTitle"
               as="h3"
-              className="mb-5 text-xl font-bold text-black dark:text-white sm:text-2xl lg:text-xl xl:text-2xl"
+              className="mb-4 md:mb-5 text-lg font-bold text-black dark:text-white sm:text-xl md:text-2xl lg:text-xl xl:text-2xl"
             >
               {getTextValue(feature.title)}
             </SanityStyledComponent>
@@ -106,7 +106,7 @@ const Features = () => {
               component={featureDescriptionComponent}
               componentName="FeatureDescription"
               as="p"
-              className="text-base text-body-color dark:text-body-color-dark"
+              className="text-sm md:text-base text-body-color dark:text-body-color-dark"
             >
               {getTextValue(feature.paragraph)}
             </SanityStyledComponent>

@@ -106,6 +106,7 @@ const ServicePage = ({ params }: ServicePageProps) => {
         <Breadcrumb
           pageName={getTextValue(service.name)}
           description={getTextValue(service.shortDescription)}
+          showIntro={false}
         />
       </div>
 
@@ -212,7 +213,7 @@ const ServicePage = ({ params }: ServicePageProps) => {
                   </a>
                   <a
                     href="/contact"
-                    className="inline-flex items-center justify-center rounded-sm border border-primary px-8 py-4 text-base font-semibold text-primary duration-300 ease-in-out hover:bg-primary hover:text-white"
+                    className="inline-flex items-center justify-center rounded-sm bg-white px-8 py-4 text-base font-semibold text-primary duration-300 ease-in-out hover:bg-gray-100"
                   >
                     Contattaci
                   </a>
