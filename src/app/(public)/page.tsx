@@ -110,7 +110,7 @@ const HomePage = () => {
       {/* Offers Section */}
       <div className="text-white">
         <section id="offers-section" className="py-12 lg:py-16 bg-gradient-to-b from-white/5 via-white/0 to-white/0">
-          <div className="container">
+          <div className="container max-w-7xl mx-auto">
             <OffersSection
               variant="homepage"
               heading="Offerte in Evidenza"
@@ -123,15 +123,15 @@ const HomePage = () => {
       {/* Novità Carousel */}
       <div className="text-white">
         <section id="novita-section" className="py-10 lg:py-14">
-          <div className="container">
+          <div className="container max-w-7xl mx-auto">
             <div className="text-center mb-12 md:mb-16">
               <p className="uppercase tracking-[0.3em] text-orange-300 text-xs md:text-sm font-semibold mb-2">
                 Novità
               </p>
-              <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl">
+              <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-5xl">
                 Ultimi Aggiornamenti
               </h2>
-              <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
+              <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed sm:text-lg lg:text-xl xl:text-lg 2xl:text-lg">
                 Notizie, lanci e promozioni dal mondo della fotoceramica professionale.
               </p>
             </div>
@@ -141,10 +141,10 @@ const HomePage = () => {
       </div>
 
       {/* Primary CTA Strip */}
-      <section className="bg-white/5 py-14 backdrop-blur">
+      <section className="py-14">
         <div className="container">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-white sm:text-4xl">
+          <div className="max-w-2xl mx-auto text-center bg-white/5 backdrop-blur rounded-2xl px-6 py-10 md:px-10 md:py-12">
+            <h2 className="text-3xl font-bold text-white sm:text-4xl lg:text-4xl xl:text-4xl 2xl:text-4xl">
               Hai un progetto in mente? Siamo pronti ad aiutarti.
             </h2>
             <p className="mt-4 text-white/80 text-lg">
@@ -195,12 +195,12 @@ const HomePage = () => {
       <div className="text-white">
         <div id="services-section-anchor" className="relative -top-24 h-0" aria-hidden="true" />
         <section className="py-12 md:py-16 lg:py-20">
-          <div className="container">
+          <div className="container max-w-7xl mx-auto">
             <div className="text-center mb-12 md:mb-16">
-              <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl">
+              <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-5xl">
                 I Nostri Servizi
               </h2>
-              <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
+              <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed sm:text-lg lg:text-xl xl:text-lg 2xl:text-lg">
                 Servizi per ottenere un prodotto perfetto.
               </p>
             </div>
@@ -212,12 +212,12 @@ const HomePage = () => {
       {/* Products Section */}
       <div className="text-white">
         <section className="py-12 md:py-16 lg:py-20">
-          <div className="container">
+          <div className="container max-w-7xl mx-auto">
             <div className="text-center mb-12 md:mb-16">
-              <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl">
+              <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-5xl">
                 I Nostri Prodotti
               </h2>
-              <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
+              <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed sm:text-lg lg:text-xl xl:text-lg 2xl:text-lg">
                 Scopri la nostra collezione di prodotti personalizzati in ceramica.
               </p>
             </div>
@@ -229,12 +229,12 @@ const HomePage = () => {
       {/* Social Media Section */}
       <div className="text-white">
         <section className="py-12 md:py-16 lg:py-20">
-          <div className="container">
+          <div className="container max-w-7xl mx-auto">
             <div className="text-center mb-12 md:mb-16">
-              <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl">
+              <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-5xl">
                 Seguici sui Social
               </h2>
-              <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
+              <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed sm:text-lg lg:text-xl xl:text-lg 2xl:text-lg">
                 Resta sempre aggiornato sui nostri progetti, novità e contenuti esclusivi.
               </p>
             </div>
@@ -334,12 +334,12 @@ const HomePage = () => {
       {/* Testimonials Section */}
       <div className="text-white">
         <section className="py-12 md:py-16 lg:py-20">
-          <div className="container">
+          <div className="container max-w-7xl mx-auto">
             <div className="text-center mb-12 md:mb-16">
-              <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl">
+              <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-5xl">
                 Cosa Dicono i Nostri Clienti
               </h2>
-              <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
+              <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed sm:text-lg lg:text-xl xl:text-lg 2xl:text-lg">
                 Le testimonianze dei nostri clienti soddisfatti che hanno scelto di lavorare con noi.
               </p>
             </div>
@@ -351,12 +351,12 @@ const HomePage = () => {
       {/* Blog Section */}
       <div className="text-white">
         <section className="py-12 md:py-16 lg:py-20">
-          <div className="container">
+          <div className="container max-w-7xl mx-auto">
             <div className="text-center mb-12 md:mb-16">
-              <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl">
+              <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-5xl">
                 Il Nostro Blog
               </h2>
-              <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
+              <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed sm:text-lg lg:text-xl xl:text-lg 2xl:text-lg">
               Scopri il mondo della stampa digitale su ceramica
               </p>
             </div>
@@ -370,12 +370,12 @@ const HomePage = () => {
         <div id="preventivo" className="relative -top-24 h-0" aria-hidden="true" />
         <div id="consulenza" className="relative -top-24 h-0" aria-hidden="true" />
         <section id="contatti" className="py-12 md:py-16 lg:py-20">
-          <div className="container">
+          <div className="container max-w-7xl mx-auto">
             <div className="text-center mb-12 md:mb-16">
-              <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl">
+              <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-5xl">
                 Contattaci
               </h2>
-              <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed sm:text-lg lg:text-xl">
+              <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed sm:text-lg lg:text-xl xl:text-lg 2xl:text-lg">
                 Dal 1998 sviluppiamo soluzioni di fotoceramica professionale: consulenza dedicata, produzione certificata e assistenza rapida per portare sul mercato collezioni ceramiche personalizzate, targhe memoriali e superfici decorative ad alto impatto.
               </p>
             </div>

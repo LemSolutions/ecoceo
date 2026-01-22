@@ -18,7 +18,7 @@ const HeroVideoBackground = () => {
   const [fadeOpacity, setFadeOpacity] = useState(1);
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
   
-  const VIDEO_ID = 'eeMQwUy38Ow'; // Video di sfondo: https://youtu.be/eeMQwUy38Ow
+  const VIDEO_ID = 'tAuJQd7cm0w'; // Video di sfondo: https://youtu.be/tAuJQd7cm0w
   // URL YouTube embed con autoplay, mute, loop e parametri ottimizzati per nascondere tutti i controlli
   const youtubeEmbedUrl = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${VIDEO_ID}&controls=0&modestbranding=1&rel=0&playsinline=1&enablejsapi=1&start=0&disablekb=1&fs=0&iv_load_policy=3&showinfo=0&cc_load_policy=0&origin=${typeof window !== 'undefined' ? window.location.origin : ''}`;
 
@@ -344,20 +344,20 @@ const Hero = () => {
                   component={heroTitleComponent}
                   componentName="HeroTitle"
                   as="h1"
-                  className="mb-8 text-3xl font-bold leading-tight text-gray-900 sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight md:text-white lg:text-6xl lg:leading-tight xl:text-7xl xl:leading-tight relative px-4 py-3 rounded-lg md:backdrop-blur md:bg-white/15 inline-block"
+                  className="mb-8 text-2xl font-bold leading-tight text-gray-900 sm:text-3xl sm:leading-tight md:text-4xl md:leading-tight md:text-white lg:text-5xl lg:leading-tight xl:text-6xl xl:leading-tight relative px-4 py-3 rounded-lg md:backdrop-blur md:bg-white/15 inline-block"
                   style={heroTitleGlowStyle}
                 >
                   Welcome to Our Platform
                 </SanityStyledComponent>
                 
                 {/* Pulsante freccia rosso pulsante - al limite della hero */}
-                <div className="mt-auto pt-48 md:pt-56 lg:pt-64 pb-4 md:pb-6 lg:pb-8 flex justify-center">
+                <div className="mt-auto pt-64 md:pt-72 lg:pt-80 pb-4 md:pb-6 lg:pb-8 flex justify-center">
                   <button
                     onClick={() => setTunnelActive(true)}
-                    className="arrow-button-pulse-strong inline-flex items-center justify-center w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white shadow-2xl shadow-red-500/60 transition-all duration-300 cursor-pointer"
+                    className="arrow-button-pulse-strong inline-flex items-center justify-center w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white shadow-2xl shadow-red-500/60 cursor-pointer"
                     aria-label="Vai alle novità"
                   >
-                    <svg className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ transform: 'rotate(90deg)' }}>
+                    <svg className="w-7 h-7 md:w-8 md:h-8 lg:w-10 lg:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ transform: 'rotate(90deg)' }}>
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3.5} d="M9 5l7 7-7 7" />
                     </svg>
                   </button>
@@ -365,23 +365,14 @@ const Hero = () => {
               </>
             ) : (
               <>
-                <SanityStyledComponent
-                  component={heroTitleComponent}
-                  componentName="HeroTitle"
-                  as="h1"
-                  className="mb-5 text-3xl font-bold leading-tight text-gray-900 sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight md:text-white lg:text-6xl lg:leading-tight xl:text-7xl xl:leading-tight relative px-4 py-3 rounded-lg md:backdrop-blur md:bg-white/15 inline-block"
-                >
-                  {getTextValue(hero.title)}
-                </SanityStyledComponent>
-                
                 {/* Pulsante freccia rosso pulsante - più basso, largo e grande */}
-                <div className="mt-44 md:mt-56 lg:mt-72 flex justify-center">
+                <div className="mt-56 md:mt-72 lg:mt-96 flex justify-center">
                   <button
                     onClick={() => setTunnelActive(true)}
-                    className="arrow-button-pulse-strong inline-flex items-center justify-center w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white shadow-2xl shadow-red-500/60 transition-all duration-300 cursor-pointer"
+                    className="arrow-button-pulse-strong inline-flex items-center justify-center w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white shadow-2xl shadow-red-500/60 cursor-pointer"
                     aria-label="Vai alle novità"
                   >
-                    <svg className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ transform: 'rotate(90deg)' }}>
+                    <svg className="w-7 h-7 md:w-8 md:h-8 lg:w-10 lg:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ transform: 'rotate(90deg)' }}>
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3.5} d="M9 5l7 7-7 7" />
                     </svg>
                   </button>
@@ -414,27 +405,21 @@ const Hero = () => {
         ${HERO_FLOAT_ANIMATION}
         
         @keyframes arrowPulseStrong {
-          0%, 100% {
-            transform: scale(1) translateY(0);
-            box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.8), 0 10px 30px rgba(239, 68, 68, 0.4);
-          }
-          25% {
-            transform: scale(1.08) translateY(-3px);
-            box-shadow: 0 0 0 8px rgba(239, 68, 68, 0.6), 0 15px 40px rgba(239, 68, 68, 0.5);
+          0% {
+            transform: translateY(0px);
           }
           50% {
-            transform: scale(1.15) translateY(-5px);
-            box-shadow: 0 0 0 15px rgba(239, 68, 68, 0.4), 0 20px 50px rgba(239, 68, 68, 0.6);
+            transform: translateY(15px);
           }
-          75% {
-            transform: scale(1.08) translateY(-3px);
-            box-shadow: 0 0 0 8px rgba(239, 68, 68, 0.6), 0 15px 40px rgba(239, 68, 68, 0.5);
+          100% {
+            transform: translateY(0px);
           }
         }
         
         .arrow-button-pulse-strong {
           animation: arrowPulseStrong 1.5s ease-in-out infinite;
           position: relative;
+          will-change: transform;
         }
         
         .arrow-button-pulse-strong::before {
