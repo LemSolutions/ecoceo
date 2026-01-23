@@ -977,3 +977,259 @@ body {
   opacity: 1 !important;
   box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.7) !important;
 }
+
+/* Spazio per evitare sovrapposizione con header sticky */
+section {
+  scroll-margin-top: 100px;
+}
+
+/* Su mobile, assicura che tutto il contenuto sia sempre sotto l'header */
+@media (max-width: 1023px) {
+  /* Tutte le sezioni devono avere padding-top sufficiente su mobile - aumentato */
+  section {
+    padding-top: 7rem !important;
+  }
+  
+  /* Breadcrumb e sezioni principali ancora più spazio */
+  section.relative,
+  section[class*="overflow-hidden"] {
+    padding-top: 7.5rem !important;
+  }
+  
+  /* Sezioni con id specifici */
+  section[id],
+  section[id*="section"] {
+    padding-top: 7rem !important;
+  }
+  
+  /* Container e contenuti principali */
+  .container {
+    padding-top: 0.5rem !important;
+  }
+}
+
+/* Aumento spacing tra paragrafi e testi */
+p + p {
+  margin-top: 1rem;
+}
+
+.text-base + p,
+.text-sm + p,
+.text-lg + p {
+  margin-top: 1rem;
+}
+
+/* Spazio tra titoli e paragrafi */
+h1 + p,
+h2 + p,
+h3 + p,
+h4 + p {
+  margin-top: 1rem;
+}
+
+/* Riduzione dimensioni per mobile - equilibrato e confortevole */
+@media (max-width: 767px) {
+  /* Riduzione font-size generale - più piccolo ma leggibile */
+  html {
+    font-size: 13px;
+  }
+  
+  body {
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+  
+  /* Spazio extra per header sticky su mobile - tutto deve essere sotto l'header */
+  section {
+    padding-top: 7rem !important;
+    padding-bottom: 1.5rem !important;
+    scroll-margin-top: 160px !important;
+  }
+  
+  /* Breadcrumb e contenuti principali devono avere ancora più spazio su mobile */
+  section[class*="pt-"],
+  .breadcrumb-section,
+  section.relative {
+    padding-top: 7.5rem !important;
+  }
+  
+  /* Spacing tra testi su mobile - ridotto */
+  p + p {
+    margin-top: 0.875rem !important;
+  }
+  
+  h1 + p,
+  h2 + p,
+  h3 + p {
+    margin-top: 0.875rem !important;
+  }
+  
+  /* Riduzione dimensioni titoli - più piccolo ma leggibile */
+  h1 {
+    font-size: 1.375rem !important;
+    line-height: 1.4 !important;
+    margin-bottom: 0.75rem !important;
+  }
+  
+  h2 {
+    font-size: 1.125rem !important;
+    line-height: 1.4 !important;
+    margin-bottom: 0.75rem !important;
+  }
+  
+  h3 {
+    font-size: 1rem !important;
+    line-height: 1.4 !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  h4 {
+    font-size: 0.9375rem !important;
+    line-height: 1.4 !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  /* Riduzione padding container */
+  .container {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+  
+  /* Riduzione spacing tra elementi */
+  .space-y-12 > * + * {
+    margin-top: 1.25rem !important;
+  }
+  
+  .space-y-8 > * + * {
+    margin-top: 0.875rem !important;
+  }
+  
+  .space-y-6 > * + * {
+    margin-top: 0.625rem !important;
+  }
+  
+  .space-y-4 > * + * {
+    margin-top: 0.5rem !important;
+  }
+  
+  .space-y-3 > * + * {
+    margin-top: 0.375rem !important;
+  }
+  
+  /* Riduzione margin bottom */
+  .mb-12 {
+    margin-bottom: 1.25rem !important;
+  }
+  
+  .mb-16 {
+    margin-bottom: 1.5rem !important;
+  }
+  
+  .mb-8 {
+    margin-bottom: 0.875rem !important;
+  }
+  
+  .mb-6 {
+    margin-bottom: 0.75rem !important;
+  }
+  
+  .mb-4 {
+    margin-bottom: 0.5rem !important;
+  }
+  
+  /* Riduzione padding bottoni */
+  button,
+  a[class*="px-"],
+  .px-8 {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+    font-size: 0.8125rem !important;
+  }
+  
+  /* Riduzione font-size bottoni e link */
+  button,
+  a[class*="text-"] {
+    font-size: 0.8125rem !important;
+  }
+  
+  /* Testi base più piccoli */
+  p {
+    font-size: 0.8125rem !important;
+    line-height: 1.6 !important;
+  }
+  
+  /* Riduzione dimensioni icone social */
+  .social-icon-move-animation {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+  }
+  
+  /* Riduzione padding generale */
+  .py-16 {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+  
+  .py-12 {
+    padding-top: 1.25rem !important;
+    padding-bottom: 1.25rem !important;
+  }
+  
+  .py-10 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+  
+  .py-8 {
+    padding-top: 0.875rem !important;
+    padding-bottom: 0.875rem !important;
+  }
+  
+  .px-6 {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+  
+  .px-8 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Riduzione gap */
+  .gap-8 {
+    gap: 0.75rem !important;
+  }
+  
+  .gap-6 {
+    gap: 0.5rem !important;
+  }
+  
+  .gap-4 {
+    gap: 0.375rem !important;
+  }
+  
+  /* Riduzione dimensioni immagini e media */
+  img {
+    max-width: 100%;
+  }
+  
+  /* Riduzione border radius su mobile */
+  .rounded-lg,
+  .rounded-xl,
+  .rounded-2xl {
+    border-radius: 0.5rem !important;
+  }
+  
+  .rounded-full {
+    border-radius: 9999px !important;
+  }
+  
+  /* Riduzione shadow su mobile */
+  .shadow-lg,
+  .shadow-xl,
+  .shadow-2xl {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  }
+}

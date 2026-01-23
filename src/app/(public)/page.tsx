@@ -109,7 +109,7 @@ const HomePage = () => {
 
       {/* Offers Section */}
       <div className="text-white">
-        <section id="offers-section" className="py-12 lg:py-16 bg-gradient-to-b from-white/5 via-white/0 to-white/0">
+        <section id="offers-section" className="pt-20 pb-12 lg:pt-24 lg:pb-16 bg-gradient-to-b from-white/5 via-white/0 to-white/0">
           <div className="container max-w-7xl mx-auto">
             <OffersSection
               variant="homepage"
@@ -122,16 +122,16 @@ const HomePage = () => {
 
       {/* Novità Carousel */}
       <div className="text-white">
-        <section id="novita-section" className="py-10 lg:py-14">
+        <section id="novita-section" className="pt-20 pb-10 lg:pt-24 lg:pb-14">
           <div className="container max-w-7xl mx-auto">
             <div className="text-center mb-12 md:mb-16">
-              <p className="uppercase tracking-[0.3em] text-orange-300 text-xs md:text-sm font-semibold mb-2">
+              <p className="uppercase tracking-[0.3em] text-orange-300 text-xs md:text-sm font-semibold mb-3">
                 Novità
               </p>
-              <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-5xl">
+              <h2 className="text-white mb-4 md:mb-5 text-xl font-bold sm:text-2xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-5xl">
                 Ultimi Aggiornamenti
               </h2>
-              <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed sm:text-lg lg:text-xl xl:text-lg 2xl:text-lg">
+              <p className="text-white/80 text-xs md:text-base font-medium leading-relaxed sm:text-base lg:text-xl xl:text-lg 2xl:text-lg mt-4">
                 Notizie, lanci e promozioni dal mondo della fotoceramica professionale.
               </p>
             </div>
@@ -141,13 +141,13 @@ const HomePage = () => {
       </div>
 
       {/* Primary CTA Strip */}
-      <section className="py-14">
+      <section className="pt-20 pb-14 lg:pt-24">
         <div className="container">
           <div className="max-w-2xl mx-auto text-center bg-white/5 backdrop-blur rounded-2xl px-6 py-10 md:px-10 md:py-12">
-            <h2 className="text-3xl font-bold text-white sm:text-4xl lg:text-4xl xl:text-4xl 2xl:text-4xl">
+            <h2 className="text-xl font-bold text-white sm:text-2xl lg:text-4xl xl:text-4xl 2xl:text-4xl">
               Hai un progetto in mente? Siamo pronti ad aiutarti.
             </h2>
-            <p className="mt-4 text-white/80 text-lg">
+            <p className="mt-4 text-white/80 text-sm sm:text-base lg:text-lg">
               Richiedi un preventivo gratuito, prenota una consulenza dedicata oppure contattaci subito per parlare con un esperto.
             </p>
             <div className="mt-10 flex flex-col items-stretch gap-4 sm:flex-row sm:flex-wrap sm:justify-center">
@@ -176,7 +176,7 @@ const HomePage = () => {
 
       {/* Projects Section */}
       <div className="text-white">
-        <section className="py-12 md:py-16 lg:py-20">
+        <section className="pt-20 pb-12 md:pt-24 md:pb-16 lg:pt-28 lg:pb-20">
           <ProjectsSection
             title="I Nostri Progetti"
             subtitle="Scopri alcune delle realizzazioni che abbiamo seguito dall’idea alla messa in produzione."
@@ -194,13 +194,13 @@ const HomePage = () => {
       {/* Services Section */}
       <div className="text-white">
         <div id="services-section-anchor" className="relative -top-24 h-0" aria-hidden="true" />
-        <section className="py-12 md:py-16 lg:py-20">
+        <section className="pt-20 pb-12 md:pt-24 md:pb-16 lg:pt-28 lg:pb-20">
           <div className="container max-w-7xl mx-auto">
             <div className="text-center mb-12 md:mb-16">
-              <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-5xl">
+              <h2 className="text-white mb-4 md:mb-5 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-5xl">
                 I Nostri Servizi
               </h2>
-              <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed sm:text-lg lg:text-xl xl:text-lg 2xl:text-lg">
+              <p className="text-white/80 text-sm md:text-base font-medium leading-relaxed sm:text-lg lg:text-xl xl:text-lg 2xl:text-lg mt-4">
                 Servizi per ottenere un prodotto perfetto.
               </p>
             </div>
@@ -211,7 +211,7 @@ const HomePage = () => {
 
       {/* Products Section */}
       <div className="text-white">
-        <section className="py-12 md:py-16 lg:py-20">
+        <section className="pt-20 pb-12 md:pt-24 md:pb-16 lg:pt-28 lg:pb-20">
           <div className="container max-w-7xl mx-auto">
             <div className="text-center mb-12 md:mb-16">
               <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-5xl">
@@ -228,7 +228,7 @@ const HomePage = () => {
 
       {/* Social Media Section */}
       <div className="text-white">
-        <section className="py-12 md:py-16 lg:py-20">
+        <section className="pt-20 pb-12 md:pt-24 md:pb-16 lg:pt-28 lg:pb-20">
           <div className="container max-w-7xl mx-auto">
             <div className="text-center mb-12 md:mb-16">
               <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-5xl">
@@ -333,7 +333,7 @@ const HomePage = () => {
 
       {/* Testimonials Section */}
       <div className="text-white">
-        <section className="py-12 md:py-16 lg:py-20">
+        <section className="pt-20 pb-12 md:pt-24 md:pb-16 lg:pt-28 lg:pb-20">
           <div className="container max-w-7xl mx-auto">
             <div className="text-center mb-12 md:mb-16">
               <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-5xl">
@@ -350,7 +350,7 @@ const HomePage = () => {
 
       {/* Blog Section */}
       <div className="text-white">
-        <section className="py-12 md:py-16 lg:py-20">
+        <section className="pt-20 pb-12 md:pt-24 md:pb-16 lg:pt-28 lg:pb-20">
           <div className="container max-w-7xl mx-auto">
             <div className="text-center mb-12 md:mb-16">
               <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-5xl">
@@ -369,7 +369,7 @@ const HomePage = () => {
       <div className="text-white">
         <div id="preventivo" className="relative -top-24 h-0" aria-hidden="true" />
         <div id="consulenza" className="relative -top-24 h-0" aria-hidden="true" />
-        <section id="contatti" className="py-12 md:py-16 lg:py-20">
+        <section id="contatti" className="pt-20 pb-12 md:pt-24 md:pb-16 lg:pt-28 lg:pb-20">
           <div className="container max-w-7xl mx-auto">
             <div className="text-center mb-12 md:mb-16">
               <h2 className="text-white mb-3 md:mb-4 text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-5xl">

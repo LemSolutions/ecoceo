@@ -43,7 +43,7 @@ const CartPage = () => {
 
         {/* Empty Cart Content - Gradiente da bianco ad arancione intenso */}
         <div className=" from-white via-blue-100 to-blue-400 text-black">
-          <section className="py-16 lg:py-20">
+          <section className="pt-20 pb-16 md:pt-24 md:pb-16 lg:pt-28 lg:pb-20">
             <div className="container">
               <div className="text-center py-12">
                 <div className="mb-8">

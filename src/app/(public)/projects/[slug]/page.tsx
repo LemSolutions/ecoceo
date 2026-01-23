@@ -75,7 +75,7 @@ const ProjectDetailsPage = () => {
 
       {/* Project Details Content - Gradiente da bianco ad arancione intenso */}
       <div className=" from-white via-blue-100 to-blue-400 text-black">
-        <section className="pt-[150px] pb-[120px]">
+        <section className="pt-20 pb-16 md:pt-24 md:pb-16 lg:pt-28 lg:pb-20">
           <div className="container">
             <div className="-mx-4 flex flex-wrap justify-center">
               <div className="w-full px-4 lg:w-8/12">

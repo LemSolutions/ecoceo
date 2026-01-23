@@ -16,7 +16,7 @@ const BlogPage = () => {
 
       {/* Blog Content - Sfondo standard */}
       <div>
-        <section className="py-16 lg:py-20">
+        <section className="pt-20 pb-16 md:pt-24 md:pb-16 lg:pt-28 lg:pb-20">
           <div className="container">
             <div className="text-center mb-16">
               <h1 className="text-3xl font-bold text-black sm:text-4xl lg:text-5xl mb-6">

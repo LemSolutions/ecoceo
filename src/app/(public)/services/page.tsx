@@ -46,7 +46,7 @@ const ServicesPage = () => {
             pageName="I Nostri Servizi"
             description="Caricamento servizi..."
           />
-          <section className="py-16 lg:py-20">
+          <section className="pt-20 pb-16 md:pt-24 md:pb-16 lg:pt-28 lg:pb-20">
             <div className="container">
               <div className="text-center py-12">
                 <p>Caricamento servizi...</p>
@@ -70,7 +70,7 @@ const ServicesPage = () => {
 
       {/* Services Content */}
       <div className="text-white">
-        <section className="py-16 lg:py-20">
+        <section className="pt-20 pb-16 md:pt-24 md:pb-16 lg:pt-28 lg:pb-20">
           <div className="container">
             {/* Page Header */}
             <div className="text-center mb-16">

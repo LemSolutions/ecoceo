@@ -17,7 +17,7 @@ interface BreadcrumbProps {
 const Breadcrumb = ({ pageName, description, showIntro = true, parentPages = [] }: BreadcrumbProps) => {
   return (
     <>
-      <section className="relative z-10 overflow-hidden pt-28 lg:pt-32">
+      <section className="relative z-10 overflow-hidden pt-36 md:pt-28 lg:pt-32">
         <div className="container">
           <div className="-mx-4 flex flex-wrap items-center">
             {showIntro && (

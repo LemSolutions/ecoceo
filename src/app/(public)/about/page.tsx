@@ -16,7 +16,7 @@ const AboutPage = () => {
 
       {/* All About Posts from Sanity */}
       <div className="text-white">
-        <section className="py-16 lg:py-20">
+        <section className="pt-20 pb-16 md:pt-24 md:pb-16 lg:pt-28 lg:pb-20">
           <div className="container">
             <AllAboutPosts />
           </div>

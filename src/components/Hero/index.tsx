@@ -149,25 +149,28 @@ const HeroVideoBackground = () => {
   );
 };
 
-// Componente per il video mobile con animazione su e giù
+// Componente per il video mobile verticale (YouTube Shorts) sopra il bottone
 const HeroVideoMobile = () => {
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
-  const VIDEO_ID = 'eeMQwUy38Ow';
+  const VIDEO_ID = 'z5-2pTulCBo'; // Video verticale Shorts: https://youtube.com/shorts/z5-2pTulCBo
   const youtubeEmbedUrl = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${VIDEO_ID}&controls=0&modestbranding=1&rel=0&playsinline=1&enablejsapi=1&start=0&disablekb=1&fs=0&iv_load_policy=3&showinfo=0&cc_load_policy=0&origin=${typeof window !== 'undefined' ? window.location.origin : ''}`;
 
   useEffect(() => {
-    // Carica il video mobile dopo un breve delay o quando entra in viewport
+    // Carica il video mobile dopo un breve delay
     const loadTimer = setTimeout(() => {
       setShouldLoadVideo(true);
-    }, 1000);
+    }, 800);
 
     return () => clearTimeout(loadTimer);
   }, []);
 
   return (
-    <div className="lg:hidden w-full max-w-2xl mx-auto mt-16 rounded-lg overflow-hidden shadow-lg video-float-mobile">
+    <div className="lg:hidden w-full max-w-sm mx-auto mb-6 rounded-lg overflow-hidden shadow-lg border-2 border-black">
       <div 
-        className="relative w-full aspect-video bg-black/20"
+        className="relative w-full aspect-[9/16] bg-black/20 player-controls-background"
+        style={{
+          pointerEvents: 'none',
+        }}
       >
         {shouldLoadVideo ? (
           <iframe
@@ -178,48 +181,18 @@ const HeroVideoMobile = () => {
             allowFullScreen={false}
             style={{
               border: 'none',
+              pointerEvents: 'none',
             }}
             loading="lazy"
           />
         ) : (
           <div className="absolute inset-0 w-full h-full rounded-lg bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
-            <div className="text-white text-sm">Caricamento video...</div>
+            <div className="text-white text-xs">Caricamento...</div>
           </div>
         )}
         <style jsx>{`
-          .video-float-mobile {
-            animation: videoFloatMobile 6s ease-in-out infinite;
-            will-change: transform;
-          }
-          
-          @keyframes videoFloatMobile {
-            0% {
-              transform: translateY(0px);
-            }
-            12.5% {
-              transform: translateY(-40px);
-            }
-            25% {
-              transform: translateY(-50px);
-            }
-            37.5% {
-              transform: translateY(-40px);
-            }
-            50% {
-              transform: translateY(0px);
-            }
-            62.5% {
-              transform: translateY(40px);
-            }
-            75% {
-              transform: translateY(50px);
-            }
-            87.5% {
-              transform: translateY(40px);
-            }
-            100% {
-              transform: translateY(0px);
-            }
+          iframe {
+            pointer-events: none !important;
           }
         `}</style>
       </div>
@@ -325,7 +298,7 @@ const Hero = () => {
         componentName="HeroSection"
         as="section"
         id="home"
-        className="relative z-10 overflow-hidden pb-12 pt-[100px] md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px] min-h-screen flex items-center"
+        className="relative z-10 overflow-hidden pb-12 pt-[100px] md:pb-[120px] md:pt-[150px] xl:pb-[160px] xl:pt-[180px] 2xl:pb-[200px] 2xl:pt-[210px] min-h-screen flex items-center lg:min-h-screen"
         style={hero?.backgroundImage ? {
           backgroundImage: `url(${getImageUrl(hero.backgroundImage)})`,
           backgroundSize: 'cover',
@@ -336,22 +309,40 @@ const Hero = () => {
         <HeroVideoBackground />
         
         {/* Contenuto principale della Hero con z-index più alto per essere sopra il video */}
-        <div className="container relative z-[2] flex flex-col items-center justify-center min-h-[60vh]">
-          <div className="w-full text-center flex-1 flex flex-col justify-center">
+        <div className="container relative z-[2] flex flex-col items-center justify-center min-h-[60vh] lg:min-h-[60vh]">
+          <div className="w-full text-center flex-1 flex flex-col justify-center lg:justify-center">
             {!hero ? (
               <>
                 <SanityStyledComponent
                   component={heroTitleComponent}
                   componentName="HeroTitle"
                   as="h1"
-                  className="mb-8 text-2xl font-bold leading-tight text-gray-900 sm:text-3xl sm:leading-tight md:text-4xl md:leading-tight md:text-white lg:text-5xl lg:leading-tight xl:text-6xl xl:leading-tight relative px-4 py-3 rounded-lg md:backdrop-blur md:bg-white/15 inline-block"
+                  className="mb-8 text-xl font-bold leading-tight text-gray-900 sm:text-2xl sm:leading-tight md:text-4xl md:leading-tight md:text-white lg:text-5xl lg:leading-tight xl:text-6xl xl:leading-tight relative px-3 py-2 rounded-lg md:backdrop-blur md:bg-white/15 inline-block"
                   style={heroTitleGlowStyle}
                 >
                   Welcome to Our Platform
                 </SanityStyledComponent>
                 
-                {/* Pulsante freccia rosso pulsante - al limite della hero */}
-                <div className="mt-auto pt-64 md:pt-72 lg:pt-80 pb-4 md:pb-6 lg:pb-8 flex justify-center">
+                {/* Video mobile verticale - grande come la hero, visibile sotto l'header */}
+                <div className="lg:hidden w-full flex justify-center items-start pt-4 pb-4">
+                  <HeroVideoMobile />
+                </div>
+                
+                {/* Pulsante freccia rosso pulsante - visibile sotto il video */}
+                <div className="lg:hidden -mt-4 mb-8 flex justify-center relative z-10">
+                  <button
+                    onClick={() => setTunnelActive(true)}
+                    className="arrow-button-pulse-strong inline-flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white shadow-2xl shadow-red-500/60 cursor-pointer"
+                    aria-label="Vai alle novità"
+                  >
+                    <svg className="w-7 h-7 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ transform: 'rotate(90deg)' }}>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3.5} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </div>
+                
+                {/* Pulsante freccia rosso pulsante - desktop */}
+                <div className="hidden lg:flex mt-auto pt-32 md:pt-48 lg:pt-64 pb-4 md:pb-6 lg:pb-8 justify-center">
                   <button
                     onClick={() => setTunnelActive(true)}
                     className="arrow-button-pulse-strong inline-flex items-center justify-center w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white shadow-2xl shadow-red-500/60 cursor-pointer"
@@ -365,8 +356,26 @@ const Hero = () => {
               </>
             ) : (
               <>
-                {/* Pulsante freccia rosso pulsante - più basso, largo e grande */}
-                <div className="mt-56 md:mt-72 lg:mt-96 flex justify-center">
+                {/* Video mobile verticale - grande come la hero, visibile sotto l'header */}
+                <div className="lg:hidden w-full flex justify-center items-start pt-4 pb-4">
+                  <HeroVideoMobile />
+                </div>
+                
+                {/* Pulsante freccia rosso pulsante - visibile sotto il video */}
+                <div className="lg:hidden -mt-4 mb-8 flex justify-center relative z-10">
+                  <button
+                    onClick={() => setTunnelActive(true)}
+                    className="arrow-button-pulse-strong inline-flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white shadow-2xl shadow-red-500/60 cursor-pointer"
+                    aria-label="Vai alle novità"
+                  >
+                    <svg className="w-7 h-7 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ transform: 'rotate(90deg)' }}>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3.5} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </div>
+                
+                {/* Pulsante freccia rosso pulsante - desktop */}
+                <div className="hidden lg:flex mt-32 md:mt-48 lg:mt-64 justify-center">
                   <button
                     onClick={() => setTunnelActive(true)}
                     className="arrow-button-pulse-strong inline-flex items-center justify-center w-14 h-14 md:w-16 md:h-16 lg:w-20 lg:h-20 rounded-full bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white shadow-2xl shadow-red-500/60 cursor-pointer"
@@ -382,8 +391,6 @@ const Hero = () => {
           </div>
         </div>
         
-        {/* Video mobile - solo se non c'è hero */}
-        {!hero && <HeroVideoMobile />}
       </SanityStyledComponent>
       
       {/* Transizione tunnel ceramica */}
